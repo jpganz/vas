@@ -1,0 +1,116 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myRequestLabel">Create or edit a Request</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.request.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.request.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_requestAmount">Request Amount</label>
+            <input type="number" class="form-control" name="requestAmount" id="field_requestAmount"
+                    ng-model="vm.request.requestAmount"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_clientNumber">Client Number</label>
+            <input type="number" class="form-control" name="clientNumber" id="field_clientNumber"
+                    ng-model="vm.request.clientNumber"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_annexedNumber">Annexed Number</label>
+            <input type="number" class="form-control" name="annexedNumber" id="field_annexedNumber"
+                    ng-model="vm.request.annexedNumber"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_clientName">Client Name</label>
+            <input type="text" class="form-control" name="clientName" id="field_clientName"
+                    ng-model="vm.request.clientName"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_requestStatus">Request Status</label>
+            <input type="number" class="form-control" name="requestStatus" id="field_requestStatus"
+                    ng-model="vm.request.requestStatus"
+                    required/>
+            <div ng-show="editForm.requestStatus.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.requestStatus.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.requestStatus.$error.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_statusRequested">Status Requested</label>
+            <input type="text" class="form-control" name="statusRequested" id="field_statusRequested"
+                    ng-model="vm.request.statusRequested"
+                    required/>
+            <div ng-show="editForm.statusRequested.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.statusRequested.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_serviceCode">Service Code</label>
+            <input type="text" class="form-control" name="serviceCode" id="field_serviceCode"
+                    ng-model="vm.request.serviceCode"
+                    required/>
+            <div ng-show="editForm.serviceCode.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.serviceCode.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_eventConfirmation">Event Confirmation</label>
+            <input type="text" class="form-control" name="eventConfirmation" id="field_eventConfirmation"
+                    ng-model="vm.request.eventConfirmation"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_nextTryBy">Next Try By</label>
+                <div class="input-group">
+                    <input id="field_nextTryBy" type="text" class="form-control" name="nextTryBy" uib-datepicker-popup="{{dateformat}}" ng-model="vm.request.nextTryBy" is-open="vm.datePickerOpenStatus.nextTryBy"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('nextTryBy')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_dateTime">Date Time</label>
+                <div class="input-group">
+                    <input id="field_dateTime" type="text" class="form-control" name="dateTime" uib-datepicker-popup="{{dateformat}}" ng-model="vm.request.dateTime" is-open="vm.datePickerOpenStatus.dateTime"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

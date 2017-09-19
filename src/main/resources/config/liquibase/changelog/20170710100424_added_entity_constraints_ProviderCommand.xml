@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity ProviderCommand.
+    -->
+    <changeSet id="20170710100424-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="command_id"
+                                 baseTableName="provider_command"
+                                 constraintName="fk_provider_command_command_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="command"/>
+
+    </changeSet>
+</databaseChangeLog>

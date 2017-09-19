@@ -1,0 +1,27 @@
+
+<div>
+    <h2><span>Service Security</span> {{vm.serviceSecurity.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{vm.serviceSecurity.name}}</span>
+        </dd>
+        <dt><span>Communication Standard Id</span></dt>
+        <dd>
+            <span>{{vm.serviceSecurity.communicationStandardId}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="service-security-detail.edit({id:vm.serviceSecurity.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

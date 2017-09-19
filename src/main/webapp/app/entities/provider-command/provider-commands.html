@@ -1,0 +1,70 @@
+<div>
+    <h2>Provider Commands</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="provider-command.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Provider Command
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Endpoint Url</span></th>
+                    <th><span>Code</span></th>
+                    <th><span>Retry Limit</span></th>
+                    <th><span>Retry Interval</span></th>
+                    <th><span>Provider Id</span></th>
+                    <th><span>Command Id</span></th>
+                    <th><span>Communication Standard Id</span></th>
+                    <th><span>Service Security Id</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="providerCommand in vm.providerCommands track by providerCommand.id">
+                    <td><a ui-sref="provider-command-detail({id:providerCommand.id})">{{providerCommand.id}}</a></td>
+                    <td>{{providerCommand.endpointUrl}}</td>
+                    <td>{{providerCommand.code}}</td>
+                    <td>{{providerCommand.retryLimit}}</td>
+                    <td>{{providerCommand.retryInterval}}</td>
+                    <td>{{providerCommand.providerId}}</td>
+                    <td>{{providerCommand.commandId}}</td>
+                    <td>{{providerCommand.communicationStandardId}}</td>
+                    <td>{{providerCommand.serviceSecurityId}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="provider-command-detail({id:providerCommand.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="provider-command.edit({id:providerCommand.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="provider-command.delete({id:providerCommand.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

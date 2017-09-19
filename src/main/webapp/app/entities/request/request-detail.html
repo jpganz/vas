@@ -1,0 +1,59 @@
+
+<div>
+    <h2><span>Request</span> {{vm.request.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Request Amount</span></dt>
+        <dd>
+            <span>{{vm.request.requestAmount}}</span>
+        </dd>
+        <dt><span>Client Number</span></dt>
+        <dd>
+            <span>{{vm.request.clientNumber}}</span>
+        </dd>
+        <dt><span>Annexed Number</span></dt>
+        <dd>
+            <span>{{vm.request.annexedNumber}}</span>
+        </dd>
+        <dt><span>Client Name</span></dt>
+        <dd>
+            <span>{{vm.request.clientName}}</span>
+        </dd>
+        <dt><span>Request Status</span></dt>
+        <dd>
+            <span>{{vm.request.requestStatus}}</span>
+        </dd>
+        <dt><span>Status Requested</span></dt>
+        <dd>
+            <span>{{vm.request.statusRequested}}</span>
+        </dd>
+        <dt><span>Service Code</span></dt>
+        <dd>
+            <span>{{vm.request.serviceCode}}</span>
+        </dd>
+        <dt><span>Event Confirmation</span></dt>
+        <dd>
+            <span>{{vm.request.eventConfirmation}}</span>
+        </dd>
+        <dt><span>Next Try By</span></dt>
+        <dd>
+            <span>{{vm.request.nextTryBy | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Date Time</span></dt>
+        <dd>
+            <span>{{vm.request.dateTime | date:'mediumDate'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="request-detail.edit({id:vm.request.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

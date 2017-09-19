@@ -1,0 +1,47 @@
+package com.sigetel.web.soap;
+
+
+import com.sigetel.web.soap.security.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.xml.ws.RequestWrapper;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Created by mumarm45 on 09/09/2017.
+ */
+@Service
+@javax.jws.WebService(serviceName = "SoapService", portName = "SoapRequestPort",
+    targetNamespace = "http://service.ws.sample/",
+    endpointInterface = "com.sigetel.web.soap.SoapService")
+public class SoapServiceImpl implements SoapService {
+    @Autowired
+    private AuthService authService;
+
+    @RequestWrapper(localName = "requestParams", targetNamespace = "http://service.ws.sample/", className = " com.web.sigel.ws.soap.RequestParams")
+
+    public ReponseObject requestSoap(RequestParams requestParams) {
+
+        ReponseObject reponseObject = new ReponseObject();
+        try {
+            Boolean tokenVerified = authService.checkLogin(requestParams.getToken());
+
+            reponseObject.setTokenVerified(tokenVerified);
+           if(!tokenVerified){
+             throw new Exception("Token is not available or expired");
+           }
+
+            Map newMmap = new HashMap<String, String>();
+            newMmap.put("ResponseCode", "200");
+            reponseObject.setMapObject(newMmap);
+
+            return reponseObject;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+    }
+}

@@ -1,0 +1,74 @@
+<div>
+    <h2>Requests</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="request.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Request
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Request Amount</span></th>
+                    <th><span>Client Number</span></th>
+                    <th><span>Annexed Number</span></th>
+                    <th><span>Client Name</span></th>
+                    <th><span>Request Status</span></th>
+                    <th><span>Status Requested</span></th>
+                    <th><span>Service Code</span></th>
+                    <th><span>Event Confirmation</span></th>
+                    <th><span>Next Try By</span></th>
+                    <th><span>Date Time</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="request in vm.requests track by request.id">
+                    <td><a ui-sref="request-detail({id:request.id})">{{request.id}}</a></td>
+                    <td>{{request.requestAmount}}</td>
+                    <td>{{request.clientNumber}}</td>
+                    <td>{{request.annexedNumber}}</td>
+                    <td>{{request.clientName}}</td>
+                    <td>{{request.requestStatus}}</td>
+                    <td>{{request.statusRequested}}</td>
+                    <td>{{request.serviceCode}}</td>
+                    <td>{{request.eventConfirmation}}</td>
+                        <td>{{request.nextTryBy | date:'mediumDate'}}</td>
+                        <td>{{request.dateTime | date:'mediumDate'}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="request-detail({id:request.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="request.edit({id:request.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="request.delete({id:request.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

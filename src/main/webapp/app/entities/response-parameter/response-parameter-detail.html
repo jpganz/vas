@@ -1,0 +1,43 @@
+
+<div>
+    <h2><span>Response Parameter</span> {{vm.responseParameter.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{vm.responseParameter.name}}</span>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+            <span>{{vm.responseParameter.type}}</span>
+        </dd>
+        <dt><span>Default Value</span></dt>
+        <dd>
+            <span>{{vm.responseParameter.default_value}}</span>
+        </dd>
+        <dt><span>Section</span></dt>
+        <dd>
+            <span>{{vm.responseParameter.section}}</span>
+        </dd>
+        <dt><span>Is Mandatory</span></dt>
+        <dd>
+            <span>{{vm.responseParameter.isMandatory}}</span>
+        </dd>
+        <dt><span>Provider Response Id</span></dt>
+        <dd>
+            <span>{{vm.responseParameter.providerResponseId}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="response-parameter-detail.edit({id:vm.responseParameter.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

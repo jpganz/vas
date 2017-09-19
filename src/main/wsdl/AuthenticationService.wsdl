@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="AuthenticationService" targetNamespace="http://authservices.ws.gt.tigo.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N3="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:WL5G3N2="http://authservices.ws.gt.tigo.com/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://www.w3.org/2001/XMLSchema">
+<wsp:Policy wsu:Id="wss_username_token_service_policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+<wsp:Policy>
+<sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+<wsp:Policy>
+<sp:WssUsernameToken10/>
+</wsp:Policy>
+</sp:UsernameToken>
+</wsp:Policy>
+</sp:SupportingTokens>
+</wsp:Policy>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://authservices.ws.gt.tigo.com/" version="1.0" xmlns:WL5G3N4="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://authservices.ws.gt.tigo.com/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="userInformationResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="alias" type="xs:string"/>
+                    <xsd:element minOccurs="0" name="bussinessPhone" type="xs:string"/>
+                    <xsd:element minOccurs="0" name="department" type="xs:string"/>
+                    <xsd:element minOccurs="0" name="email" type="xs:string"/>
+                    <xsd:element minOccurs="0" name="errorMessage" type="xs:string"/>
+                    <xsd:element minOccurs="0" name="firt" type="xs:string"/>
+                    <xsd:element minOccurs="0" name="groups" type="tns:userInformationGroups"/>
+                    <xsd:element minOccurs="0" name="last" type="xs:string"/>
+                    <xsd:element minOccurs="0" name="mobilePhone" type="xs:string"/>
+                    <xsd:element minOccurs="0" name="title" type="xs:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="userInformationGroups">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="group" nillable="true" type="xs:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="requestUserInfo">
+        <wsdl:part name="ldapId" type="WL5G3N1:int"/>
+        <wsdl:part name="user" type="WL5G3N1:string"/>
+        <wsdl:part name="password" type="WL5G3N1:string"/>
+    </wsdl:message>
+    <wsdl:message name="requestUserInfoResponse">
+        <wsdl:part name="userInfo" type="WL5G3N2:userInformationResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="AuthService">
+        <wsdl:operation name="requestUserInfo">
+            <wsdl:input name="requestUserInfo" message="WL5G3N2:requestUserInfo"/>
+            <wsdl:output name="requestUserInfoResponse" message="WL5G3N2:requestUserInfoResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AuthenticationServiceSoapBinding" type="WL5G3N2:AuthService">
+        <WL5G3N3:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsp:PolicyReference URI="#wss_username_token_service_policy" wsdl:required="false" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+        <wsdl:operation name="requestUserInfo">
+            <WL5G3N3:operation style="rpc"/>
+            <wsdl:input name="requestUserInfo">
+                <WL5G3N3:body use="literal" namespace="http://authservices.ws.gt.tigo.com/"/>
+            </wsdl:input>
+            <wsdl:output name="requestUserInfoResponse">
+                <WL5G3N3:body use="literal" namespace="http://authservices.ws.gt.tigo.com/"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="AuthenticationServiceSoapBindingQSService">
+        <wsdl:port name="AuthenticationServiceSoapBindingQSPort" binding="WL5G3N2:AuthenticationServiceSoapBinding">
+            <WL5G3N3:address location="http://172.30.13.44:8011/DTHWeb/AuthenticationService/V1"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

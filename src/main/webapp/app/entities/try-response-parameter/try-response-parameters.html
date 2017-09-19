@@ -1,0 +1,60 @@
+<div>
+    <h2>Try Response Parameters</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="try-response-parameter.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Try Response Parameter
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Value</span></th>
+                    <th><span>Request Try Id</span></th>
+                    <th><span>Response Parameter Id</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="tryResponseParameter in vm.tryResponseParameters track by tryResponseParameter.id">
+                    <td><a ui-sref="try-response-parameter-detail({id:tryResponseParameter.id})">{{tryResponseParameter.id}}</a></td>
+                    <td>{{tryResponseParameter.value}}</td>
+                    <td>{{tryResponseParameter.requestTryId}}</td>
+                    <td>{{tryResponseParameter.responseParameterId}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="try-response-parameter-detail({id:tryResponseParameter.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="try-response-parameter.edit({id:tryResponseParameter.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="try-response-parameter.delete({id:tryResponseParameter.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

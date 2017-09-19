@@ -1,0 +1,51 @@
+
+<div>
+    <h2><span>Provider Command</span> {{vm.providerCommand.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Endpoint Url</span></dt>
+        <dd>
+            <span>{{vm.providerCommand.endpointUrl}}</span>
+        </dd>
+        <dt><span>Code</span></dt>
+        <dd>
+            <span>{{vm.providerCommand.code}}</span>
+        </dd>
+        <dt><span>Retry Limit</span></dt>
+        <dd>
+            <span>{{vm.providerCommand.retryLimit}}</span>
+        </dd>
+        <dt><span>Retry Interval</span></dt>
+        <dd>
+            <span>{{vm.providerCommand.retryInterval}}</span>
+        </dd>
+        <dt><span>Provider Id</span></dt>
+        <dd>
+            <span>{{vm.providerCommand.providerId}}</span>
+        </dd>
+        <dt><span>Command Id</span></dt>
+        <dd>
+            <span>{{vm.providerCommand.commandId}}</span>
+        </dd>
+        <dt><span>Communication Standard Id</span></dt>
+        <dd>
+            <span>{{vm.providerCommand.communicationStandardId}}</span>
+        </dd>
+        <dt><span>Service Security Id</span></dt>
+        <dd>
+            <span>{{vm.providerCommand.serviceSecurityId}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="provider-command-detail.edit({id:vm.providerCommand.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

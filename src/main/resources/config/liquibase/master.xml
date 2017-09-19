@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170710093719_added_entity_Request.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170710094545_added_entity_RequestParameter.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170710095354_added_entity_Provider.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170710095558_added_entity_Command.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170710100424_added_entity_ProviderCommand.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713112924_added_entity_RequestTry.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713113136_added_entity_TryParameter.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713115155_added_entity_ProviderResponse.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713115431_added_entity_TryResponseParameter.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713120238_added_entity_ResponseParameter.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713120412_added_entity_CommunicationStandard.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713120620_added_entity_ServiceSecurity.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713121354_added_entity_ProviderCommandRequest.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170726112754_added_entity_SysOptions.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="classpath:config/liquibase/changelog/20170710100424_added_entity_constraints_ProviderCommand.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+</databaseChangeLog>
