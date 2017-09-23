@@ -1,6 +1,5 @@
 package com.sigetel.web.soap;
 
-
 import com.sigetel.web.soap.security.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,9 +8,6 @@ import javax.xml.ws.RequestWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by mumarm45 on 09/09/2017.
- */
 @Service
 @javax.jws.WebService(serviceName = "SoapService", portName = "SoapRequestPort",
     targetNamespace = "http://service.ws.sample/",
@@ -20,7 +16,7 @@ public class SoapServiceImpl implements SoapService {
     @Autowired
     private AuthService authService;
 
-    @RequestWrapper(localName = "requestParams", targetNamespace = "http://service.ws.sample/", className = " com.web.sigel.ws.soap.RequestParams")
+    @RequestWrapper(localName = "requestParams", targetNamespace = "http://service.ws.sample/", className = " com.sigetel.web.soap.RequestParams")
 
     public ReponseObject requestSoap(RequestParams requestParams) {
 

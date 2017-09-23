@@ -23,7 +23,7 @@ public class GenerateLoginToken implements  GenerateToken {
 
 
     @Override
-    @RequestWrapper(localName = "loginRequest", targetNamespace = "http://service.ws.samp", className = "com.web.sigel.ws.soap.security.LoginRequest")
+    @RequestWrapper(localName = "loginRequest", targetNamespace = "http://service.ws.samp", className = "com.sigetel.web.soap.security.LoginRequest")
     public LoginResponse generateToken(LoginRequest loginRequest) {
         LoginResponse loginResponse = new LoginResponse();
          String token  = authService.createAuthToken(loginRequest);

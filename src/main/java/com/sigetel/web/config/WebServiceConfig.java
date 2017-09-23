@@ -1,6 +1,5 @@
 package com.sigetel.web.config;
 
-
 import com.sigetel.web.soap.SoapService;
 import com.sigetel.web.soap.webServices.GenerateLoginToken;
 import org.apache.cxf.Bus;

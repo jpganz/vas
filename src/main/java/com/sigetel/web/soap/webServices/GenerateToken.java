@@ -16,8 +16,8 @@ import javax.xml.ws.ResponseWrapper;
 public interface GenerateToken {
 
     @WebResult(name = "return", targetNamespace = "loginRequest")
-    @RequestWrapper(targetNamespace = "http://service.ws.samp", className = "com.web.sigel.ws.soap.security.LoginRequest")
+    @RequestWrapper(targetNamespace = "http://service.ws.samp", className = "com.sigetel.web.soap.security.LoginRequest")
     @WebMethod(operationName = "getGenerateToken")
-    @ResponseWrapper(targetNamespace = "http://service.ws.samp", className = "com.web.sigel.ws.soap.security.LoginResponse")
+    @ResponseWrapper(targetNamespace = "http://service.ws.samp", className = "com.sigetel.web.soap.security.LoginResponse")
     public LoginResponse generateToken(@WebParam(name = "loginRequest", targetNamespace = "", mode = WebParam.Mode.IN) LoginRequest loginRequest);
 }
