@@ -194,4 +194,19 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A user is deleted with identifier " + login, login)).build();
     }
+
+    /**
+     * GET  /users : get all users.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and with body all users
+     */
+    @GetMapping("/validateUser")
+    @Timed
+    public Boolean isValidUser(@ApiParam String username, @ApiParam String password) {
+        // invoke ldap
+        //check for oauth tables, if not updated update :)
+        return true;
+    }
+
 }

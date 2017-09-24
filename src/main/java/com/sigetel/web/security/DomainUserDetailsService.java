@@ -38,8 +38,8 @@ public class DomainUserDetailsService implements UserDetailsService {
         String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
         Optional<User> userFromDatabase = userRepository.findOneWithAuthoritiesByLogin(lowercaseLogin);
         return userFromDatabase.map(user -> {
-            //if (!isUserValid(userFromDatabase.get().getEmail(), userFromDatabase.get().getPassword()) || !user.getActivated()) {
-            if (!user.getActivated()) {
+            if (!isUserValid(userFromDatabase.get().getEmail(), userFromDatabase.get().getPassword()) && !user.getActivated()) {
+            //if (!user.getActivated()) {
                     throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
             }
             List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()

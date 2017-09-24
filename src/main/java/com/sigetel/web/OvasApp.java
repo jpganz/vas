@@ -24,8 +24,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
-
-@ComponentScan
 //@EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 @SpringBootApplication
@@ -40,11 +38,11 @@ public class OvasApp {
     }
 
     /**
-     * Initializes ovas.
+     * Initializes soap.
      * <p>
      * Spring profiles can be configured with a program arguments --spring.profiles.active=your-active-profile
      * <p>
-     * You can find more information on how profiles work with JHipster on <a href="http://jhipster.github.io/profiles/">http://jhipster.github.io/profiles/</a>.
+     * You can find more information on how profiles work with JHipster on <a href="https://jhipster.github.io/profiles/">https://jhipster.github.io/profiles/</a>.
      */
     @PostConstruct
     public void initApplication() {
@@ -54,7 +52,7 @@ public class OvasApp {
                 "with both the 'dev' and 'prod' profiles at the same time.");
         }
         if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_CLOUD)) {
-            log.error("You have misconfigured your application! It should not" +
+            log.error("You have misconfigured your application! It should not " +
                 "run with both the 'dev' and 'cloud' profiles at the same time.");
         }
     }
@@ -73,8 +71,6 @@ public class OvasApp {
         if (env.getProperty("server.ssl.key-store") != null) {
             protocol = "https";
         }
-        String url = "http://localhost:8281/ovas-soap";
-        Endpoint.publish(url, new OvasPublic());
         log.info("\n----------------------------------------------------------\n\t" +
                 "Application '{}' is running! Access URLs:\n\t" +
                 "Local: \t\t{}://localhost:{}\n\t" +
@@ -88,4 +84,7 @@ public class OvasApp {
             env.getProperty("server.port"),
             env.getActiveProfiles());
     }
+
+
+
 }
