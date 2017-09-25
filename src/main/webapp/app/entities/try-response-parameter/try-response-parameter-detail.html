@@ -8,13 +8,13 @@
         <dd>
             <span>{{vm.tryResponseParameter.value}}</span>
         </dd>
-        <dt><span>Request Try Id</span></dt>
+        <dt><span>Response Parameter</span></dt>
         <dd>
-            <span>{{vm.tryResponseParameter.requestTryId}}</span>
+            <a ui-sref="response-parameter-detail({id:vm.tryResponseParameter.responseParameter.id})">{{vm.tryResponseParameter.responseParameter.id}}</a>
         </dd>
-        <dt><span>Response Parameter Id</span></dt>
+        <dt><span>Request Try</span></dt>
         <dd>
-            <span>{{vm.tryResponseParameter.responseParameterId}}</span>
+            <a ui-sref="request-try-detail({id:vm.tryResponseParameter.requestTry.id})">{{vm.tryResponseParameter.requestTry.id}}</a>
         </dd>
     </dl>
 

@@ -20,21 +20,21 @@
         <dd>
             <span>{{vm.providerCommand.retryInterval}}</span>
         </dd>
-        <dt><span>Provider Id</span></dt>
-        <dd>
-            <span>{{vm.providerCommand.providerId}}</span>
-        </dd>
-        <dt><span>Command Id</span></dt>
-        <dd>
-            <span>{{vm.providerCommand.commandId}}</span>
-        </dd>
-        <dt><span>Communication Standard Id</span></dt>
-        <dd>
-            <span>{{vm.providerCommand.communicationStandardId}}</span>
-        </dd>
         <dt><span>Service Security Id</span></dt>
         <dd>
             <span>{{vm.providerCommand.serviceSecurityId}}</span>
+        </dd>
+        <dt><span>Provider</span></dt>
+        <dd>
+            <a ui-sref="provider-detail({id:vm.providerCommand.provider.id})">{{vm.providerCommand.provider.id}}</a>
+        </dd>
+        <dt><span>Communication Standard</span></dt>
+        <dd>
+            <a ui-sref="communication-standard-detail({id:vm.providerCommand.communicationStandard.id})">{{vm.providerCommand.communicationStandard.id}}</a>
+        </dd>
+        <dt><span>Command</span></dt>
+        <dd>
+            <a ui-sref="command-detail({id:vm.providerCommand.command.id})">{{vm.providerCommand.command.id}}</a>
         </dd>
     </dl>
 

@@ -1,9 +1,12 @@
 package com.sigetel.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -32,9 +35,13 @@ public class ProviderResponse implements Serializable {
     @Column(name = "jhi_type", nullable = false)
     private String type;
 
-    @NotNull
-    @Column(name = "provider_command_id", nullable = false)
-    private Long providerCommandId;
+    @ManyToOne
+    @JsonIgnore
+    private ProviderCommand providerCommand;
+
+    @OneToMany(mappedBy = "providerResponse", fetch = FetchType.EAGER)
+    //@JsonIgnore
+    private Set<ResponseParameter> responseParameters = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -96,17 +103,42 @@ public class ProviderResponse implements Serializable {
         this.type = type;
     }
 
-    public Long getProviderCommandId() {
-        return providerCommandId;
+    public ProviderCommand getProviderCommand() {
+        return providerCommand;
     }
 
-    public ProviderResponse providerCommandId(Long providerCommandId) {
-        this.providerCommandId = providerCommandId;
+    public ProviderResponse providerCommand(ProviderCommand providerCommand) {
+        this.providerCommand = providerCommand;
         return this;
     }
 
-    public void setProviderCommandId(Long providerCommandId) {
-        this.providerCommandId = providerCommandId;
+    public void setProviderCommand(ProviderCommand providerCommand) {
+        this.providerCommand = providerCommand;
+    }
+
+    public Set<ResponseParameter> getResponseParameters() {
+        return responseParameters;
+    }
+
+    public ProviderResponse responseParameters(Set<ResponseParameter> responseParameters) {
+        this.responseParameters = responseParameters;
+        return this;
+    }
+
+    public ProviderResponse addResponseParameter(ResponseParameter responseParameter) {
+        this.responseParameters.add(responseParameter);
+        responseParameter.setProviderResponse(this);
+        return this;
+    }
+
+    public ProviderResponse removeResponseParameter(ResponseParameter responseParameter) {
+        this.responseParameters.remove(responseParameter);
+        responseParameter.setProviderResponse(null);
+        return this;
+    }
+
+    public void setResponseParameters(Set<ResponseParameter> responseParameters) {
+        this.responseParameters = responseParameters;
     }
 
     @Override
@@ -137,7 +169,6 @@ public class ProviderResponse implements Serializable {
             ", emailAddressToNotify='" + getEmailAddressToNotify() + "'" +
             ", addToRetry='" + isAddToRetry() + "'" +
             ", type='" + getType() + "'" +
-            ", providerCommandId='" + getProviderCommandId() + "'" +
             "}";
     }
 }

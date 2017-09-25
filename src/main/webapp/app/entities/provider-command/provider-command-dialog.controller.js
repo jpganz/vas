@@ -5,14 +5,19 @@
         .module('ovasApp')
         .controller('ProviderCommandDialogController', ProviderCommandDialogController);
 
-    ProviderCommandDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'ProviderCommand'];
+    ProviderCommandDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'ProviderCommand', 'Provider', 'CommunicationStandard', 'Command', 'ProviderResponse', 'RequestParameter'];
 
-    function ProviderCommandDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, ProviderCommand) {
+    function ProviderCommandDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, ProviderCommand, Provider, CommunicationStandard, Command, ProviderResponse, RequestParameter) {
         var vm = this;
 
         vm.providerCommand = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.providers = Provider.query();
+        vm.communicationstandards = CommunicationStandard.query();
+        vm.commands = Command.query();
+        vm.providerresponses = ProviderResponse.query();
+        vm.requestparameters = RequestParameter.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

@@ -23,10 +23,10 @@
                     <th><span>Code</span></th>
                     <th><span>Retry Limit</span></th>
                     <th><span>Retry Interval</span></th>
-                    <th><span>Provider Id</span></th>
-                    <th><span>Command Id</span></th>
-                    <th><span>Communication Standard Id</span></th>
                     <th><span>Service Security Id</span></th>
+                    <th><span>Provider</span></th>
+                    <th><span>Communication Standard</span></th>
+                    <th><span>Command</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -37,10 +37,16 @@
                     <td>{{providerCommand.code}}</td>
                     <td>{{providerCommand.retryLimit}}</td>
                     <td>{{providerCommand.retryInterval}}</td>
-                    <td>{{providerCommand.providerId}}</td>
-                    <td>{{providerCommand.commandId}}</td>
-                    <td>{{providerCommand.communicationStandardId}}</td>
                     <td>{{providerCommand.serviceSecurityId}}</td>
+                    <td>
+                        <a ui-sref="provider-detail({id:providerCommand.provider.id})">{{providerCommand.provider.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="communication-standard-detail({id:providerCommand.communicationStandard.id})">{{providerCommand.communicationStandard.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="command-detail({id:providerCommand.command.id})">{{providerCommand.command.id}}</a>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

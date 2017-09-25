@@ -41,12 +41,6 @@ public class TryResponseParameterResourceIntTest {
     private static final String DEFAULT_VALUE = "AAAAAAAAAA";
     private static final String UPDATED_VALUE = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_REQUEST_TRY_ID = 1L;
-    private static final Long UPDATED_REQUEST_TRY_ID = 2L;
-
-    private static final Long DEFAULT_RESPONSE_PARAMETER_ID = 1L;
-    private static final Long UPDATED_RESPONSE_PARAMETER_ID = 2L;
-
     @Autowired
     private TryResponseParameterRepository tryResponseParameterRepository;
 
@@ -87,9 +81,7 @@ public class TryResponseParameterResourceIntTest {
      */
     public static TryResponseParameter createEntity(EntityManager em) {
         TryResponseParameter tryResponseParameter = new TryResponseParameter()
-            .value(DEFAULT_VALUE)
-            .requestTryId(DEFAULT_REQUEST_TRY_ID)
-            .responseParameterId(DEFAULT_RESPONSE_PARAMETER_ID);
+            .value(DEFAULT_VALUE);
         return tryResponseParameter;
     }
 
@@ -114,8 +106,6 @@ public class TryResponseParameterResourceIntTest {
         assertThat(tryResponseParameterList).hasSize(databaseSizeBeforeCreate + 1);
         TryResponseParameter testTryResponseParameter = tryResponseParameterList.get(tryResponseParameterList.size() - 1);
         assertThat(testTryResponseParameter.getValue()).isEqualTo(DEFAULT_VALUE);
-        assertThat(testTryResponseParameter.getRequestTryId()).isEqualTo(DEFAULT_REQUEST_TRY_ID);
-        assertThat(testTryResponseParameter.getResponseParameterId()).isEqualTo(DEFAULT_RESPONSE_PARAMETER_ID);
     }
 
     @Test
@@ -139,42 +129,6 @@ public class TryResponseParameterResourceIntTest {
 
     @Test
     @Transactional
-    public void checkRequestTryIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = tryResponseParameterRepository.findAll().size();
-        // set the field null
-        tryResponseParameter.setRequestTryId(null);
-
-        // Create the TryResponseParameter, which fails.
-
-        restTryResponseParameterMockMvc.perform(post("/api/try-response-parameters")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(tryResponseParameter)))
-            .andExpect(status().isBadRequest());
-
-        List<TryResponseParameter> tryResponseParameterList = tryResponseParameterRepository.findAll();
-        assertThat(tryResponseParameterList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkResponseParameterIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = tryResponseParameterRepository.findAll().size();
-        // set the field null
-        tryResponseParameter.setResponseParameterId(null);
-
-        // Create the TryResponseParameter, which fails.
-
-        restTryResponseParameterMockMvc.perform(post("/api/try-response-parameters")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(tryResponseParameter)))
-            .andExpect(status().isBadRequest());
-
-        List<TryResponseParameter> tryResponseParameterList = tryResponseParameterRepository.findAll();
-        assertThat(tryResponseParameterList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllTryResponseParameters() throws Exception {
         // Initialize the database
         tryResponseParameterRepository.saveAndFlush(tryResponseParameter);
@@ -184,9 +138,7 @@ public class TryResponseParameterResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(tryResponseParameter.getId().intValue())))
-            .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE.toString())))
-            .andExpect(jsonPath("$.[*].requestTryId").value(hasItem(DEFAULT_REQUEST_TRY_ID.intValue())))
-            .andExpect(jsonPath("$.[*].responseParameterId").value(hasItem(DEFAULT_RESPONSE_PARAMETER_ID.intValue())));
+            .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE.toString())));
     }
 
     @Test
@@ -200,9 +152,7 @@ public class TryResponseParameterResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(tryResponseParameter.getId().intValue()))
-            .andExpect(jsonPath("$.value").value(DEFAULT_VALUE.toString()))
-            .andExpect(jsonPath("$.requestTryId").value(DEFAULT_REQUEST_TRY_ID.intValue()))
-            .andExpect(jsonPath("$.responseParameterId").value(DEFAULT_RESPONSE_PARAMETER_ID.intValue()));
+            .andExpect(jsonPath("$.value").value(DEFAULT_VALUE.toString()));
     }
 
     @Test
@@ -224,9 +174,7 @@ public class TryResponseParameterResourceIntTest {
         // Update the tryResponseParameter
         TryResponseParameter updatedTryResponseParameter = tryResponseParameterRepository.findOne(tryResponseParameter.getId());
         updatedTryResponseParameter
-            .value(UPDATED_VALUE)
-            .requestTryId(UPDATED_REQUEST_TRY_ID)
-            .responseParameterId(UPDATED_RESPONSE_PARAMETER_ID);
+            .value(UPDATED_VALUE);
 
         restTryResponseParameterMockMvc.perform(put("/api/try-response-parameters")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -238,8 +186,6 @@ public class TryResponseParameterResourceIntTest {
         assertThat(tryResponseParameterList).hasSize(databaseSizeBeforeUpdate);
         TryResponseParameter testTryResponseParameter = tryResponseParameterList.get(tryResponseParameterList.size() - 1);
         assertThat(testTryResponseParameter.getValue()).isEqualTo(UPDATED_VALUE);
-        assertThat(testTryResponseParameter.getRequestTryId()).isEqualTo(UPDATED_REQUEST_TRY_ID);
-        assertThat(testTryResponseParameter.getResponseParameterId()).isEqualTo(UPDATED_RESPONSE_PARAMETER_ID);
     }
 
     @Test

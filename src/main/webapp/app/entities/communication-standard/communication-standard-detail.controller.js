@@ -5,9 +5,9 @@
         .module('ovasApp')
         .controller('CommunicationStandardDetailController', CommunicationStandardDetailController);
 
-    CommunicationStandardDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'CommunicationStandard'];
+    CommunicationStandardDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'CommunicationStandard', 'ProviderCommand'];
 
-    function CommunicationStandardDetailController($scope, $rootScope, $stateParams, previousState, entity, CommunicationStandard) {
+    function CommunicationStandardDetailController($scope, $rootScope, $stateParams, previousState, entity, CommunicationStandard, ProviderCommand) {
         var vm = this;
 
         vm.communicationStandard = entity;

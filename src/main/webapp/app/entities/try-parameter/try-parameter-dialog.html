@@ -25,39 +25,19 @@
                 </p>
             </div>
         </div>
-        <div class="form-group">
-            <label class="control-label" for="field_requestId">Request Id</label>
-            <input type="number" class="form-control" name="requestId" id="field_requestId"
-                    ng-model="vm.tryParameter.requestId"
-                    required/>
-            <div ng-show="editForm.requestId.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.requestId.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.requestId.$error.number">
-                    This field should be a number.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_requestParameterId">Request Parameter Id</label>
-            <input type="number" class="form-control" name="requestParameterId" id="field_requestParameterId"
-                    ng-model="vm.tryParameter.requestParameterId"
-                    required/>
-            <div ng-show="editForm.requestParameterId.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.requestParameterId.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.requestParameterId.$error.number">
-                    This field should be a number.
-                </p>
-            </div>
-        </div>
 
+        <div class="form-group">
+            <label for="field_request">Request</label>
+            <select class="form-control" id="field_request" name="request" ng-model="vm.tryParameter.request" ng-options="request as request.id for request in vm.requests track by request.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_requestParameter">Request Parameter</label>
+            <select class="form-control" id="field_requestParameter" name="requestParameter" ng-model="vm.tryParameter.requestParameter" ng-options="requestParameter as requestParameter.id for requestParameter in vm.requestparameters track by requestParameter.id">
+                <option value=""></option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

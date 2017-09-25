@@ -1,10 +1,11 @@
 package com.sigetel.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A Provider.
@@ -16,19 +17,24 @@ public class Provider implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
+    @NotNull
     @Column(name = "description", nullable = false)
     private String description;
 
     @NotNull
     @Column(name = "code", nullable = false)
-    private String code;
+    private Long code;
+
+    @OneToMany(mappedBy = "provider", fetch = FetchType.EAGER)
+    //@JsonIgnore
+    private List<ProviderCommand> providerCommands = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -64,17 +70,42 @@ public class Provider implements Serializable {
         this.description = description;
     }
 
-    public String getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public Provider code(String code) {
+    public Provider code(Long code) {
         this.code = code;
         return this;
     }
 
-    public void setCode(String code) {
+    public void setCode(Long code) {
         this.code = code;
+    }
+
+    public List<ProviderCommand> getProviderCommands() {
+        return providerCommands;
+    }
+
+    public Provider providerCommands(List<ProviderCommand> providerCommands) {
+        this.providerCommands = providerCommands;
+        return this;
+    }
+
+    public Provider addProviderCommand(ProviderCommand providerCommand) {
+        this.providerCommands.add(providerCommand);
+        providerCommand.setProvider(this);
+        return this;
+    }
+
+    public Provider removeProviderCommand(ProviderCommand providerCommand) {
+        this.providerCommands.remove(providerCommand);
+        providerCommand.setProvider(null);
+        return this;
+    }
+
+    public void setProviderCommands(List<ProviderCommand> providerCommands) {
+        this.providerCommands = providerCommands;
     }
 
     @Override

@@ -50,15 +50,6 @@ public class ProviderCommandResourceIntTest {
     private static final Long DEFAULT_RETRY_INTERVAL = 1L;
     private static final Long UPDATED_RETRY_INTERVAL = 2L;
 
-    private static final Long DEFAULT_PROVIDER_ID = 1L;
-    private static final Long UPDATED_PROVIDER_ID = 2L;
-
-    private static final Long DEFAULT_COMMAND_ID = 1L;
-    private static final Long UPDATED_COMMAND_ID = 2L;
-
-    private static final Long DEFAULT_COMMUNICATION_STANDARD_ID = 1L;
-    private static final Long UPDATED_COMMUNICATION_STANDARD_ID = 2L;
-
     private static final Long DEFAULT_SERVICE_SECURITY_ID = 1L;
     private static final Long UPDATED_SERVICE_SECURITY_ID = 2L;
 
@@ -106,9 +97,6 @@ public class ProviderCommandResourceIntTest {
             .code(DEFAULT_CODE)
             .retryLimit(DEFAULT_RETRY_LIMIT)
             .retryInterval(DEFAULT_RETRY_INTERVAL)
-            .providerId(DEFAULT_PROVIDER_ID)
-            .commandId(DEFAULT_COMMAND_ID)
-            .communicationStandardId(DEFAULT_COMMUNICATION_STANDARD_ID)
             .serviceSecurityId(DEFAULT_SERVICE_SECURITY_ID);
         return providerCommand;
     }
@@ -137,9 +125,6 @@ public class ProviderCommandResourceIntTest {
         assertThat(testProviderCommand.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testProviderCommand.getRetryLimit()).isEqualTo(DEFAULT_RETRY_LIMIT);
         assertThat(testProviderCommand.getRetryInterval()).isEqualTo(DEFAULT_RETRY_INTERVAL);
-        assertThat(testProviderCommand.getProviderId()).isEqualTo(DEFAULT_PROVIDER_ID);
-        assertThat(testProviderCommand.getCommandId()).isEqualTo(DEFAULT_COMMAND_ID);
-        assertThat(testProviderCommand.getCommunicationStandardId()).isEqualTo(DEFAULT_COMMUNICATION_STANDARD_ID);
         assertThat(testProviderCommand.getServiceSecurityId()).isEqualTo(DEFAULT_SERVICE_SECURITY_ID);
     }
 
@@ -218,60 +203,6 @@ public class ProviderCommandResourceIntTest {
 
     @Test
     @Transactional
-    public void checkProviderIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = providerCommandRepository.findAll().size();
-        // set the field null
-        providerCommand.setProviderId(null);
-
-        // Create the ProviderCommand, which fails.
-
-        restProviderCommandMockMvc.perform(post("/api/provider-commands")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(providerCommand)))
-            .andExpect(status().isBadRequest());
-
-        List<ProviderCommand> providerCommandList = providerCommandRepository.findAll();
-        assertThat(providerCommandList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCommandIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = providerCommandRepository.findAll().size();
-        // set the field null
-        providerCommand.setCommandId(null);
-
-        // Create the ProviderCommand, which fails.
-
-        restProviderCommandMockMvc.perform(post("/api/provider-commands")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(providerCommand)))
-            .andExpect(status().isBadRequest());
-
-        List<ProviderCommand> providerCommandList = providerCommandRepository.findAll();
-        assertThat(providerCommandList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCommunicationStandardIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = providerCommandRepository.findAll().size();
-        // set the field null
-        providerCommand.setCommunicationStandardId(null);
-
-        // Create the ProviderCommand, which fails.
-
-        restProviderCommandMockMvc.perform(post("/api/provider-commands")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(providerCommand)))
-            .andExpect(status().isBadRequest());
-
-        List<ProviderCommand> providerCommandList = providerCommandRepository.findAll();
-        assertThat(providerCommandList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkServiceSecurityIdIsRequired() throws Exception {
         int databaseSizeBeforeTest = providerCommandRepository.findAll().size();
         // set the field null
@@ -303,9 +234,6 @@ public class ProviderCommandResourceIntTest {
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].retryLimit").value(hasItem(DEFAULT_RETRY_LIMIT.intValue())))
             .andExpect(jsonPath("$.[*].retryInterval").value(hasItem(DEFAULT_RETRY_INTERVAL.intValue())))
-            .andExpect(jsonPath("$.[*].providerId").value(hasItem(DEFAULT_PROVIDER_ID.intValue())))
-            .andExpect(jsonPath("$.[*].commandId").value(hasItem(DEFAULT_COMMAND_ID.intValue())))
-            .andExpect(jsonPath("$.[*].communicationStandardId").value(hasItem(DEFAULT_COMMUNICATION_STANDARD_ID.intValue())))
             .andExpect(jsonPath("$.[*].serviceSecurityId").value(hasItem(DEFAULT_SERVICE_SECURITY_ID.intValue())));
     }
 
@@ -324,9 +252,6 @@ public class ProviderCommandResourceIntTest {
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.retryLimit").value(DEFAULT_RETRY_LIMIT.intValue()))
             .andExpect(jsonPath("$.retryInterval").value(DEFAULT_RETRY_INTERVAL.intValue()))
-            .andExpect(jsonPath("$.providerId").value(DEFAULT_PROVIDER_ID.intValue()))
-            .andExpect(jsonPath("$.commandId").value(DEFAULT_COMMAND_ID.intValue()))
-            .andExpect(jsonPath("$.communicationStandardId").value(DEFAULT_COMMUNICATION_STANDARD_ID.intValue()))
             .andExpect(jsonPath("$.serviceSecurityId").value(DEFAULT_SERVICE_SECURITY_ID.intValue()));
     }
 
@@ -353,9 +278,6 @@ public class ProviderCommandResourceIntTest {
             .code(UPDATED_CODE)
             .retryLimit(UPDATED_RETRY_LIMIT)
             .retryInterval(UPDATED_RETRY_INTERVAL)
-            .providerId(UPDATED_PROVIDER_ID)
-            .commandId(UPDATED_COMMAND_ID)
-            .communicationStandardId(UPDATED_COMMUNICATION_STANDARD_ID)
             .serviceSecurityId(UPDATED_SERVICE_SECURITY_ID);
 
         restProviderCommandMockMvc.perform(put("/api/provider-commands")
@@ -371,9 +293,6 @@ public class ProviderCommandResourceIntTest {
         assertThat(testProviderCommand.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testProviderCommand.getRetryLimit()).isEqualTo(UPDATED_RETRY_LIMIT);
         assertThat(testProviderCommand.getRetryInterval()).isEqualTo(UPDATED_RETRY_INTERVAL);
-        assertThat(testProviderCommand.getProviderId()).isEqualTo(UPDATED_PROVIDER_ID);
-        assertThat(testProviderCommand.getCommandId()).isEqualTo(UPDATED_COMMAND_ID);
-        assertThat(testProviderCommand.getCommunicationStandardId()).isEqualTo(UPDATED_COMMUNICATION_STANDARD_ID);
         assertThat(testProviderCommand.getServiceSecurityId()).isEqualTo(UPDATED_SERVICE_SECURITY_ID);
     }
 

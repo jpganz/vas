@@ -1,5 +1,6 @@
 package com.sigetel.web.service.impl;
 
+import com.sigetel.web.domain.ProviderCommand;
 import com.sigetel.web.service.ProviderService;
 import com.sigetel.web.domain.Provider;
 import com.sigetel.web.repository.ProviderRepository;
@@ -59,7 +60,11 @@ public class ProviderServiceImpl implements ProviderService{
     @Transactional(readOnly = true)
     public Provider findOne(Long id) {
         log.debug("Request to get Provider : {}", id);
-        return providerRepository.findOne(id);
+        Provider provider = providerRepository.findOne(id);
+        for(ProviderCommand command:provider.getProviderCommands()){
+            command.getId();
+        }
+        return provider;
     }
 
     /**

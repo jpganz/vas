@@ -38,13 +38,13 @@ public class ResponseParameter implements Serializable {
     @Column(name = "is_mandatory")
     private Boolean isMandatory;
 
-    @NotNull
-    @Column(name = "provider_response_id", nullable = false)
-    private Long providerResponseId;
-
-    @OneToMany(mappedBy = "id")
+    @ManyToOne
     @JsonIgnore
-    private Set<ProviderResponse> providerResponses = new HashSet<>();
+    private ProviderResponse providerResponse;
+
+    @OneToMany(mappedBy = "responseParameter", fetch = FetchType.EAGER)
+    //@JsonIgnore
+    private Set<TryResponseParameter> tryResponseParameters = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -119,41 +119,42 @@ public class ResponseParameter implements Serializable {
         this.isMandatory = isMandatory;
     }
 
-    public Long getProviderResponseId() {
-        return providerResponseId;
+    public ProviderResponse getProviderResponse() {
+        return providerResponse;
     }
 
-    public ResponseParameter providerResponseId(Long providerResponseId) {
-        this.providerResponseId = providerResponseId;
+    public ResponseParameter providerResponse(ProviderResponse providerResponse) {
+        this.providerResponse = providerResponse;
         return this;
     }
 
-    public void setProviderResponseId(Long providerResponseId) {
-        this.providerResponseId = providerResponseId;
+    public void setProviderResponse(ProviderResponse providerResponse) {
+        this.providerResponse = providerResponse;
     }
 
-    public Set<ProviderResponse> getProviderResponses() {
-        return providerResponses;
+    public Set<TryResponseParameter> getTryResponseParameters() {
+        return tryResponseParameters;
     }
 
-    public ResponseParameter providerResponses(Set<ProviderResponse> providerResponses) {
-        this.providerResponses = providerResponses;
+    public ResponseParameter tryResponseParameters(Set<TryResponseParameter> tryResponseParameters) {
+        this.tryResponseParameters = tryResponseParameters;
         return this;
     }
 
-    public ResponseParameter addProviderResponse(ProviderResponse providerResponse) {
-        this.providerResponses.add(providerResponse);
+    public ResponseParameter addTryResponseParameter(TryResponseParameter tryResponseParameter) {
+        this.tryResponseParameters.add(tryResponseParameter);
+        tryResponseParameter.setResponseParameter(this);
         return this;
     }
 
-    public ResponseParameter removeProviderResponse(ProviderResponse providerResponse) {
-        this.providerResponses.remove(providerResponse);
-        providerResponse.setId(null);
+    public ResponseParameter removeTryResponseParameter(TryResponseParameter tryResponseParameter) {
+        this.tryResponseParameters.remove(tryResponseParameter);
+        tryResponseParameter.setResponseParameter(null);
         return this;
     }
 
-    public void setProviderResponses(Set<ProviderResponse> providerResponses) {
-        this.providerResponses = providerResponses;
+    public void setTryResponseParameters(Set<TryResponseParameter> tryResponseParameters) {
+        this.tryResponseParameters = tryResponseParameters;
     }
 
     @Override
@@ -185,7 +186,6 @@ public class ResponseParameter implements Serializable {
             ", default_value='" + getDefault_value() + "'" +
             ", section='" + getSection() + "'" +
             ", isMandatory='" + isIsMandatory() + "'" +
-            ", providerResponseId='" + getProviderResponseId() + "'" +
             "}";
     }
 }

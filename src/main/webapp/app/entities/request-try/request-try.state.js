@@ -96,7 +96,6 @@
                         entity: function () {
                             return {
                                 status: null,
-                                requestId: null,
                                 id: null
                             };
                         }

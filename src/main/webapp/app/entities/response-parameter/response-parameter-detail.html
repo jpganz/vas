@@ -24,9 +24,9 @@
         <dd>
             <span>{{vm.responseParameter.isMandatory}}</span>
         </dd>
-        <dt><span>Provider Response Id</span></dt>
+        <dt><span>Provider Response</span></dt>
         <dd>
-            <span>{{vm.responseParameter.providerResponseId}}</span>
+            <a ui-sref="provider-response-detail({id:vm.responseParameter.providerResponse.id})">{{vm.responseParameter.providerResponse.id}}</a>
         </dd>
     </dl>
 

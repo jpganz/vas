@@ -8,6 +8,18 @@
     -->
     <changeSet id="20170710100424-2" author="jhipster">
         
+        <addForeignKeyConstraint baseColumnNames="provider_id"
+                                 baseTableName="provider_command"
+                                 constraintName="fk_provider_command_provider_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="provider"/>
+
+        <addForeignKeyConstraint baseColumnNames="communication_standard_id"
+                                 baseTableName="provider_command"
+                                 constraintName="fk_provider_command_communication_standard_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="communication_standard"/>
+
         <addForeignKeyConstraint baseColumnNames="command_id"
                                  baseTableName="provider_command"
                                  constraintName="fk_provider_command_command_id"

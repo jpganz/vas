@@ -99,7 +99,6 @@
                                 type: null,
                                 defaultValue: null,
                                 section: null,
-                                providerCommandId: null,
                                 isMandatory: null,
                                 id: null
                             };

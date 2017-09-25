@@ -100,7 +100,6 @@
                                 default_value: null,
                                 section: null,
                                 isMandatory: null,
-                                providerResponseId: null,
                                 id: null
                             };
                         }

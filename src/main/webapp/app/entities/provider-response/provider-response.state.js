@@ -99,7 +99,6 @@
                                 emailAddressToNotify: null,
                                 addToRetry: null,
                                 type: null,
-                                providerCommandId: null,
                                 id: null
                             };
                         }

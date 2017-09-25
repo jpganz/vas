@@ -1,9 +1,11 @@
 package com.sigetel.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -22,9 +24,13 @@ public class RequestTry implements Serializable {
     @Column(name = "status")
     private Integer status;
 
-    @NotNull
-    @Column(name = "request_id", nullable = false)
-    private Long requestId;
+    @ManyToOne
+    @JsonIgnore
+    private Request request;
+
+    @OneToMany(mappedBy = "requestTry", fetch = FetchType.EAGER)
+    //@JsonIgnore
+    private Set<TryResponseParameter> tryResponseParameters = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -47,17 +53,42 @@ public class RequestTry implements Serializable {
         this.status = status;
     }
 
-    public Long getRequestId() {
-        return requestId;
+    public Request getRequest() {
+        return request;
     }
 
-    public RequestTry requestId(Long requestId) {
-        this.requestId = requestId;
+    public RequestTry request(Request request) {
+        this.request = request;
         return this;
     }
 
-    public void setRequestId(Long requestId) {
-        this.requestId = requestId;
+    public void setRequest(Request request) {
+        this.request = request;
+    }
+
+    public Set<TryResponseParameter> getTryResponseParameters() {
+        return tryResponseParameters;
+    }
+
+    public RequestTry tryResponseParameters(Set<TryResponseParameter> tryResponseParameters) {
+        this.tryResponseParameters = tryResponseParameters;
+        return this;
+    }
+
+    public RequestTry addTryResponseParameter(TryResponseParameter tryResponseParameter) {
+        this.tryResponseParameters.add(tryResponseParameter);
+        tryResponseParameter.setRequestTry(this);
+        return this;
+    }
+
+    public RequestTry removeTryResponseParameter(TryResponseParameter tryResponseParameter) {
+        this.tryResponseParameters.remove(tryResponseParameter);
+        tryResponseParameter.setRequestTry(null);
+        return this;
+    }
+
+    public void setTryResponseParameters(Set<TryResponseParameter> tryResponseParameters) {
+        this.tryResponseParameters = tryResponseParameters;
     }
 
     @Override
@@ -85,7 +116,6 @@ public class RequestTry implements Serializable {
         return "RequestTry{" +
             "id=" + getId() +
             ", status='" + getStatus() + "'" +
-            ", requestId='" + getRequestId() + "'" +
             "}";
     }
 }

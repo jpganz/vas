@@ -1,0 +1,55 @@
+
+<div>
+    <h2><span>Providercommand</span> {{vm.providercommand.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Endpoint Url</span></dt>
+        <dd>
+            <span>{{vm.providercommand.endpointUrl}}</span>
+        </dd>
+        <dt><span>Code</span></dt>
+        <dd>
+            <span>{{vm.providercommand.code}}</span>
+        </dd>
+        <dt><span>Retry Limit</span></dt>
+        <dd>
+            <span>{{vm.providercommand.retryLimit}}</span>
+        </dd>
+        <dt><span>Retry Interval</span></dt>
+        <dd>
+            <span>{{vm.providercommand.retryInterval}}</span>
+        </dd>
+        <dt><span>Communication Standard Id</span></dt>
+        <dd>
+            <span>{{vm.providercommand.communicationStandardId}}</span>
+        </dd>
+        <dt><span>Service Security Id</span></dt>
+        <dd>
+            <span>{{vm.providercommand.serviceSecurityId}}</span>
+        </dd>
+        <dt><span>Provider</span></dt>
+        <dd>
+            <a ui-sref="provider-detail({id:vm.providercommand.provider.id})">{{vm.providercommand.provider.id}}</a>
+        </dd>
+        <dt><span>Communication Standard</span></dt>
+        <dd>
+            <a ui-sref="communication-standard-detail({id:vm.providercommand.communicationStandard.id})">{{vm.providercommand.communicationStandard.id}}</a>
+        </dd>
+        <dt><span>Command</span></dt>
+        <dd>
+            <a ui-sref="command-detail({id:vm.providercommand.command.id})">{{vm.providercommand.command.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="providercommand-detail.edit({id:vm.providercommand.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

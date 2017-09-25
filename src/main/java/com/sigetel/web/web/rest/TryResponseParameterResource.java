@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -43,7 +42,7 @@ public class TryResponseParameterResource {
      */
     @PostMapping("/try-response-parameters")
     @Timed
-    public ResponseEntity<TryResponseParameter> createTryResponseParameter(@Valid @RequestBody TryResponseParameter tryResponseParameter) throws URISyntaxException {
+    public ResponseEntity<TryResponseParameter> createTryResponseParameter(@RequestBody TryResponseParameter tryResponseParameter) throws URISyntaxException {
         log.debug("REST request to save TryResponseParameter : {}", tryResponseParameter);
         if (tryResponseParameter.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new tryResponseParameter cannot already have an ID")).body(null);
@@ -65,7 +64,7 @@ public class TryResponseParameterResource {
      */
     @PutMapping("/try-response-parameters")
     @Timed
-    public ResponseEntity<TryResponseParameter> updateTryResponseParameter(@Valid @RequestBody TryResponseParameter tryResponseParameter) throws URISyntaxException {
+    public ResponseEntity<TryResponseParameter> updateTryResponseParameter(@RequestBody TryResponseParameter tryResponseParameter) throws URISyntaxException {
         log.debug("REST request to update TryResponseParameter : {}", tryResponseParameter);
         if (tryResponseParameter.getId() == null) {
             return createTryResponseParameter(tryResponseParameter);

@@ -38,11 +38,11 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="provider_command_id" type="bigint">
-                <constraints nullable="false" />
+            <column name="is_mandatory" type="bit">
+                <constraints nullable="true" />
             </column>
 
-            <column name="is_mandatory" type="bit">
+            <column name="provider_command_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

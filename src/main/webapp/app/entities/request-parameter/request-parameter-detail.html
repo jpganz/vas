@@ -20,13 +20,13 @@
         <dd>
             <span>{{vm.requestParameter.section}}</span>
         </dd>
-        <dt><span>Provider Command Id</span></dt>
-        <dd>
-            <span>{{vm.requestParameter.providerCommandId}}</span>
-        </dd>
         <dt><span>Is Mandatory</span></dt>
         <dd>
             <span>{{vm.requestParameter.isMandatory}}</span>
+        </dd>
+        <dt><span>Provider Command</span></dt>
+        <dd>
+            <a ui-sref="provider-command-detail({id:vm.requestParameter.providerCommand.id})">{{vm.requestParameter.providerCommand.id}}</a>
         </dd>
     </dl>
 

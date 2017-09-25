@@ -5,9 +5,9 @@
         .module('ovasApp')
         .controller('RequestDialogController', RequestDialogController);
 
-    RequestDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Request'];
+    RequestDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Request', 'RequestTry'];
 
-    function RequestDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Request) {
+    function RequestDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Request, RequestTry) {
         var vm = this;
 
         vm.request = entity;
@@ -15,6 +15,7 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
+        vm.requesttries = RequestTry.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

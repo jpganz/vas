@@ -99,9 +99,6 @@
                                 code: null,
                                 retryLimit: null,
                                 retryInterval: null,
-                                providerId: null,
-                                commandId: null,
-                                communicationStandardId: null,
                                 serviceSecurityId: null,
                                 id: null
                             };

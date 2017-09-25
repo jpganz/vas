@@ -64,54 +64,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_providerId">Provider Id</label>
-            <input type="number" class="form-control" name="providerId" id="field_providerId"
-                    ng-model="vm.providerCommand.providerId"
-                    required/>
-            <div ng-show="editForm.providerId.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.providerId.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.providerId.$error.number">
-                    This field should be a number.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_commandId">Command Id</label>
-            <input type="number" class="form-control" name="commandId" id="field_commandId"
-                    ng-model="vm.providerCommand.commandId"
-                    required/>
-            <div ng-show="editForm.commandId.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.commandId.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.commandId.$error.number">
-                    This field should be a number.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_communicationStandardId">Communication Standard Id</label>
-            <input type="number" class="form-control" name="communicationStandardId" id="field_communicationStandardId"
-                    ng-model="vm.providerCommand.communicationStandardId"
-                    required/>
-            <div ng-show="editForm.communicationStandardId.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.communicationStandardId.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.communicationStandardId.$error.number">
-                    This field should be a number.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
             <label class="control-label" for="field_serviceSecurityId">Service Security Id</label>
             <input type="number" class="form-control" name="serviceSecurityId" id="field_serviceSecurityId"
                     ng-model="vm.providerCommand.serviceSecurityId"
@@ -128,6 +80,24 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label for="field_provider">Provider</label>
+            <select class="form-control" id="field_provider" name="provider" ng-model="vm.providerCommand.provider" ng-options="provider as provider.id for provider in vm.providers track by provider.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_communicationStandard">Communication Standard</label>
+            <select class="form-control" id="field_communicationStandard" name="communicationStandard" ng-model="vm.providerCommand.communicationStandard" ng-options="communicationStandard as communicationStandard.id for communicationStandard in vm.communicationstandards track by communicationStandard.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_command">Command</label>
+            <select class="form-control" id="field_command" name="command" ng-model="vm.providerCommand.command" ng-options="command as command.id for command in vm.commands track by command.id">
+                <option value=""></option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

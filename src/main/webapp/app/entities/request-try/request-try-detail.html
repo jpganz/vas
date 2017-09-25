@@ -8,9 +8,9 @@
         <dd>
             <span>{{vm.requestTry.status}}</span>
         </dd>
-        <dt><span>Request Id</span></dt>
+        <dt><span>Request</span></dt>
         <dd>
-            <span>{{vm.requestTry.requestId}}</span>
+            <a ui-sref="request-detail({id:vm.requestTry.request.id})">{{vm.requestTry.request.id}}</a>
         </dd>
     </dl>
 

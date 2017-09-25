@@ -1,6 +1,8 @@
 package com.sigetel.web.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -23,13 +25,13 @@ public class TryParameter implements Serializable {
     @Column(name = "jhi_value", nullable = false)
     private String value;
 
-    @NotNull
-    @Column(name = "request_id", nullable = false)
-    private Long requestId;
+    @ManyToOne
+    @JsonIgnore
+    private Request request;
 
-    @NotNull
-    @Column(name = "request_parameter_id", nullable = false)
-    private Long requestParameterId;
+    @ManyToOne
+    @JsonIgnore
+    private RequestParameter requestParameter;
 
     public Long getId() {
         return id;
@@ -52,30 +54,30 @@ public class TryParameter implements Serializable {
         this.value = value;
     }
 
-    public Long getRequestId() {
-        return requestId;
+    public Request getRequest() {
+        return request;
     }
 
-    public TryParameter requestId(Long requestId) {
-        this.requestId = requestId;
+    public TryParameter request(Request request) {
+        this.request = request;
         return this;
     }
 
-    public void setRequestId(Long requestId) {
-        this.requestId = requestId;
+    public void setRequest(Request request) {
+        this.request = request;
     }
 
-    public Long getRequestParameterId() {
-        return requestParameterId;
+    public RequestParameter getRequestParameter() {
+        return requestParameter;
     }
 
-    public TryParameter requestParameterId(Long requestParameterId) {
-        this.requestParameterId = requestParameterId;
+    public TryParameter requestParameter(RequestParameter requestParameter) {
+        this.requestParameter = requestParameter;
         return this;
     }
 
-    public void setRequestParameterId(Long requestParameterId) {
-        this.requestParameterId = requestParameterId;
+    public void setRequestParameter(RequestParameter requestParameter) {
+        this.requestParameter = requestParameter;
     }
 
     @Override
@@ -103,8 +105,6 @@ public class TryParameter implements Serializable {
         return "TryParameter{" +
             "id=" + getId() +
             ", value='" + getValue() + "'" +
-            ", requestId='" + getRequestId() + "'" +
-            ", requestParameterId='" + getRequestParameterId() + "'" +
             "}";
     }
 }

@@ -38,20 +38,20 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="provider_id" type="bigint">
+            <column name="service_security_id" type="bigint">
                 <constraints nullable="false" />
             </column>
 
-            <column name="command_id" type="bigint">
-                <constraints nullable="false" />
+            <column name="provider_id" type="bigint">
+                <constraints nullable="true" />
             </column>
 
             <column name="communication_standard_id" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
-            <column name="service_security_id" type="bigint">
-                <constraints nullable="false" />
+            <column name="command_id" type="bigint">
+                <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

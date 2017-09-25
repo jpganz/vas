@@ -5,9 +5,9 @@
         .module('ovasApp')
         .controller('TryParameterDetailController', TryParameterDetailController);
 
-    TryParameterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'TryParameter'];
+    TryParameterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'TryParameter', 'Request', 'RequestParameter'];
 
-    function TryParameterDetailController($scope, $rootScope, $stateParams, previousState, entity, TryParameter) {
+    function TryParameterDetailController($scope, $rootScope, $stateParams, previousState, entity, TryParameter, Request, RequestParameter) {
         var vm = this;
 
         vm.tryParameter = entity;

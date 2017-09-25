@@ -56,27 +56,17 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_providerCommandId">Provider Command Id</label>
-            <input type="number" class="form-control" name="providerCommandId" id="field_providerCommandId"
-                    ng-model="vm.requestParameter.providerCommandId"
-                    required/>
-            <div ng-show="editForm.providerCommandId.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.providerCommandId.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.providerCommandId.$error.number">
-                    This field should be a number.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
             <label class="control-label" for="field_isMandatory">Is Mandatory</label>
                 <input type="checkbox" name="isMandatory" id="field_isMandatory"
                           ng-model="vm.requestParameter.isMandatory"/>
         </div>
 
+        <div class="form-group">
+            <label for="field_providerCommand">Provider Command</label>
+            <select class="form-control" id="field_providerCommand" name="providerCommand" ng-model="vm.requestParameter.providerCommand" ng-options="providerCommand as providerCommand.id for providerCommand in vm.providercommands track by providerCommand.id">
+                <option value=""></option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

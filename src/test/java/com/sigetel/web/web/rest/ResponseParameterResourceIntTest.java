@@ -53,9 +53,6 @@ public class ResponseParameterResourceIntTest {
     private static final Boolean DEFAULT_IS_MANDATORY = false;
     private static final Boolean UPDATED_IS_MANDATORY = true;
 
-    private static final Long DEFAULT_PROVIDER_RESPONSE_ID = 1L;
-    private static final Long UPDATED_PROVIDER_RESPONSE_ID = 2L;
-
     @Autowired
     private ResponseParameterRepository responseParameterRepository;
 
@@ -100,8 +97,7 @@ public class ResponseParameterResourceIntTest {
             .type(DEFAULT_TYPE)
             .default_value(DEFAULT_DEFAULT_VALUE)
             .section(DEFAULT_SECTION)
-            .isMandatory(DEFAULT_IS_MANDATORY)
-            .providerResponseId(DEFAULT_PROVIDER_RESPONSE_ID);
+            .isMandatory(DEFAULT_IS_MANDATORY);
         return responseParameter;
     }
 
@@ -130,7 +126,6 @@ public class ResponseParameterResourceIntTest {
         assertThat(testResponseParameter.getDefault_value()).isEqualTo(DEFAULT_DEFAULT_VALUE);
         assertThat(testResponseParameter.getSection()).isEqualTo(DEFAULT_SECTION);
         assertThat(testResponseParameter.isIsMandatory()).isEqualTo(DEFAULT_IS_MANDATORY);
-        assertThat(testResponseParameter.getProviderResponseId()).isEqualTo(DEFAULT_PROVIDER_RESPONSE_ID);
     }
 
     @Test
@@ -172,24 +167,6 @@ public class ResponseParameterResourceIntTest {
 
     @Test
     @Transactional
-    public void checkProviderResponseIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = responseParameterRepository.findAll().size();
-        // set the field null
-        responseParameter.setProviderResponseId(null);
-
-        // Create the ResponseParameter, which fails.
-
-        restResponseParameterMockMvc.perform(post("/api/response-parameters")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(responseParameter)))
-            .andExpect(status().isBadRequest());
-
-        List<ResponseParameter> responseParameterList = responseParameterRepository.findAll();
-        assertThat(responseParameterList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllResponseParameters() throws Exception {
         // Initialize the database
         responseParameterRepository.saveAndFlush(responseParameter);
@@ -203,8 +180,7 @@ public class ResponseParameterResourceIntTest {
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].default_value").value(hasItem(DEFAULT_DEFAULT_VALUE.toString())))
             .andExpect(jsonPath("$.[*].section").value(hasItem(DEFAULT_SECTION.toString())))
-            .andExpect(jsonPath("$.[*].isMandatory").value(hasItem(DEFAULT_IS_MANDATORY.booleanValue())))
-            .andExpect(jsonPath("$.[*].providerResponseId").value(hasItem(DEFAULT_PROVIDER_RESPONSE_ID.intValue())));
+            .andExpect(jsonPath("$.[*].isMandatory").value(hasItem(DEFAULT_IS_MANDATORY.booleanValue())));
     }
 
     @Test
@@ -222,8 +198,7 @@ public class ResponseParameterResourceIntTest {
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.default_value").value(DEFAULT_DEFAULT_VALUE.toString()))
             .andExpect(jsonPath("$.section").value(DEFAULT_SECTION.toString()))
-            .andExpect(jsonPath("$.isMandatory").value(DEFAULT_IS_MANDATORY.booleanValue()))
-            .andExpect(jsonPath("$.providerResponseId").value(DEFAULT_PROVIDER_RESPONSE_ID.intValue()));
+            .andExpect(jsonPath("$.isMandatory").value(DEFAULT_IS_MANDATORY.booleanValue()));
     }
 
     @Test
@@ -249,8 +224,7 @@ public class ResponseParameterResourceIntTest {
             .type(UPDATED_TYPE)
             .default_value(UPDATED_DEFAULT_VALUE)
             .section(UPDATED_SECTION)
-            .isMandatory(UPDATED_IS_MANDATORY)
-            .providerResponseId(UPDATED_PROVIDER_RESPONSE_ID);
+            .isMandatory(UPDATED_IS_MANDATORY);
 
         restResponseParameterMockMvc.perform(put("/api/response-parameters")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -266,7 +240,6 @@ public class ResponseParameterResourceIntTest {
         assertThat(testResponseParameter.getDefault_value()).isEqualTo(UPDATED_DEFAULT_VALUE);
         assertThat(testResponseParameter.getSection()).isEqualTo(UPDATED_SECTION);
         assertThat(testResponseParameter.isIsMandatory()).isEqualTo(UPDATED_IS_MANDATORY);
-        assertThat(testResponseParameter.getProviderResponseId()).isEqualTo(UPDATED_PROVIDER_RESPONSE_ID);
     }
 
     @Test

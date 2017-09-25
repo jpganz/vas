@@ -50,9 +50,6 @@ public class ProviderResponseResourceIntTest {
     private static final String DEFAULT_TYPE = "AAAAAAAAAA";
     private static final String UPDATED_TYPE = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_PROVIDER_COMMAND_ID = 1L;
-    private static final Long UPDATED_PROVIDER_COMMAND_ID = 2L;
-
     @Autowired
     private ProviderResponseRepository providerResponseRepository;
 
@@ -96,8 +93,7 @@ public class ProviderResponseResourceIntTest {
             .emailNotify(DEFAULT_EMAIL_NOTIFY)
             .emailAddressToNotify(DEFAULT_EMAIL_ADDRESS_TO_NOTIFY)
             .addToRetry(DEFAULT_ADD_TO_RETRY)
-            .type(DEFAULT_TYPE)
-            .providerCommandId(DEFAULT_PROVIDER_COMMAND_ID);
+            .type(DEFAULT_TYPE);
         return providerResponse;
     }
 
@@ -125,7 +121,6 @@ public class ProviderResponseResourceIntTest {
         assertThat(testProviderResponse.getEmailAddressToNotify()).isEqualTo(DEFAULT_EMAIL_ADDRESS_TO_NOTIFY);
         assertThat(testProviderResponse.isAddToRetry()).isEqualTo(DEFAULT_ADD_TO_RETRY);
         assertThat(testProviderResponse.getType()).isEqualTo(DEFAULT_TYPE);
-        assertThat(testProviderResponse.getProviderCommandId()).isEqualTo(DEFAULT_PROVIDER_COMMAND_ID);
     }
 
     @Test
@@ -167,24 +162,6 @@ public class ProviderResponseResourceIntTest {
 
     @Test
     @Transactional
-    public void checkProviderCommandIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = providerResponseRepository.findAll().size();
-        // set the field null
-        providerResponse.setProviderCommandId(null);
-
-        // Create the ProviderResponse, which fails.
-
-        restProviderResponseMockMvc.perform(post("/api/provider-responses")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(providerResponse)))
-            .andExpect(status().isBadRequest());
-
-        List<ProviderResponse> providerResponseList = providerResponseRepository.findAll();
-        assertThat(providerResponseList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllProviderResponses() throws Exception {
         // Initialize the database
         providerResponseRepository.saveAndFlush(providerResponse);
@@ -197,8 +174,7 @@ public class ProviderResponseResourceIntTest {
             .andExpect(jsonPath("$.[*].emailNotify").value(hasItem(DEFAULT_EMAIL_NOTIFY.toString())))
             .andExpect(jsonPath("$.[*].emailAddressToNotify").value(hasItem(DEFAULT_EMAIL_ADDRESS_TO_NOTIFY.toString())))
             .andExpect(jsonPath("$.[*].addToRetry").value(hasItem(DEFAULT_ADD_TO_RETRY.booleanValue())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].providerCommandId").value(hasItem(DEFAULT_PROVIDER_COMMAND_ID.intValue())));
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
     }
 
     @Test
@@ -215,8 +191,7 @@ public class ProviderResponseResourceIntTest {
             .andExpect(jsonPath("$.emailNotify").value(DEFAULT_EMAIL_NOTIFY.toString()))
             .andExpect(jsonPath("$.emailAddressToNotify").value(DEFAULT_EMAIL_ADDRESS_TO_NOTIFY.toString()))
             .andExpect(jsonPath("$.addToRetry").value(DEFAULT_ADD_TO_RETRY.booleanValue()))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
-            .andExpect(jsonPath("$.providerCommandId").value(DEFAULT_PROVIDER_COMMAND_ID.intValue()));
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
     }
 
     @Test
@@ -241,8 +216,7 @@ public class ProviderResponseResourceIntTest {
             .emailNotify(UPDATED_EMAIL_NOTIFY)
             .emailAddressToNotify(UPDATED_EMAIL_ADDRESS_TO_NOTIFY)
             .addToRetry(UPDATED_ADD_TO_RETRY)
-            .type(UPDATED_TYPE)
-            .providerCommandId(UPDATED_PROVIDER_COMMAND_ID);
+            .type(UPDATED_TYPE);
 
         restProviderResponseMockMvc.perform(put("/api/provider-responses")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -257,7 +231,6 @@ public class ProviderResponseResourceIntTest {
         assertThat(testProviderResponse.getEmailAddressToNotify()).isEqualTo(UPDATED_EMAIL_ADDRESS_TO_NOTIFY);
         assertThat(testProviderResponse.isAddToRetry()).isEqualTo(UPDATED_ADD_TO_RETRY);
         assertThat(testProviderResponse.getType()).isEqualTo(UPDATED_TYPE);
-        assertThat(testProviderResponse.getProviderCommandId()).isEqualTo(UPDATED_PROVIDER_COMMAND_ID);
     }
 
     @Test

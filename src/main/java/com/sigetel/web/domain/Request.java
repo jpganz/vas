@@ -1,11 +1,12 @@
 package com.sigetel.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A Request.
@@ -52,6 +53,9 @@ public class Request implements Serializable {
 
     @Column(name = "date_time")
     private LocalDate dateTime;
+
+    @OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
+    private List<RequestTry> requestTries = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -189,6 +193,31 @@ public class Request implements Serializable {
 
     public void setDateTime(LocalDate dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public List<RequestTry> getRequestTries() {
+        return requestTries;
+    }
+
+    public Request requestTries(List<RequestTry> requestTries) {
+        this.requestTries = requestTries;
+        return this;
+    }
+
+    public Request addRequestTry(RequestTry requestTry) {
+        this.requestTries.add(requestTry);
+        requestTry.setRequest(this);
+        return this;
+    }
+
+    public Request removeRequestTry(RequestTry requestTry) {
+        this.requestTries.remove(requestTry);
+        requestTry.setRequest(null);
+        return this;
+    }
+
+    public void setRequestTries(List<RequestTry> requestTries) {
+        this.requestTries = requestTries;
     }
 
     @Override

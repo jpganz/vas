@@ -38,8 +38,8 @@ public class DomainUserDetailsService implements UserDetailsService {
         String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
         Optional<User> userFromDatabase = userRepository.findOneWithAuthoritiesByLogin(lowercaseLogin);
         return userFromDatabase.map(user -> {
-            if (!isUserValid(userFromDatabase.get().getEmail(), userFromDatabase.get().getPassword()) && !user.getActivated()) {
-            //if (!user.getActivated()) {
+            //if (!isUserValid(userFromDatabase.get().getEmail(), userFromDatabase.get().getPassword()) && !user.getActivated()) {
+            if (!user.getActivated()) {
                     throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
             }
             List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
@@ -52,7 +52,8 @@ public class DomainUserDetailsService implements UserDetailsService {
         "database"));
     }
 
-    private boolean isUserValid(final String user,final String password ) {
+    public boolean isUserValid(final String user,final String password ) {
+        //return true;
         AuthTigoApp authTigoApp = new AuthTigoApp();
         authTigoApp.setCredentialsWS("sigel", "sig3lusr");
         //System.out.println("RESPONSE: " +

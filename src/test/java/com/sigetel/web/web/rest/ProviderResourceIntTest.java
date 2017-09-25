@@ -85,9 +85,18 @@ public class ProviderResourceIntTest {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    
+    public static Provider createEntity(EntityManager em) {
+        Provider provider = new Provider()
+            .name(DEFAULT_NAME)
+            .description(DEFAULT_DESCRIPTION)
+            .code(DEFAULT_CODE);
+        return provider;
+    }
 
-    
+    @Before
+    public void initTest() {
+        provider = createEntity(em);
+    }
 
     @Test
     @Transactional
@@ -231,7 +240,17 @@ public class ProviderResourceIntTest {
         int databaseSizeBeforeUpdate = providerRepository.findAll().size();
 
         // Update the provider
-    
+        Provider updatedProvider = providerRepository.findOne(provider.getId());
+        updatedProvider
+            .name(UPDATED_NAME)
+            .description(UPDATED_DESCRIPTION)
+            .code(UPDATED_CODE);
+
+        restProviderMockMvc.perform(put("/api/providers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedProvider)))
+            .andExpect(status().isOk());
+
         // Validate the Provider in the database
         List<Provider> providerList = providerRepository.findAll();
         assertThat(providerList).hasSize(databaseSizeBeforeUpdate);

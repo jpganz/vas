@@ -20,9 +20,9 @@
         <dd>
             <span>{{vm.providerResponse.type}}</span>
         </dd>
-        <dt><span>Provider Command Id</span></dt>
+        <dt><span>Provider Command</span></dt>
         <dd>
-            <span>{{vm.providerResponse.providerCommandId}}</span>
+            <a ui-sref="provider-command-detail({id:vm.providerResponse.providerCommand.id})">{{vm.providerResponse.providerCommand.id}}</a>
         </dd>
     </dl>
 

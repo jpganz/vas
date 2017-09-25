@@ -1,0 +1,126 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myProvidercommandLabel">Create or edit a Providercommand</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.providercommand.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.providercommand.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_endpointUrl">Endpoint Url</label>
+            <input type="text" class="form-control" name="endpointUrl" id="field_endpointUrl"
+                    ng-model="vm.providercommand.endpointUrl"
+                    required/>
+            <div ng-show="editForm.endpointUrl.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.endpointUrl.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_code">Code</label>
+            <input type="text" class="form-control" name="code" id="field_code"
+                    ng-model="vm.providercommand.code"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_retryLimit">Retry Limit</label>
+            <input type="number" class="form-control" name="retryLimit" id="field_retryLimit"
+                    ng-model="vm.providercommand.retryLimit"
+                    required/>
+            <div ng-show="editForm.retryLimit.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.retryLimit.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.retryLimit.$error.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_retryInterval">Retry Interval</label>
+            <input type="number" class="form-control" name="retryInterval" id="field_retryInterval"
+                    ng-model="vm.providercommand.retryInterval"
+                    required/>
+            <div ng-show="editForm.retryInterval.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.retryInterval.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.retryInterval.$error.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_communicationStandardId">Communication Standard Id</label>
+            <input type="number" class="form-control" name="communicationStandardId" id="field_communicationStandardId"
+                    ng-model="vm.providercommand.communicationStandardId"
+                    required/>
+            <div ng-show="editForm.communicationStandardId.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.communicationStandardId.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.communicationStandardId.$error.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_serviceSecurityId">Service Security Id</label>
+            <input type="number" class="form-control" name="serviceSecurityId" id="field_serviceSecurityId"
+                    ng-model="vm.providercommand.serviceSecurityId"
+                    required/>
+            <div ng-show="editForm.serviceSecurityId.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.serviceSecurityId.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.serviceSecurityId.$error.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_provider">Provider</label>
+            <select class="form-control" id="field_provider" name="provider" ng-model="vm.providercommand.provider" ng-options="provider as provider.id for provider in vm.providers track by provider.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_communicationStandard">Communication Standard</label>
+            <select class="form-control" id="field_communicationStandard" name="communicationStandard" ng-model="vm.providercommand.communicationStandard" ng-options="communicationStandard as communicationStandard.id for communicationStandard in vm.communicationstandards track by communicationStandard.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_command">Command</label>
+            <select class="form-control" id="field_command" name="command" ng-model="vm.providercommand.command" ng-options="command as command.id for command in vm.commands track by command.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

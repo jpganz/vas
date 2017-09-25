@@ -41,9 +41,6 @@ public class RequestTryResourceIntTest {
     private static final Integer DEFAULT_STATUS = 1;
     private static final Integer UPDATED_STATUS = 2;
 
-    private static final Long DEFAULT_REQUEST_ID = 1L;
-    private static final Long UPDATED_REQUEST_ID = 2L;
-
     @Autowired
     private RequestTryRepository requestTryRepository;
 
@@ -84,8 +81,7 @@ public class RequestTryResourceIntTest {
      */
     public static RequestTry createEntity(EntityManager em) {
         RequestTry requestTry = new RequestTry()
-            .status(DEFAULT_STATUS)
-            .requestId(DEFAULT_REQUEST_ID);
+            .status(DEFAULT_STATUS);
         return requestTry;
     }
 
@@ -110,7 +106,6 @@ public class RequestTryResourceIntTest {
         assertThat(requestTryList).hasSize(databaseSizeBeforeCreate + 1);
         RequestTry testRequestTry = requestTryList.get(requestTryList.size() - 1);
         assertThat(testRequestTry.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testRequestTry.getRequestId()).isEqualTo(DEFAULT_REQUEST_ID);
     }
 
     @Test
@@ -134,24 +129,6 @@ public class RequestTryResourceIntTest {
 
     @Test
     @Transactional
-    public void checkRequestIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = requestTryRepository.findAll().size();
-        // set the field null
-        requestTry.setRequestId(null);
-
-        // Create the RequestTry, which fails.
-
-        restRequestTryMockMvc.perform(post("/api/request-tries")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(requestTry)))
-            .andExpect(status().isBadRequest());
-
-        List<RequestTry> requestTryList = requestTryRepository.findAll();
-        assertThat(requestTryList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllRequestTries() throws Exception {
         // Initialize the database
         requestTryRepository.saveAndFlush(requestTry);
@@ -161,8 +138,7 @@ public class RequestTryResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(requestTry.getId().intValue())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
-            .andExpect(jsonPath("$.[*].requestId").value(hasItem(DEFAULT_REQUEST_ID.intValue())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
     }
 
     @Test
@@ -176,8 +152,7 @@ public class RequestTryResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(requestTry.getId().intValue()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS))
-            .andExpect(jsonPath("$.requestId").value(DEFAULT_REQUEST_ID.intValue()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS));
     }
 
     @Test
@@ -199,8 +174,7 @@ public class RequestTryResourceIntTest {
         // Update the requestTry
         RequestTry updatedRequestTry = requestTryRepository.findOne(requestTry.getId());
         updatedRequestTry
-            .status(UPDATED_STATUS)
-            .requestId(UPDATED_REQUEST_ID);
+            .status(UPDATED_STATUS);
 
         restRequestTryMockMvc.perform(put("/api/request-tries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -212,7 +186,6 @@ public class RequestTryResourceIntTest {
         assertThat(requestTryList).hasSize(databaseSizeBeforeUpdate);
         RequestTry testRequestTry = requestTryList.get(requestTryList.size() - 1);
         assertThat(testRequestTry.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testRequestTry.getRequestId()).isEqualTo(UPDATED_REQUEST_ID);
     }
 
     @Test

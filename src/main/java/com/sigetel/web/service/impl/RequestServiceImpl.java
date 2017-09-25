@@ -1,5 +1,6 @@
 package com.sigetel.web.service.impl;
 
+import com.sigetel.web.domain.RequestTry;
 import com.sigetel.web.service.RequestService;
 import com.sigetel.web.domain.Request;
 import com.sigetel.web.repository.RequestRepository;
@@ -46,7 +47,11 @@ public class RequestServiceImpl implements RequestService{
     @Transactional(readOnly = true)
     public List<Request> findAll() {
         log.debug("Request to get all Requests");
-        return requestRepository.findAll();
+        List<Request> requests = requestRepository.findAll();
+        for(Request request:requests){
+            request.getRequestTries();
+        }
+        return requests;
     }
 
     /**
@@ -59,7 +64,11 @@ public class RequestServiceImpl implements RequestService{
     @Transactional(readOnly = true)
     public Request findOne(Long id) {
         log.debug("Request to get Request : {}", id);
-        return requestRepository.findOne(id);
+        Request request = requestRepository.findOne(id);
+        for(RequestTry rtry:request.getRequestTries()){
+            rtry.getId();
+        }
+        return request;
     }
 
     /**

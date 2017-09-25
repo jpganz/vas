@@ -1,8 +1,9 @@
 package com.sigetel.web.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -22,13 +23,13 @@ public class TryResponseParameter implements Serializable {
     @Column(name = "jhi_value")
     private String value;
 
-    @NotNull
-    @Column(name = "request_try_id", nullable = false)
-    private Long requestTryId;
+    @ManyToOne
+    @JsonIgnore
+    private ResponseParameter responseParameter;
 
-    @NotNull
-    @Column(name = "response_parameter_id", nullable = false)
-    private Long responseParameterId;
+    @ManyToOne
+    @JsonIgnore
+    private RequestTry requestTry;
 
     public Long getId() {
         return id;
@@ -51,30 +52,30 @@ public class TryResponseParameter implements Serializable {
         this.value = value;
     }
 
-    public Long getRequestTryId() {
-        return requestTryId;
+    public ResponseParameter getResponseParameter() {
+        return responseParameter;
     }
 
-    public TryResponseParameter requestTryId(Long requestTryId) {
-        this.requestTryId = requestTryId;
+    public TryResponseParameter responseParameter(ResponseParameter responseParameter) {
+        this.responseParameter = responseParameter;
         return this;
     }
 
-    public void setRequestTryId(Long requestTryId) {
-        this.requestTryId = requestTryId;
+    public void setResponseParameter(ResponseParameter responseParameter) {
+        this.responseParameter = responseParameter;
     }
 
-    public Long getResponseParameterId() {
-        return responseParameterId;
+    public RequestTry getRequestTry() {
+        return requestTry;
     }
 
-    public TryResponseParameter responseParameterId(Long responseParameterId) {
-        this.responseParameterId = responseParameterId;
+    public TryResponseParameter requestTry(RequestTry requestTry) {
+        this.requestTry = requestTry;
         return this;
     }
 
-    public void setResponseParameterId(Long responseParameterId) {
-        this.responseParameterId = responseParameterId;
+    public void setRequestTry(RequestTry requestTry) {
+        this.requestTry = requestTry;
     }
 
     @Override
@@ -102,8 +103,6 @@ public class TryResponseParameter implements Serializable {
         return "TryResponseParameter{" +
             "id=" + getId() +
             ", value='" + getValue() + "'" +
-            ", requestTryId='" + getRequestTryId() + "'" +
-            ", responseParameterId='" + getResponseParameterId() + "'" +
             "}";
     }
 }

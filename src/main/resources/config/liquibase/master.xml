@@ -19,7 +19,15 @@
     <include file="classpath:config/liquibase/changelog/20170713120620_added_entity_ServiceSecurity.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170713121354_added_entity_ProviderCommandRequest.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170726112754_added_entity_SysOptions.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170710100424_added_entity_Providercommand.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20170710100424_added_entity_constraints_ProviderCommand.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713112924_added_entity_constraints_RequestTry.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170710100424_added_entity_constraints_Providercommand.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713113136_added_entity_constraints_TryParameter.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713115155_added_entity_constraints_ProviderResponse.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170710094545_added_entity_constraints_RequestParameter.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713120238_added_entity_constraints_ResponseParameter.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713115431_added_entity_constraints_TryResponseParameter.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

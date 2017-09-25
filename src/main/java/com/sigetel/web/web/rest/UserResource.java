@@ -3,6 +3,7 @@ package com.sigetel.web.web.rest;
 import com.sigetel.web.config.Constants;
 import com.codahale.metrics.annotation.Timed;
 import com.sigetel.web.domain.User;
+import com.sigetel.web.domain.ValidUser;
 import com.sigetel.web.repository.UserRepository;
 import com.sigetel.web.security.AuthoritiesConstants;
 import com.sigetel.web.service.MailService;
@@ -11,6 +12,7 @@ import com.sigetel.web.service.dto.UserDTO;
 import com.sigetel.web.web.rest.vm.ManagedUserVM;
 import com.sigetel.web.web.rest.util.HeaderUtil;
 import com.sigetel.web.web.rest.util.PaginationUtil;
+import com.sigetel.web.wsdl.AuthTigoApp;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 
@@ -196,17 +198,35 @@ public class UserResource {
     }
 
     /**
-     * GET  /users : get all users.
+     * GET  /validUser : get status of ldap for a user
      *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and with body all users
+     *
+     * @return the ResponseEntity with status 200 (OK) and with body all information
      */
     @GetMapping("/validateUser")
     @Timed
-    public Boolean isValidUser(@ApiParam String username, @ApiParam String password) {
-        // invoke ldap
-        //check for oauth tables, if not updated update :)
-        return true;
+    public ResponseEntity<ValidUser> isValidUser(@ApiParam String username, @ApiParam String password) {
+        //check if user exists, if not, update it
+        ValidUser response = new ValidUser();
+        if (isTigoUser(username, password)){
+            response.setStatus(true);
+            response.setDescription("Request accepted");
+        }else {
+            response.setStatus(false);
+            response.setDescription("Login failed");
+        }
+        //return response;
+
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, username))
+            .body(response);
     }
 
+    private boolean isTigoUser(final String username, final String password){
+        AuthTigoApp authTigoApp = new AuthTigoApp();
+        authTigoApp.setCredentialsWS("sigel", "sig3lusr");
+        //System.out.println("RESPONSE: " +
+        return (authTigoApp.processUserInformationResponse(
+            authTigoApp.requestUserInfo(100, username, password)).size() > 0);
+    }
 }

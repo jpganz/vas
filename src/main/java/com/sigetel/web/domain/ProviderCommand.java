@@ -1,9 +1,12 @@
 package com.sigetel.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -35,20 +38,27 @@ public class ProviderCommand implements Serializable {
     private Long retryInterval;
 
     @NotNull
-    @Column(name = "provider_id", nullable = false)
-    private Long providerId;
-
-    @NotNull
-    @Column(name = "command_id", nullable = false)
-    private Long commandId;
-
-    @NotNull
-    @Column(name = "communication_standard_id", nullable = false)
-    private Long communicationStandardId;
-
-    @NotNull
     @Column(name = "service_security_id", nullable = false)
     private Long serviceSecurityId;
+
+    @ManyToOne
+    private Provider provider;
+
+    @ManyToOne
+    @JsonIgnore
+    private CommunicationStandard communicationStandard;
+
+    @ManyToOne
+    @JsonIgnore
+    private Command command;
+
+    @OneToMany(mappedBy = "providerCommand", fetch = FetchType.EAGER)
+    //@JsonIgnore
+    private Set<ProviderResponse> providerResponses = new HashSet<>();
+
+    @OneToMany(mappedBy = "providerCommand", fetch = FetchType.EAGER)
+    //@JsonIgnore
+    private Set<RequestParameter> requestParameters = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -110,45 +120,6 @@ public class ProviderCommand implements Serializable {
         this.retryInterval = retryInterval;
     }
 
-    public Long getProviderId() {
-        return providerId;
-    }
-
-    public ProviderCommand providerId(Long providerId) {
-        this.providerId = providerId;
-        return this;
-    }
-
-    public void setProviderId(Long providerId) {
-        this.providerId = providerId;
-    }
-
-    public Long getCommandId() {
-        return commandId;
-    }
-
-    public ProviderCommand commandId(Long commandId) {
-        this.commandId = commandId;
-        return this;
-    }
-
-    public void setCommandId(Long commandId) {
-        this.commandId = commandId;
-    }
-
-    public Long getCommunicationStandardId() {
-        return communicationStandardId;
-    }
-
-    public ProviderCommand communicationStandardId(Long communicationStandardId) {
-        this.communicationStandardId = communicationStandardId;
-        return this;
-    }
-
-    public void setCommunicationStandardId(Long communicationStandardId) {
-        this.communicationStandardId = communicationStandardId;
-    }
-
     public Long getServiceSecurityId() {
         return serviceSecurityId;
     }
@@ -160,6 +131,95 @@ public class ProviderCommand implements Serializable {
 
     public void setServiceSecurityId(Long serviceSecurityId) {
         this.serviceSecurityId = serviceSecurityId;
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public ProviderCommand provider(Provider provider) {
+        this.provider = provider;
+        return this;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
+    public CommunicationStandard getCommunicationStandard() {
+        return communicationStandard;
+    }
+
+    public ProviderCommand communicationStandard(CommunicationStandard communicationStandard) {
+        this.communicationStandard = communicationStandard;
+        return this;
+    }
+
+    public void setCommunicationStandard(CommunicationStandard communicationStandard) {
+        this.communicationStandard = communicationStandard;
+    }
+
+    public Command getCommand() {
+        return command;
+    }
+
+    public ProviderCommand command(Command command) {
+        this.command = command;
+        return this;
+    }
+
+    public void setCommand(Command command) {
+        this.command = command;
+    }
+
+    public Set<ProviderResponse> getProviderResponses() {
+        return providerResponses;
+    }
+
+    public ProviderCommand providerResponses(Set<ProviderResponse> providerResponses) {
+        this.providerResponses = providerResponses;
+        return this;
+    }
+
+    public ProviderCommand addProviderResponse(ProviderResponse providerResponse) {
+        this.providerResponses.add(providerResponse);
+        providerResponse.setProviderCommand(this);
+        return this;
+    }
+
+    public ProviderCommand removeProviderResponse(ProviderResponse providerResponse) {
+        this.providerResponses.remove(providerResponse);
+        providerResponse.setProviderCommand(null);
+        return this;
+    }
+
+    public void setProviderResponses(Set<ProviderResponse> providerResponses) {
+        this.providerResponses = providerResponses;
+    }
+
+    public Set<RequestParameter> getRequestParameters() {
+        return requestParameters;
+    }
+
+    public ProviderCommand requestParameters(Set<RequestParameter> requestParameters) {
+        this.requestParameters = requestParameters;
+        return this;
+    }
+
+    public ProviderCommand addRequestParameter(RequestParameter requestParameter) {
+        this.requestParameters.add(requestParameter);
+        requestParameter.setProviderCommand(this);
+        return this;
+    }
+
+    public ProviderCommand removeRequestParameter(RequestParameter requestParameter) {
+        this.requestParameters.remove(requestParameter);
+        requestParameter.setProviderCommand(null);
+        return this;
+    }
+
+    public void setRequestParameters(Set<RequestParameter> requestParameters) {
+        this.requestParameters = requestParameters;
     }
 
     @Override
@@ -190,9 +250,6 @@ public class ProviderCommand implements Serializable {
             ", code='" + getCode() + "'" +
             ", retryLimit='" + getRetryLimit() + "'" +
             ", retryInterval='" + getRetryInterval() + "'" +
-            ", providerId='" + getProviderId() + "'" +
-            ", commandId='" + getCommandId() + "'" +
-            ", communicationStandardId='" + getCommunicationStandardId() + "'" +
             ", serviceSecurityId='" + getServiceSecurityId() + "'" +
             "}";
     }

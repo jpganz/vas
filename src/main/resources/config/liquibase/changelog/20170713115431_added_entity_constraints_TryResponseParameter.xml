@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity TryResponseParameter.
+    -->
+    <changeSet id="20170713115431-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="response_parameter_id"
+                                 baseTableName="try_response_parameter"
+                                 constraintName="fk_try_response_parameter_response_parameter_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="response_parameter"/>
+
+        <addForeignKeyConstraint baseColumnNames="request_try_id"
+                                 baseTableName="try_response_parameter"
+                                 constraintName="fk_try_response_parameter_request_try_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="request_try"/>
+
+    </changeSet>
+</databaseChangeLog>

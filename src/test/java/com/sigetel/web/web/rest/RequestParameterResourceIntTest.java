@@ -50,9 +50,6 @@ public class RequestParameterResourceIntTest {
     private static final String DEFAULT_SECTION = "AAAAAAAAAA";
     private static final String UPDATED_SECTION = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_PROVIDER_COMMAND_ID = 1L;
-    private static final Long UPDATED_PROVIDER_COMMAND_ID = 2L;
-
     private static final Boolean DEFAULT_IS_MANDATORY = false;
     private static final Boolean UPDATED_IS_MANDATORY = true;
 
@@ -100,7 +97,6 @@ public class RequestParameterResourceIntTest {
             .type(DEFAULT_TYPE)
             .defaultValue(DEFAULT_DEFAULT_VALUE)
             .section(DEFAULT_SECTION)
-            .providerCommandId(DEFAULT_PROVIDER_COMMAND_ID)
             .isMandatory(DEFAULT_IS_MANDATORY);
         return requestParameter;
     }
@@ -129,7 +125,6 @@ public class RequestParameterResourceIntTest {
         assertThat(testRequestParameter.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testRequestParameter.getDefaultValue()).isEqualTo(DEFAULT_DEFAULT_VALUE);
         assertThat(testRequestParameter.getSection()).isEqualTo(DEFAULT_SECTION);
-        assertThat(testRequestParameter.getProviderCommandId()).isEqualTo(DEFAULT_PROVIDER_COMMAND_ID);
         assertThat(testRequestParameter.isIsMandatory()).isEqualTo(DEFAULT_IS_MANDATORY);
     }
 
@@ -208,24 +203,6 @@ public class RequestParameterResourceIntTest {
 
     @Test
     @Transactional
-    public void checkProviderCommandIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = requestParameterRepository.findAll().size();
-        // set the field null
-        requestParameter.setProviderCommandId(null);
-
-        // Create the RequestParameter, which fails.
-
-        restRequestParameterMockMvc.perform(post("/api/request-parameters")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(requestParameter)))
-            .andExpect(status().isBadRequest());
-
-        List<RequestParameter> requestParameterList = requestParameterRepository.findAll();
-        assertThat(requestParameterList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllRequestParameters() throws Exception {
         // Initialize the database
         requestParameterRepository.saveAndFlush(requestParameter);
@@ -239,7 +216,6 @@ public class RequestParameterResourceIntTest {
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].defaultValue").value(hasItem(DEFAULT_DEFAULT_VALUE.toString())))
             .andExpect(jsonPath("$.[*].section").value(hasItem(DEFAULT_SECTION.toString())))
-            .andExpect(jsonPath("$.[*].providerCommandId").value(hasItem(DEFAULT_PROVIDER_COMMAND_ID.intValue())))
             .andExpect(jsonPath("$.[*].isMandatory").value(hasItem(DEFAULT_IS_MANDATORY.booleanValue())));
     }
 
@@ -258,7 +234,6 @@ public class RequestParameterResourceIntTest {
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.defaultValue").value(DEFAULT_DEFAULT_VALUE.toString()))
             .andExpect(jsonPath("$.section").value(DEFAULT_SECTION.toString()))
-            .andExpect(jsonPath("$.providerCommandId").value(DEFAULT_PROVIDER_COMMAND_ID.intValue()))
             .andExpect(jsonPath("$.isMandatory").value(DEFAULT_IS_MANDATORY.booleanValue()));
     }
 
@@ -285,7 +260,6 @@ public class RequestParameterResourceIntTest {
             .type(UPDATED_TYPE)
             .defaultValue(UPDATED_DEFAULT_VALUE)
             .section(UPDATED_SECTION)
-            .providerCommandId(UPDATED_PROVIDER_COMMAND_ID)
             .isMandatory(UPDATED_IS_MANDATORY);
 
         restRequestParameterMockMvc.perform(put("/api/request-parameters")
@@ -301,7 +275,6 @@ public class RequestParameterResourceIntTest {
         assertThat(testRequestParameter.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testRequestParameter.getDefaultValue()).isEqualTo(UPDATED_DEFAULT_VALUE);
         assertThat(testRequestParameter.getSection()).isEqualTo(UPDATED_SECTION);
-        assertThat(testRequestParameter.getProviderCommandId()).isEqualTo(UPDATED_PROVIDER_COMMAND_ID);
         assertThat(testRequestParameter.isIsMandatory()).isEqualTo(UPDATED_IS_MANDATORY);
     }
 

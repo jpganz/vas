@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity TryParameter.
+    -->
+    <changeSet id="20170713113136-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="request_id"
+                                 baseTableName="try_parameter"
+                                 constraintName="fk_try_parameter_request_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="request"/>
+
+        <addForeignKeyConstraint baseColumnNames="request_parameter_id"
+                                 baseTableName="try_parameter"
+                                 constraintName="fk_try_parameter_request_parameter_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="request_parameter"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,9 +1,12 @@
 package com.sigetel.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -34,12 +37,16 @@ public class RequestParameter implements Serializable {
     @Column(name = "section", nullable = false)
     private String section;
 
-    @NotNull
-    @Column(name = "provider_command_id", nullable = false)
-    private Long providerCommandId;
-
     @Column(name = "is_mandatory")
     private Boolean isMandatory;
+
+    @OneToMany(mappedBy = "requestParameter", fetch = FetchType.EAGER)
+    //@JsonIgnore
+    private Set<TryParameter> tryParameters = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnore
+    private ProviderCommand providerCommand;
 
     public Long getId() {
         return id;
@@ -101,19 +108,6 @@ public class RequestParameter implements Serializable {
         this.section = section;
     }
 
-    public Long getProviderCommandId() {
-        return providerCommandId;
-    }
-
-    public RequestParameter providerCommandId(Long providerCommandId) {
-        this.providerCommandId = providerCommandId;
-        return this;
-    }
-
-    public void setProviderCommandId(Long providerCommandId) {
-        this.providerCommandId = providerCommandId;
-    }
-
     public Boolean isIsMandatory() {
         return isMandatory;
     }
@@ -125,6 +119,44 @@ public class RequestParameter implements Serializable {
 
     public void setIsMandatory(Boolean isMandatory) {
         this.isMandatory = isMandatory;
+    }
+
+    public Set<TryParameter> getTryParameters() {
+        return tryParameters;
+    }
+
+    public RequestParameter tryParameters(Set<TryParameter> tryParameters) {
+        this.tryParameters = tryParameters;
+        return this;
+    }
+
+    public RequestParameter addTryParameter(TryParameter tryParameter) {
+        this.tryParameters.add(tryParameter);
+        tryParameter.setRequestParameter(this);
+        return this;
+    }
+
+    public RequestParameter removeTryParameter(TryParameter tryParameter) {
+        this.tryParameters.remove(tryParameter);
+        tryParameter.setRequestParameter(null);
+        return this;
+    }
+
+    public void setTryParameters(Set<TryParameter> tryParameters) {
+        this.tryParameters = tryParameters;
+    }
+
+    public ProviderCommand getProviderCommand() {
+        return providerCommand;
+    }
+
+    public RequestParameter providerCommand(ProviderCommand providerCommand) {
+        this.providerCommand = providerCommand;
+        return this;
+    }
+
+    public void setProviderCommand(ProviderCommand providerCommand) {
+        this.providerCommand = providerCommand;
     }
 
     @Override
@@ -155,7 +187,6 @@ public class RequestParameter implements Serializable {
             ", type='" + getType() + "'" +
             ", defaultValue='" + getDefaultValue() + "'" +
             ", section='" + getSection() + "'" +
-            ", providerCommandId='" + getProviderCommandId() + "'" +
             ", isMandatory='" + isIsMandatory() + "'" +
             "}";
     }
