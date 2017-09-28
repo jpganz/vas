@@ -1,9 +1,12 @@
 package com.sigetel.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -34,6 +37,10 @@ public class ProviderResponse implements Serializable {
 
     @ManyToOne
     private ProviderCommand providerCommand;
+
+    @OneToMany(mappedBy = "providerResponse",  fetch = FetchType.EAGER)
+    //@JsonIgnore
+    private Set<ResponseParameter> responseParameters = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -106,6 +113,31 @@ public class ProviderResponse implements Serializable {
 
     public void setProviderCommand(ProviderCommand providerCommand) {
         this.providerCommand = providerCommand;
+    }
+
+    public Set<ResponseParameter> getResponseParameters() {
+        return responseParameters;
+    }
+
+    public ProviderResponse responseParameters(Set<ResponseParameter> responseParameters) {
+        this.responseParameters = responseParameters;
+        return this;
+    }
+
+    public ProviderResponse addResponseParameter(ResponseParameter responseParameter) {
+        this.responseParameters.add(responseParameter);
+        responseParameter.setProviderResponse(this);
+        return this;
+    }
+
+    public ProviderResponse removeResponseParameter(ResponseParameter responseParameter) {
+        this.responseParameters.remove(responseParameter);
+        responseParameter.setProviderResponse(null);
+        return this;
+    }
+
+    public void setResponseParameters(Set<ResponseParameter> responseParameters) {
+        this.responseParameters = responseParameters;
     }
 
     @Override

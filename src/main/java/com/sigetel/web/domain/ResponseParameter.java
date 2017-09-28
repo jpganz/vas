@@ -42,8 +42,8 @@ public class ResponseParameter implements Serializable {
     @JsonIgnore
     private ProviderResponse providerResponse;
 
-    @OneToMany(mappedBy = "responseParameter", fetch = FetchType.LAZY)
-    //@JsonIgnore
+    @OneToMany(mappedBy = "responseParameter")
+    @JsonIgnore
     private Set<TryResponseParameter> tryResponseParameters = new HashSet<>();
 
     public Long getId() {

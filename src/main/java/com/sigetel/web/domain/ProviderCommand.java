@@ -46,7 +46,7 @@ public class ProviderCommand implements Serializable {
     @Column(name = "email_notify")
     private Integer emailNotify;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private Provider provider;
 
