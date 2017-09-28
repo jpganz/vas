@@ -44,11 +44,11 @@ public class ProviderResponseResourceIntTest {
     private static final String DEFAULT_EMAIL_ADDRESS_TO_NOTIFY = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL_ADDRESS_TO_NOTIFY = "BBBBBBBBBB";
 
-    private static final Boolean DEFAULT_ADD_TO_RETRY = false;
-    private static final Boolean UPDATED_ADD_TO_RETRY = true;
-
     private static final String DEFAULT_TYPE = "AAAAAAAAAA";
     private static final String UPDATED_TYPE = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_ADD_TO_RETRY = 1;
+    private static final Integer UPDATED_ADD_TO_RETRY = 2;
 
     @Autowired
     private ProviderResponseRepository providerResponseRepository;
@@ -92,8 +92,8 @@ public class ProviderResponseResourceIntTest {
         ProviderResponse providerResponse = new ProviderResponse()
             .emailNotify(DEFAULT_EMAIL_NOTIFY)
             .emailAddressToNotify(DEFAULT_EMAIL_ADDRESS_TO_NOTIFY)
-            .addToRetry(DEFAULT_ADD_TO_RETRY)
-            .type(DEFAULT_TYPE);
+            .type(DEFAULT_TYPE)
+            .addToRetry(DEFAULT_ADD_TO_RETRY);
         return providerResponse;
     }
 
@@ -119,8 +119,8 @@ public class ProviderResponseResourceIntTest {
         ProviderResponse testProviderResponse = providerResponseList.get(providerResponseList.size() - 1);
         assertThat(testProviderResponse.getEmailNotify()).isEqualTo(DEFAULT_EMAIL_NOTIFY);
         assertThat(testProviderResponse.getEmailAddressToNotify()).isEqualTo(DEFAULT_EMAIL_ADDRESS_TO_NOTIFY);
-        assertThat(testProviderResponse.isAddToRetry()).isEqualTo(DEFAULT_ADD_TO_RETRY);
         assertThat(testProviderResponse.getType()).isEqualTo(DEFAULT_TYPE);
+        assertThat(testProviderResponse.getAddToRetry()).isEqualTo(DEFAULT_ADD_TO_RETRY);
     }
 
     @Test
@@ -173,8 +173,8 @@ public class ProviderResponseResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(providerResponse.getId().intValue())))
             .andExpect(jsonPath("$.[*].emailNotify").value(hasItem(DEFAULT_EMAIL_NOTIFY.toString())))
             .andExpect(jsonPath("$.[*].emailAddressToNotify").value(hasItem(DEFAULT_EMAIL_ADDRESS_TO_NOTIFY.toString())))
-            .andExpect(jsonPath("$.[*].addToRetry").value(hasItem(DEFAULT_ADD_TO_RETRY.booleanValue())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].addToRetry").value(hasItem(DEFAULT_ADD_TO_RETRY)));
     }
 
     @Test
@@ -190,8 +190,8 @@ public class ProviderResponseResourceIntTest {
             .andExpect(jsonPath("$.id").value(providerResponse.getId().intValue()))
             .andExpect(jsonPath("$.emailNotify").value(DEFAULT_EMAIL_NOTIFY.toString()))
             .andExpect(jsonPath("$.emailAddressToNotify").value(DEFAULT_EMAIL_ADDRESS_TO_NOTIFY.toString()))
-            .andExpect(jsonPath("$.addToRetry").value(DEFAULT_ADD_TO_RETRY.booleanValue()))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
+            .andExpect(jsonPath("$.addToRetry").value(DEFAULT_ADD_TO_RETRY));
     }
 
     @Test
@@ -215,8 +215,8 @@ public class ProviderResponseResourceIntTest {
         updatedProviderResponse
             .emailNotify(UPDATED_EMAIL_NOTIFY)
             .emailAddressToNotify(UPDATED_EMAIL_ADDRESS_TO_NOTIFY)
-            .addToRetry(UPDATED_ADD_TO_RETRY)
-            .type(UPDATED_TYPE);
+            .type(UPDATED_TYPE)
+            .addToRetry(UPDATED_ADD_TO_RETRY);
 
         restProviderResponseMockMvc.perform(put("/api/provider-responses")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -229,8 +229,8 @@ public class ProviderResponseResourceIntTest {
         ProviderResponse testProviderResponse = providerResponseList.get(providerResponseList.size() - 1);
         assertThat(testProviderResponse.getEmailNotify()).isEqualTo(UPDATED_EMAIL_NOTIFY);
         assertThat(testProviderResponse.getEmailAddressToNotify()).isEqualTo(UPDATED_EMAIL_ADDRESS_TO_NOTIFY);
-        assertThat(testProviderResponse.isAddToRetry()).isEqualTo(UPDATED_ADD_TO_RETRY);
         assertThat(testProviderResponse.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testProviderResponse.getAddToRetry()).isEqualTo(UPDATED_ADD_TO_RETRY);
     }
 
     @Test

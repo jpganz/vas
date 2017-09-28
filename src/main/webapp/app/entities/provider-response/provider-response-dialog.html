@@ -26,11 +26,6 @@
                     />
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_addToRetry">Add To Retry</label>
-                <input type="checkbox" name="addToRetry" id="field_addToRetry"
-                          ng-model="vm.providerResponse.addToRetry"/>
-        </div>
-        <div class="form-group">
             <label class="control-label" for="field_type">Type</label>
             <input type="text" class="form-control" name="type" id="field_type"
                     ng-model="vm.providerResponse.type"
@@ -41,6 +36,12 @@
                     This field is required.
                 </p>
             </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_addToRetry">Add To Retry</label>
+            <input type="number" class="form-control" name="addToRetry" id="field_addToRetry"
+                    ng-model="vm.providerResponse.addToRetry"
+                    />
         </div>
 
         <div class="form-group">

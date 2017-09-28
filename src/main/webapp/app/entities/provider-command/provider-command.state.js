@@ -99,9 +99,9 @@
                                 code: null,
                                 retryLimit: null,
                                 retryInterval: null,
-                                emailNotify: null,
                                 emailAddressToNotify: null,
                                 addToRetry: null,
+                                emailNotify: null,
                                 id: null
                             };
                         }

@@ -37,34 +37,35 @@ public class ProviderCommand implements Serializable {
     @Column(name = "retry_interval", nullable = false)
     private Long retryInterval;
 
-    @Column(name = "email_notify")
-    private Boolean emailNotify;
-
     @Column(name = "email_address_to_notify")
     private String emailAddressToNotify;
 
     @Column(name = "add_to_retry")
     private Boolean addToRetry;
 
+    @Column(name = "email_notify")
+    private Integer emailNotify;
+
     @ManyToOne
+    @JsonIgnore
     private Provider provider;
 
     @ManyToOne
     private CommunicationStandard communicationStandard;
 
     @OneToMany(mappedBy = "providerCommand")
-    @JsonIgnore
+    //@JsonIgnore
     private Set<ProviderResponse> providerResponses = new HashSet<>();
 
     @OneToMany(mappedBy = "providerCommand")
-
+    @JsonIgnore
     private Set<RequestParameter> requestParameters = new HashSet<>();
 
     @ManyToOne
     private Command command;
 
     @OneToMany(mappedBy = "providerCommand")
-
+    @JsonIgnore
     private Set<ServiceSecurity> serviceSecurities = new HashSet<>();
 
     public Long getId() {
@@ -127,19 +128,6 @@ public class ProviderCommand implements Serializable {
         this.retryInterval = retryInterval;
     }
 
-    public Boolean isEmailNotify() {
-        return emailNotify;
-    }
-
-    public ProviderCommand emailNotify(Boolean emailNotify) {
-        this.emailNotify = emailNotify;
-        return this;
-    }
-
-    public void setEmailNotify(Boolean emailNotify) {
-        this.emailNotify = emailNotify;
-    }
-
     public String getEmailAddressToNotify() {
         return emailAddressToNotify;
     }
@@ -164,6 +152,19 @@ public class ProviderCommand implements Serializable {
 
     public void setAddToRetry(Boolean addToRetry) {
         this.addToRetry = addToRetry;
+    }
+
+    public Integer getEmailNotify() {
+        return emailNotify;
+    }
+
+    public ProviderCommand emailNotify(Integer emailNotify) {
+        this.emailNotify = emailNotify;
+        return this;
+    }
+
+    public void setEmailNotify(Integer emailNotify) {
+        this.emailNotify = emailNotify;
     }
 
     public Provider getProvider() {
@@ -308,9 +309,9 @@ public class ProviderCommand implements Serializable {
             ", code='" + getCode() + "'" +
             ", retryLimit='" + getRetryLimit() + "'" +
             ", retryInterval='" + getRetryInterval() + "'" +
-            ", emailNotify='" + isEmailNotify() + "'" +
             ", emailAddressToNotify='" + getEmailAddressToNotify() + "'" +
             ", addToRetry='" + isAddToRetry() + "'" +
+            ", emailNotify='" + getEmailNotify() + "'" +
             "}";
     }
 }

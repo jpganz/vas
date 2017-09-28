@@ -1,12 +1,9 @@
 package com.sigetel.web.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -28,20 +25,15 @@ public class ProviderResponse implements Serializable {
     @Column(name = "email_address_to_notify")
     private String emailAddressToNotify;
 
-    @Column(name = "add_to_retry")
-    private Boolean addToRetry;
-
     @NotNull
     @Column(name = "jhi_type", nullable = false)
     private String type;
 
-    @ManyToOne
-    @JsonIgnore
-    private ProviderCommand providerCommand;
+    @Column(name = "add_to_retry")
+    private Integer addToRetry;
 
-    @OneToMany(mappedBy = "providerResponse", fetch = FetchType.LAZY)
-    //@JsonIgnore
-    private Set<ResponseParameter> responseParameters = new HashSet<>();
+    @ManyToOne
+    private ProviderCommand providerCommand;
 
     public Long getId() {
         return id;
@@ -77,19 +69,6 @@ public class ProviderResponse implements Serializable {
         this.emailAddressToNotify = emailAddressToNotify;
     }
 
-    public Boolean isAddToRetry() {
-        return addToRetry;
-    }
-
-    public ProviderResponse addToRetry(Boolean addToRetry) {
-        this.addToRetry = addToRetry;
-        return this;
-    }
-
-    public void setAddToRetry(Boolean addToRetry) {
-        this.addToRetry = addToRetry;
-    }
-
     public String getType() {
         return type;
     }
@@ -103,6 +82,19 @@ public class ProviderResponse implements Serializable {
         this.type = type;
     }
 
+    public Integer getAddToRetry() {
+        return addToRetry;
+    }
+
+    public ProviderResponse addToRetry(Integer addToRetry) {
+        this.addToRetry = addToRetry;
+        return this;
+    }
+
+    public void setAddToRetry(Integer addToRetry) {
+        this.addToRetry = addToRetry;
+    }
+
     public ProviderCommand getProviderCommand() {
         return providerCommand;
     }
@@ -114,31 +106,6 @@ public class ProviderResponse implements Serializable {
 
     public void setProviderCommand(ProviderCommand providerCommand) {
         this.providerCommand = providerCommand;
-    }
-
-    public Set<ResponseParameter> getResponseParameters() {
-        return responseParameters;
-    }
-
-    public ProviderResponse responseParameters(Set<ResponseParameter> responseParameters) {
-        this.responseParameters = responseParameters;
-        return this;
-    }
-
-    public ProviderResponse addResponseParameter(ResponseParameter responseParameter) {
-        this.responseParameters.add(responseParameter);
-        responseParameter.setProviderResponse(this);
-        return this;
-    }
-
-    public ProviderResponse removeResponseParameter(ResponseParameter responseParameter) {
-        this.responseParameters.remove(responseParameter);
-        responseParameter.setProviderResponse(null);
-        return this;
-    }
-
-    public void setResponseParameters(Set<ResponseParameter> responseParameters) {
-        this.responseParameters = responseParameters;
     }
 
     @Override
@@ -167,8 +134,8 @@ public class ProviderResponse implements Serializable {
             "id=" + getId() +
             ", emailNotify='" + getEmailNotify() + "'" +
             ", emailAddressToNotify='" + getEmailAddressToNotify() + "'" +
-            ", addToRetry='" + isAddToRetry() + "'" +
             ", type='" + getType() + "'" +
+            ", addToRetry='" + getAddToRetry() + "'" +
             "}";
     }
 }

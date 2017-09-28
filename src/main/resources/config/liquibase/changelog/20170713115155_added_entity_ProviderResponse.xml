@@ -30,12 +30,12 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="add_to_retry" type="bit">
-                <constraints nullable="true" />
-            </column>
-
             <column name="jhi_type" type="varchar(255)">
                 <constraints nullable="false" />
+            </column>
+
+            <column name="add_to_retry" type="integer">
+                <constraints nullable="true" />
             </column>
 
             <column name="provider_command_id" type="bigint">

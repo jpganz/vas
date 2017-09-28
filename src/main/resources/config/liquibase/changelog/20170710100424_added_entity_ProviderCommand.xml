@@ -38,15 +38,15 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="email_notify" type="bit">
-                <constraints nullable="true" />
-            </column>
-
             <column name="email_address_to_notify" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
             <column name="add_to_retry" type="bit">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="email_notify" type="integer">
                 <constraints nullable="true" />
             </column>
 

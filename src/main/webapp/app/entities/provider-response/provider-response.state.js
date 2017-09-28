@@ -97,8 +97,8 @@
                             return {
                                 emailNotify: null,
                                 emailAddressToNotify: null,
-                                addToRetry: null,
                                 type: null,
+                                addToRetry: null,
                                 id: null
                             };
                         }

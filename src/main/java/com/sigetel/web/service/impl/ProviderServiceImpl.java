@@ -66,7 +66,6 @@ public class ProviderServiceImpl implements ProviderService{
         }
         return provider;
     }
-
     /**
      *  Delete the  provider by id.
      *
@@ -77,4 +76,13 @@ public class ProviderServiceImpl implements ProviderService{
         log.debug("Request to delete Provider : {}", id);
         providerRepository.delete(id);
     }
+/*
+    @Override
+    @Transactional(readOnly = true)
+    public Provider findByIdAndProviderCommandId(Long id, Long commandId) {
+        log.debug("Request to get Provider : {}", id);
+        return providerRepository.findByIdAndProviderCommandsId(id, commandId);
+    }
+
+  */
 }

@@ -64,11 +64,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_emailNotify">Email Notify</label>
-                <input type="checkbox" name="emailNotify" id="field_emailNotify"
-                          ng-model="vm.providerCommand.emailNotify"/>
-        </div>
-        <div class="form-group">
             <label class="control-label" for="field_emailAddressToNotify">Email Address To Notify</label>
             <input type="text" class="form-control" name="emailAddressToNotify" id="field_emailAddressToNotify"
                     ng-model="vm.providerCommand.emailAddressToNotify"
@@ -78,6 +73,12 @@
             <label class="control-label" for="field_addToRetry">Add To Retry</label>
                 <input type="checkbox" name="addToRetry" id="field_addToRetry"
                           ng-model="vm.providerCommand.addToRetry"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_emailNotify">Email Notify</label>
+            <input type="number" class="form-control" name="emailNotify" id="field_emailNotify"
+                    ng-model="vm.providerCommand.emailNotify"
+                    />
         </div>
 
         <div class="form-group">

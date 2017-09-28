@@ -95,7 +95,7 @@ public class ProviderResource {
      * @param id the id of the provider to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the provider, or with status 404 (Not Found)
      */
-    @GetMapping("/providersA/{id}")
+    @GetMapping("/providersx/{id}")
     @Timed
     public ResponseEntity<Provider> getProvider(@PathVariable Long id) {
         log.debug("REST request to get Provider : {}", id);
@@ -124,70 +124,38 @@ public class ProviderResource {
         return providerService.findAll();
     }
 
-    @GetMapping("/providers/{id}")
+    @GetMapping("/providers-list/{id}")
     @Timed
-    @Transactional
-    public Provider getAllProviders1(@PathVariable Long id) {
+    //@Transactional
+    public ResponseEntity<Provider> getAllProviders1(@PathVariable Long id) {
         log.debug("REST request to get all Providers");
         Provider provider = providerService.findOne(id);
-        List<ProviderCommand> providerCommands = provider.getProviderCommands();
-        for(ProviderCommand command:providerCommands){
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(provider));
+        /*List<ProviderCommand> providerCommands = provider.getProviderCommands();
+        for (ProviderCommand command : providerCommands) {
             command.getId();
             command.getCommand().getName();
             command.getCommunicationStandard().getName();
-            for(ServiceSecurity security:command.getServiceSecurities()){
+            for (ServiceSecurity security : command.getServiceSecurities()) {
                 security.getName();
-                    for(SecurityParams params:security.getSecurityParams()){
-                        params.getId();
-                        break;
-                    }
-                    break;
-            }
-            for(RequestParameter param:command.getRequestParameters()){
-                param.getName();
-                break;
-            }
-            break;
-        }
-        return provider;
-    }
-
-    @GetMapping("/providers/{id}/request")
-    @Timed
-    public List<Provider> getAllProviders3(@PathVariable Long id) {
-        log.debug("REST request to get all Providers");
-        List<Provider> providers = providerService.findAll();
-        for(Provider provider:providers){
-            for(ProviderCommand command:provider.getProviderCommands()){
-                for(RequestParameter param:command.getRequestParameters()){
-                    param.getDefaultValue();
-                    break;
+                for (SecurityParams params : security.getSecurityParams()) {
+                    params.getId();
+                   //break;
                 }
+                //break;
             }
+            for (RequestParameter param : command.getRequestParameters()) {
+                param.getName();
+                //break;
+            }
+           // break;
         }
-        return providers;
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(provider));*/
     }
 
-    @GetMapping("/providers/{id}/request/{requestId}")
-        @Timed
-        public List<Provider>getAllProviders4(@PathVariable Long id, @PathVariable Long requestId){
-        log.debug("REST request to get all Providers");
-        return providerService.findAll();
-    }
 
-    @GetMapping("/providers/{id}/request/{requestId}/response")
-    @Timed
-    public List<Provider>getAllProviders5(@PathVariable Long id, @PathVariable Long requestId){
-        log.debug("REST request to get all Providers");
-        return providerService.findAll();
-    }
 
-    @GetMapping("/providers/{id}/request/{requestId}/response/{responseId}")
-    @Timed
-    public List<Provider>getAllProviders6(@PathVariable Long id, @PathVariable Long requestId, @PathVariable Long responseId){
-        log.debug("REST request to get all Providers");
-        return providerService.findAll();
-    }
+
 
 
 }
