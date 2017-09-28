@@ -23,7 +23,9 @@
                     <th><span>Code</span></th>
                     <th><span>Retry Limit</span></th>
                     <th><span>Retry Interval</span></th>
-                    <th><span>Service Security Id</span></th>
+                    <th><span>Email Notify</span></th>
+                    <th><span>Email Address To Notify</span></th>
+                    <th><span>Add To Retry</span></th>
                     <th><span>Provider</span></th>
                     <th><span>Communication Standard</span></th>
                     <th><span>Command</span></th>
@@ -37,7 +39,9 @@
                     <td>{{providerCommand.code}}</td>
                     <td>{{providerCommand.retryLimit}}</td>
                     <td>{{providerCommand.retryInterval}}</td>
-                    <td>{{providerCommand.serviceSecurityId}}</td>
+                    <td>{{providerCommand.emailNotify}}</td>
+                    <td>{{providerCommand.emailAddressToNotify}}</td>
+                    <td>{{providerCommand.addToRetry}}</td>
                     <td>
                         <a ui-sref="provider-detail({id:providerCommand.provider.id})">{{providerCommand.provider.id}}</a>
                     </td>

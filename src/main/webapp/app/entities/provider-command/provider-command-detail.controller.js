@@ -5,9 +5,9 @@
         .module('ovasApp')
         .controller('ProviderCommandDetailController', ProviderCommandDetailController);
 
-    ProviderCommandDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'ProviderCommand', 'Provider', 'CommunicationStandard', 'Command', 'ProviderResponse', 'RequestParameter'];
+    ProviderCommandDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'ProviderCommand', 'Provider', 'CommunicationStandard', 'ProviderResponse', 'RequestParameter', 'Command', 'ServiceSecurity'];
 
-    function ProviderCommandDetailController($scope, $rootScope, $stateParams, previousState, entity, ProviderCommand, Provider, CommunicationStandard, Command, ProviderResponse, RequestParameter) {
+    function ProviderCommandDetailController($scope, $rootScope, $stateParams, previousState, entity, ProviderCommand, Provider, CommunicationStandard, ProviderResponse, RequestParameter, Command, ServiceSecurity) {
         var vm = this;
 
         vm.providerCommand = entity;

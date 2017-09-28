@@ -50,8 +50,14 @@ public class ProviderCommandResourceIntTest {
     private static final Long DEFAULT_RETRY_INTERVAL = 1L;
     private static final Long UPDATED_RETRY_INTERVAL = 2L;
 
-    private static final Long DEFAULT_SERVICE_SECURITY_ID = 1L;
-    private static final Long UPDATED_SERVICE_SECURITY_ID = 2L;
+    private static final Boolean DEFAULT_EMAIL_NOTIFY = false;
+    private static final Boolean UPDATED_EMAIL_NOTIFY = true;
+
+    private static final String DEFAULT_EMAIL_ADDRESS_TO_NOTIFY = "AAAAAAAAAA";
+    private static final String UPDATED_EMAIL_ADDRESS_TO_NOTIFY = "BBBBBBBBBB";
+
+    private static final Boolean DEFAULT_ADD_TO_RETRY = false;
+    private static final Boolean UPDATED_ADD_TO_RETRY = true;
 
     @Autowired
     private ProviderCommandRepository providerCommandRepository;
@@ -97,7 +103,9 @@ public class ProviderCommandResourceIntTest {
             .code(DEFAULT_CODE)
             .retryLimit(DEFAULT_RETRY_LIMIT)
             .retryInterval(DEFAULT_RETRY_INTERVAL)
-            .serviceSecurityId(DEFAULT_SERVICE_SECURITY_ID);
+            .emailNotify(DEFAULT_EMAIL_NOTIFY)
+            .emailAddressToNotify(DEFAULT_EMAIL_ADDRESS_TO_NOTIFY)
+            .addToRetry(DEFAULT_ADD_TO_RETRY);
         return providerCommand;
     }
 
@@ -125,7 +133,9 @@ public class ProviderCommandResourceIntTest {
         assertThat(testProviderCommand.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testProviderCommand.getRetryLimit()).isEqualTo(DEFAULT_RETRY_LIMIT);
         assertThat(testProviderCommand.getRetryInterval()).isEqualTo(DEFAULT_RETRY_INTERVAL);
-        assertThat(testProviderCommand.getServiceSecurityId()).isEqualTo(DEFAULT_SERVICE_SECURITY_ID);
+        assertThat(testProviderCommand.isEmailNotify()).isEqualTo(DEFAULT_EMAIL_NOTIFY);
+        assertThat(testProviderCommand.getEmailAddressToNotify()).isEqualTo(DEFAULT_EMAIL_ADDRESS_TO_NOTIFY);
+        assertThat(testProviderCommand.isAddToRetry()).isEqualTo(DEFAULT_ADD_TO_RETRY);
     }
 
     @Test
@@ -203,24 +213,6 @@ public class ProviderCommandResourceIntTest {
 
     @Test
     @Transactional
-    public void checkServiceSecurityIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = providerCommandRepository.findAll().size();
-        // set the field null
-        providerCommand.setServiceSecurityId(null);
-
-        // Create the ProviderCommand, which fails.
-
-        restProviderCommandMockMvc.perform(post("/api/provider-commands")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(providerCommand)))
-            .andExpect(status().isBadRequest());
-
-        List<ProviderCommand> providerCommandList = providerCommandRepository.findAll();
-        assertThat(providerCommandList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllProviderCommands() throws Exception {
         // Initialize the database
         providerCommandRepository.saveAndFlush(providerCommand);
@@ -234,7 +226,9 @@ public class ProviderCommandResourceIntTest {
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].retryLimit").value(hasItem(DEFAULT_RETRY_LIMIT.intValue())))
             .andExpect(jsonPath("$.[*].retryInterval").value(hasItem(DEFAULT_RETRY_INTERVAL.intValue())))
-            .andExpect(jsonPath("$.[*].serviceSecurityId").value(hasItem(DEFAULT_SERVICE_SECURITY_ID.intValue())));
+            .andExpect(jsonPath("$.[*].emailNotify").value(hasItem(DEFAULT_EMAIL_NOTIFY.booleanValue())))
+            .andExpect(jsonPath("$.[*].emailAddressToNotify").value(hasItem(DEFAULT_EMAIL_ADDRESS_TO_NOTIFY.toString())))
+            .andExpect(jsonPath("$.[*].addToRetry").value(hasItem(DEFAULT_ADD_TO_RETRY.booleanValue())));
     }
 
     @Test
@@ -252,7 +246,9 @@ public class ProviderCommandResourceIntTest {
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.retryLimit").value(DEFAULT_RETRY_LIMIT.intValue()))
             .andExpect(jsonPath("$.retryInterval").value(DEFAULT_RETRY_INTERVAL.intValue()))
-            .andExpect(jsonPath("$.serviceSecurityId").value(DEFAULT_SERVICE_SECURITY_ID.intValue()));
+            .andExpect(jsonPath("$.emailNotify").value(DEFAULT_EMAIL_NOTIFY.booleanValue()))
+            .andExpect(jsonPath("$.emailAddressToNotify").value(DEFAULT_EMAIL_ADDRESS_TO_NOTIFY.toString()))
+            .andExpect(jsonPath("$.addToRetry").value(DEFAULT_ADD_TO_RETRY.booleanValue()));
     }
 
     @Test
@@ -278,7 +274,9 @@ public class ProviderCommandResourceIntTest {
             .code(UPDATED_CODE)
             .retryLimit(UPDATED_RETRY_LIMIT)
             .retryInterval(UPDATED_RETRY_INTERVAL)
-            .serviceSecurityId(UPDATED_SERVICE_SECURITY_ID);
+            .emailNotify(UPDATED_EMAIL_NOTIFY)
+            .emailAddressToNotify(UPDATED_EMAIL_ADDRESS_TO_NOTIFY)
+            .addToRetry(UPDATED_ADD_TO_RETRY);
 
         restProviderCommandMockMvc.perform(put("/api/provider-commands")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -293,7 +291,9 @@ public class ProviderCommandResourceIntTest {
         assertThat(testProviderCommand.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testProviderCommand.getRetryLimit()).isEqualTo(UPDATED_RETRY_LIMIT);
         assertThat(testProviderCommand.getRetryInterval()).isEqualTo(UPDATED_RETRY_INTERVAL);
-        assertThat(testProviderCommand.getServiceSecurityId()).isEqualTo(UPDATED_SERVICE_SECURITY_ID);
+        assertThat(testProviderCommand.isEmailNotify()).isEqualTo(UPDATED_EMAIL_NOTIFY);
+        assertThat(testProviderCommand.getEmailAddressToNotify()).isEqualTo(UPDATED_EMAIL_ADDRESS_TO_NOTIFY);
+        assertThat(testProviderCommand.isAddToRetry()).isEqualTo(UPDATED_ADD_TO_RETRY);
     }
 
     @Test

@@ -96,7 +96,6 @@
                         entity: function () {
                             return {
                                 name: null,
-                                communicationStandardId: null,
                                 id: null
                             };
                         }

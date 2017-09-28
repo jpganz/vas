@@ -41,9 +41,6 @@ public class ServiceSecurityResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_COMMUNICATION_STANDARD_ID = 1L;
-    private static final Long UPDATED_COMMUNICATION_STANDARD_ID = 2L;
-
     @Autowired
     private ServiceSecurityRepository serviceSecurityRepository;
 
@@ -84,8 +81,7 @@ public class ServiceSecurityResourceIntTest {
      */
     public static ServiceSecurity createEntity(EntityManager em) {
         ServiceSecurity serviceSecurity = new ServiceSecurity()
-            .name(DEFAULT_NAME)
-            .communicationStandardId(DEFAULT_COMMUNICATION_STANDARD_ID);
+            .name(DEFAULT_NAME);
         return serviceSecurity;
     }
 
@@ -110,7 +106,6 @@ public class ServiceSecurityResourceIntTest {
         assertThat(serviceSecurityList).hasSize(databaseSizeBeforeCreate + 1);
         ServiceSecurity testServiceSecurity = serviceSecurityList.get(serviceSecurityList.size() - 1);
         assertThat(testServiceSecurity.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testServiceSecurity.getCommunicationStandardId()).isEqualTo(DEFAULT_COMMUNICATION_STANDARD_ID);
     }
 
     @Test
@@ -152,24 +147,6 @@ public class ServiceSecurityResourceIntTest {
 
     @Test
     @Transactional
-    public void checkCommunicationStandardIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = serviceSecurityRepository.findAll().size();
-        // set the field null
-        serviceSecurity.setCommunicationStandardId(null);
-
-        // Create the ServiceSecurity, which fails.
-
-        restServiceSecurityMockMvc.perform(post("/api/service-securities")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(serviceSecurity)))
-            .andExpect(status().isBadRequest());
-
-        List<ServiceSecurity> serviceSecurityList = serviceSecurityRepository.findAll();
-        assertThat(serviceSecurityList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllServiceSecurities() throws Exception {
         // Initialize the database
         serviceSecurityRepository.saveAndFlush(serviceSecurity);
@@ -179,8 +156,7 @@ public class ServiceSecurityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(serviceSecurity.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].communicationStandardId").value(hasItem(DEFAULT_COMMUNICATION_STANDARD_ID.intValue())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
     @Test
@@ -194,8 +170,7 @@ public class ServiceSecurityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(serviceSecurity.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.communicationStandardId").value(DEFAULT_COMMUNICATION_STANDARD_ID.intValue()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
 
     @Test
@@ -217,8 +192,7 @@ public class ServiceSecurityResourceIntTest {
         // Update the serviceSecurity
         ServiceSecurity updatedServiceSecurity = serviceSecurityRepository.findOne(serviceSecurity.getId());
         updatedServiceSecurity
-            .name(UPDATED_NAME)
-            .communicationStandardId(UPDATED_COMMUNICATION_STANDARD_ID);
+            .name(UPDATED_NAME);
 
         restServiceSecurityMockMvc.perform(put("/api/service-securities")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -230,7 +204,6 @@ public class ServiceSecurityResourceIntTest {
         assertThat(serviceSecurityList).hasSize(databaseSizeBeforeUpdate);
         ServiceSecurity testServiceSecurity = serviceSecurityList.get(serviceSecurityList.size() - 1);
         assertThat(testServiceSecurity.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testServiceSecurity.getCommunicationStandardId()).isEqualTo(UPDATED_COMMUNICATION_STANDARD_ID);
     }
 
     @Test

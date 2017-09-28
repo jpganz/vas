@@ -8,9 +8,13 @@
         <dd>
             <span>{{vm.serviceSecurity.name}}</span>
         </dd>
-        <dt><span>Communication Standard Id</span></dt>
+        <dt><span>Communication Standard</span></dt>
         <dd>
-            <span>{{vm.serviceSecurity.communicationStandardId}}</span>
+            <a ui-sref="communication-standard-detail({id:vm.serviceSecurity.communicationStandard.id})">{{vm.serviceSecurity.communicationStandard.id}}</a>
+        </dd>
+        <dt><span>Provider Command</span></dt>
+        <dd>
+            <a ui-sref="provider-command-detail({id:vm.serviceSecurity.providerCommand.id})">{{vm.serviceSecurity.providerCommand.id}}</a>
         </dd>
     </dl>
 

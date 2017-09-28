@@ -40,7 +40,7 @@ public class RequestParameter implements Serializable {
     @Column(name = "is_mandatory")
     private Boolean isMandatory;
 
-    @OneToMany(mappedBy = "requestParameter", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "requestParameter", fetch = FetchType.LAZY)
     //@JsonIgnore
     private Set<TryParameter> tryParameters = new HashSet<>();
 

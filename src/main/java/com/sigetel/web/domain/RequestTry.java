@@ -28,7 +28,7 @@ public class RequestTry implements Serializable {
     @JsonIgnore
     private Request request;
 
-    @OneToMany(mappedBy = "requestTry", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "requestTry", fetch = FetchType.LAZY)
     //@JsonIgnore
     private Set<TryResponseParameter> tryResponseParameters = new HashSet<>();
 

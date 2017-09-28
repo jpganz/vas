@@ -39,7 +39,7 @@ public class ProviderResponse implements Serializable {
     @JsonIgnore
     private ProviderCommand providerCommand;
 
-    @OneToMany(mappedBy = "providerResponse", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "providerResponse", fetch = FetchType.LAZY)
     //@JsonIgnore
     private Set<ResponseParameter> responseParameters = new HashSet<>();
 

@@ -17,7 +17,7 @@ public class Provider implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -32,7 +32,7 @@ public class Provider implements Serializable {
     @Column(name = "code", nullable = false)
     private Long code;
 
-    @OneToMany(mappedBy = "provider", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY)
     //@JsonIgnore
     private List<ProviderCommand> providerCommands = new ArrayList<>();
 

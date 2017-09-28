@@ -64,20 +64,20 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_serviceSecurityId">Service Security Id</label>
-            <input type="number" class="form-control" name="serviceSecurityId" id="field_serviceSecurityId"
-                    ng-model="vm.providerCommand.serviceSecurityId"
-                    required/>
-            <div ng-show="editForm.serviceSecurityId.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.serviceSecurityId.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.serviceSecurityId.$error.number">
-                    This field should be a number.
-                </p>
-            </div>
+            <label class="control-label" for="field_emailNotify">Email Notify</label>
+                <input type="checkbox" name="emailNotify" id="field_emailNotify"
+                          ng-model="vm.providerCommand.emailNotify"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_emailAddressToNotify">Email Address To Notify</label>
+            <input type="text" class="form-control" name="emailAddressToNotify" id="field_emailAddressToNotify"
+                    ng-model="vm.providerCommand.emailAddressToNotify"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_addToRetry">Add To Retry</label>
+                <input type="checkbox" name="addToRetry" id="field_addToRetry"
+                          ng-model="vm.providerCommand.addToRetry"/>
         </div>
 
         <div class="form-group">

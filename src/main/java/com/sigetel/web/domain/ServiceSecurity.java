@@ -1,9 +1,12 @@
 package com.sigetel.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -23,9 +26,14 @@ public class ServiceSecurity implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "communication_standard_id", nullable = false)
-    private Long communicationStandardId;
+    @ManyToOne
+    private CommunicationStandard communicationStandard;
+
+    @OneToMany(mappedBy = "serviceSecurity")
+    private Set<SecurityParams> securityParams = new HashSet<>();
+
+    @ManyToOne
+    private ProviderCommand providerCommand;
 
     public Long getId() {
         return id;
@@ -48,17 +56,55 @@ public class ServiceSecurity implements Serializable {
         this.name = name;
     }
 
-    public Long getCommunicationStandardId() {
-        return communicationStandardId;
+    public CommunicationStandard getCommunicationStandard() {
+        return communicationStandard;
     }
 
-    public ServiceSecurity communicationStandardId(Long communicationStandardId) {
-        this.communicationStandardId = communicationStandardId;
+    public ServiceSecurity communicationStandard(CommunicationStandard communicationStandard) {
+        this.communicationStandard = communicationStandard;
         return this;
     }
 
-    public void setCommunicationStandardId(Long communicationStandardId) {
-        this.communicationStandardId = communicationStandardId;
+    public void setCommunicationStandard(CommunicationStandard communicationStandard) {
+        this.communicationStandard = communicationStandard;
+    }
+
+    public Set<SecurityParams> getSecurityParams() {
+        return securityParams;
+    }
+
+    public ServiceSecurity securityParams(Set<SecurityParams> securityParams) {
+        this.securityParams = securityParams;
+        return this;
+    }
+
+    public ServiceSecurity addSecurityParams(SecurityParams securityParams) {
+        this.securityParams.add(securityParams);
+        securityParams.setServiceSecurity(this);
+        return this;
+    }
+
+    public ServiceSecurity removeSecurityParams(SecurityParams securityParams) {
+        this.securityParams.remove(securityParams);
+        securityParams.setServiceSecurity(null);
+        return this;
+    }
+
+    public void setSecurityParams(Set<SecurityParams> securityParams) {
+        this.securityParams = securityParams;
+    }
+
+    public ProviderCommand getProviderCommand() {
+        return providerCommand;
+    }
+
+    public ServiceSecurity providerCommand(ProviderCommand providerCommand) {
+        this.providerCommand = providerCommand;
+        return this;
+    }
+
+    public void setProviderCommand(ProviderCommand providerCommand) {
+        this.providerCommand = providerCommand;
     }
 
     @Override
@@ -86,7 +132,6 @@ public class ServiceSecurity implements Serializable {
         return "ServiceSecurity{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", communicationStandardId='" + getCommunicationStandardId() + "'" +
             "}";
     }
 }

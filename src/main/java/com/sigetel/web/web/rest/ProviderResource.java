@@ -1,7 +1,7 @@
 package com.sigetel.web.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.sigetel.web.domain.Provider;
+import com.sigetel.web.domain.*;
 import com.sigetel.web.service.ProviderService;
 import com.sigetel.web.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -81,7 +82,7 @@ public class ProviderResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of providers in body
      */
-    @GetMapping("/providers")
+    @GetMapping("/providersA")
     @Timed
     public List<Provider> getAllProviders() {
         log.debug("REST request to get all Providers");
@@ -94,7 +95,7 @@ public class ProviderResource {
      * @param id the id of the provider to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the provider, or with status 404 (Not Found)
      */
-    @GetMapping("/providers/{id}")
+    @GetMapping("/providersA/{id}")
     @Timed
     public ResponseEntity<Provider> getProvider(@PathVariable Long id) {
         log.debug("REST request to get Provider : {}", id);
@@ -115,4 +116,78 @@ public class ProviderResource {
         providerService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/providers")
+    @Timed
+    public List<Provider> getAllProviders0() {
+        log.debug("REST request to get all Providers");
+        return providerService.findAll();
+    }
+
+    @GetMapping("/providers/{id}")
+    @Timed
+    @Transactional
+    public Provider getAllProviders1(@PathVariable Long id) {
+        log.debug("REST request to get all Providers");
+        Provider provider = providerService.findOne(id);
+        List<ProviderCommand> providerCommands = provider.getProviderCommands();
+        for(ProviderCommand command:providerCommands){
+            command.getId();
+            command.getCommand().getName();
+            command.getCommunicationStandard().getName();
+            for(ServiceSecurity security:command.getServiceSecurities()){
+                security.getName();
+                    for(SecurityParams params:security.getSecurityParams()){
+                        params.getId();
+                        break;
+                    }
+                    break;
+            }
+            for(RequestParameter param:command.getRequestParameters()){
+                param.getName();
+                break;
+            }
+            break;
+        }
+        return provider;
+    }
+
+    @GetMapping("/providers/{id}/request")
+    @Timed
+    public List<Provider> getAllProviders3(@PathVariable Long id) {
+        log.debug("REST request to get all Providers");
+        List<Provider> providers = providerService.findAll();
+        for(Provider provider:providers){
+            for(ProviderCommand command:provider.getProviderCommands()){
+                for(RequestParameter param:command.getRequestParameters()){
+                    param.getDefaultValue();
+                    break;
+                }
+            }
+        }
+        return providers;
+    }
+
+    @GetMapping("/providers/{id}/request/{requestId}")
+        @Timed
+        public List<Provider>getAllProviders4(@PathVariable Long id, @PathVariable Long requestId){
+        log.debug("REST request to get all Providers");
+        return providerService.findAll();
+    }
+
+    @GetMapping("/providers/{id}/request/{requestId}/response")
+    @Timed
+    public List<Provider>getAllProviders5(@PathVariable Long id, @PathVariable Long requestId){
+        log.debug("REST request to get all Providers");
+        return providerService.findAll();
+    }
+
+    @GetMapping("/providers/{id}/request/{requestId}/response/{responseId}")
+    @Timed
+    public List<Provider>getAllProviders6(@PathVariable Long id, @PathVariable Long requestId, @PathVariable Long responseId){
+        log.debug("REST request to get all Providers");
+        return providerService.findAll();
+    }
+
+
 }

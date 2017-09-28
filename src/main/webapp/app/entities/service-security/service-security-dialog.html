@@ -25,23 +25,19 @@
                 </p>
             </div>
         </div>
-        <div class="form-group">
-            <label class="control-label" for="field_communicationStandardId">Communication Standard Id</label>
-            <input type="number" class="form-control" name="communicationStandardId" id="field_communicationStandardId"
-                    ng-model="vm.serviceSecurity.communicationStandardId"
-                    required/>
-            <div ng-show="editForm.communicationStandardId.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.communicationStandardId.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.communicationStandardId.$error.number">
-                    This field should be a number.
-                </p>
-            </div>
-        </div>
 
+        <div class="form-group">
+            <label for="field_communicationStandard">Communication Standard</label>
+            <select class="form-control" id="field_communicationStandard" name="communicationStandard" ng-model="vm.serviceSecurity.communicationStandard" ng-options="communicationStandard as communicationStandard.id for communicationStandard in vm.communicationstandards track by communicationStandard.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_providerCommand">Provider Command</label>
+            <select class="form-control" id="field_providerCommand" name="providerCommand" ng-model="vm.serviceSecurity.providerCommand" ng-options="providerCommand as providerCommand.id for providerCommand in vm.providercommands track by providerCommand.id">
+                <option value=""></option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

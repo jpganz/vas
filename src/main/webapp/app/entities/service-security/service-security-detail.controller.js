@@ -5,9 +5,9 @@
         .module('ovasApp')
         .controller('ServiceSecurityDetailController', ServiceSecurityDetailController);
 
-    ServiceSecurityDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'ServiceSecurity'];
+    ServiceSecurityDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'ServiceSecurity', 'CommunicationStandard', 'SecurityParams', 'ProviderCommand'];
 
-    function ServiceSecurityDetailController($scope, $rootScope, $stateParams, previousState, entity, ServiceSecurity) {
+    function ServiceSecurityDetailController($scope, $rootScope, $stateParams, previousState, entity, ServiceSecurity, CommunicationStandard, SecurityParams, ProviderCommand) {
         var vm = this;
 
         vm.serviceSecurity = entity;

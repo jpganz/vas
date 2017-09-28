@@ -54,7 +54,7 @@ public class Request implements Serializable {
     @Column(name = "date_time")
     private LocalDate dateTime;
 
-    @OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "request", fetch = FetchType.LAZY)
     private List<RequestTry> requestTries = new ArrayList<>();
 
     public Long getId() {

@@ -1,9 +1,12 @@
 package com.sigetel.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -22,6 +25,10 @@ public class Command implements Serializable {
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "command")
+    @JsonIgnore
+    private Set<ProviderCommand> providerCommands = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -42,6 +49,31 @@ public class Command implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<ProviderCommand> getProviderCommands() {
+        return providerCommands;
+    }
+
+    public Command providerCommands(Set<ProviderCommand> providerCommands) {
+        this.providerCommands = providerCommands;
+        return this;
+    }
+
+    public Command addProviderCommand(ProviderCommand providerCommand) {
+        this.providerCommands.add(providerCommand);
+        providerCommand.setCommand(this);
+        return this;
+    }
+
+    public Command removeProviderCommand(ProviderCommand providerCommand) {
+        this.providerCommands.remove(providerCommand);
+        providerCommand.setCommand(null);
+        return this;
+    }
+
+    public void setProviderCommands(Set<ProviderCommand> providerCommands) {
+        this.providerCommands = providerCommands;
     }
 
     @Override

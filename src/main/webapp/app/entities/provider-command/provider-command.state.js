@@ -99,7 +99,9 @@
                                 code: null,
                                 retryLimit: null,
                                 retryInterval: null,
-                                serviceSecurityId: null,
+                                emailNotify: null,
+                                emailAddressToNotify: null,
+                                addToRetry: null,
                                 id: null
                             };
                         }

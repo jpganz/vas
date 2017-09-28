@@ -5,14 +5,17 @@
         .module('ovasApp')
         .controller('ServiceSecurityDialogController', ServiceSecurityDialogController);
 
-    ServiceSecurityDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'ServiceSecurity'];
+    ServiceSecurityDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'ServiceSecurity', 'CommunicationStandard', 'SecurityParams', 'ProviderCommand'];
 
-    function ServiceSecurityDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, ServiceSecurity) {
+    function ServiceSecurityDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, ServiceSecurity, CommunicationStandard, SecurityParams, ProviderCommand) {
         var vm = this;
 
         vm.serviceSecurity = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.communicationstandards = CommunicationStandard.query();
+        vm.securityparams = SecurityParams.query();
+        vm.providercommands = ProviderCommand.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

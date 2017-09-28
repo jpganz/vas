@@ -20,14 +20,20 @@ public class CommunicationStandard implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "communicationStandard", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "communicationStandard")
+    @JsonIgnore
     private Set<ProviderCommand> providerCommands = new HashSet<>();
+
+    @OneToMany(mappedBy = "communicationStandard")
+    @JsonIgnore
+    private Set<ServiceSecurity> serviceSecurities = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -73,6 +79,31 @@ public class CommunicationStandard implements Serializable {
 
     public void setProviderCommands(Set<ProviderCommand> providerCommands) {
         this.providerCommands = providerCommands;
+    }
+
+    public Set<ServiceSecurity> getServiceSecurities() {
+        return serviceSecurities;
+    }
+
+    public CommunicationStandard serviceSecurities(Set<ServiceSecurity> serviceSecurities) {
+        this.serviceSecurities = serviceSecurities;
+        return this;
+    }
+
+    public CommunicationStandard addServiceSecurity(ServiceSecurity serviceSecurity) {
+        this.serviceSecurities.add(serviceSecurity);
+        serviceSecurity.setCommunicationStandard(this);
+        return this;
+    }
+
+    public CommunicationStandard removeServiceSecurity(ServiceSecurity serviceSecurity) {
+        this.serviceSecurities.remove(serviceSecurity);
+        serviceSecurity.setCommunicationStandard(null);
+        return this;
+    }
+
+    public void setServiceSecurities(Set<ServiceSecurity> serviceSecurities) {
+        this.serviceSecurities = serviceSecurities;
     }
 
     @Override

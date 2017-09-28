@@ -37,28 +37,35 @@ public class ProviderCommand implements Serializable {
     @Column(name = "retry_interval", nullable = false)
     private Long retryInterval;
 
-    @NotNull
-    @Column(name = "service_security_id", nullable = false)
-    private Long serviceSecurityId;
+    @Column(name = "email_notify")
+    private Boolean emailNotify;
+
+    @Column(name = "email_address_to_notify")
+    private String emailAddressToNotify;
+
+    @Column(name = "add_to_retry")
+    private Boolean addToRetry;
 
     @ManyToOne
     private Provider provider;
 
     @ManyToOne
-    @JsonIgnore
     private CommunicationStandard communicationStandard;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "providerCommand")
     @JsonIgnore
-    private Command command;
-
-    @OneToMany(mappedBy = "providerCommand", fetch = FetchType.EAGER)
-    //@JsonIgnore
     private Set<ProviderResponse> providerResponses = new HashSet<>();
 
-    @OneToMany(mappedBy = "providerCommand", fetch = FetchType.EAGER)
-    //@JsonIgnore
+    @OneToMany(mappedBy = "providerCommand")
+
     private Set<RequestParameter> requestParameters = new HashSet<>();
+
+    @ManyToOne
+    private Command command;
+
+    @OneToMany(mappedBy = "providerCommand")
+
+    private Set<ServiceSecurity> serviceSecurities = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -120,17 +127,43 @@ public class ProviderCommand implements Serializable {
         this.retryInterval = retryInterval;
     }
 
-    public Long getServiceSecurityId() {
-        return serviceSecurityId;
+    public Boolean isEmailNotify() {
+        return emailNotify;
     }
 
-    public ProviderCommand serviceSecurityId(Long serviceSecurityId) {
-        this.serviceSecurityId = serviceSecurityId;
+    public ProviderCommand emailNotify(Boolean emailNotify) {
+        this.emailNotify = emailNotify;
         return this;
     }
 
-    public void setServiceSecurityId(Long serviceSecurityId) {
-        this.serviceSecurityId = serviceSecurityId;
+    public void setEmailNotify(Boolean emailNotify) {
+        this.emailNotify = emailNotify;
+    }
+
+    public String getEmailAddressToNotify() {
+        return emailAddressToNotify;
+    }
+
+    public ProviderCommand emailAddressToNotify(String emailAddressToNotify) {
+        this.emailAddressToNotify = emailAddressToNotify;
+        return this;
+    }
+
+    public void setEmailAddressToNotify(String emailAddressToNotify) {
+        this.emailAddressToNotify = emailAddressToNotify;
+    }
+
+    public Boolean isAddToRetry() {
+        return addToRetry;
+    }
+
+    public ProviderCommand addToRetry(Boolean addToRetry) {
+        this.addToRetry = addToRetry;
+        return this;
+    }
+
+    public void setAddToRetry(Boolean addToRetry) {
+        this.addToRetry = addToRetry;
     }
 
     public Provider getProvider() {
@@ -157,19 +190,6 @@ public class ProviderCommand implements Serializable {
 
     public void setCommunicationStandard(CommunicationStandard communicationStandard) {
         this.communicationStandard = communicationStandard;
-    }
-
-    public Command getCommand() {
-        return command;
-    }
-
-    public ProviderCommand command(Command command) {
-        this.command = command;
-        return this;
-    }
-
-    public void setCommand(Command command) {
-        this.command = command;
     }
 
     public Set<ProviderResponse> getProviderResponses() {
@@ -222,6 +242,44 @@ public class ProviderCommand implements Serializable {
         this.requestParameters = requestParameters;
     }
 
+    public Command getCommand() {
+        return command;
+    }
+
+    public ProviderCommand command(Command command) {
+        this.command = command;
+        return this;
+    }
+
+    public void setCommand(Command command) {
+        this.command = command;
+    }
+
+    public Set<ServiceSecurity> getServiceSecurities() {
+        return serviceSecurities;
+    }
+
+    public ProviderCommand serviceSecurities(Set<ServiceSecurity> serviceSecurities) {
+        this.serviceSecurities = serviceSecurities;
+        return this;
+    }
+
+    public ProviderCommand addServiceSecurity(ServiceSecurity serviceSecurity) {
+        this.serviceSecurities.add(serviceSecurity);
+        serviceSecurity.setProviderCommand(this);
+        return this;
+    }
+
+    public ProviderCommand removeServiceSecurity(ServiceSecurity serviceSecurity) {
+        this.serviceSecurities.remove(serviceSecurity);
+        serviceSecurity.setProviderCommand(null);
+        return this;
+    }
+
+    public void setServiceSecurities(Set<ServiceSecurity> serviceSecurities) {
+        this.serviceSecurities = serviceSecurities;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -250,7 +308,9 @@ public class ProviderCommand implements Serializable {
             ", code='" + getCode() + "'" +
             ", retryLimit='" + getRetryLimit() + "'" +
             ", retryInterval='" + getRetryInterval() + "'" +
-            ", serviceSecurityId='" + getServiceSecurityId() + "'" +
+            ", emailNotify='" + isEmailNotify() + "'" +
+            ", emailAddressToNotify='" + getEmailAddressToNotify() + "'" +
+            ", addToRetry='" + isAddToRetry() + "'" +
             "}";
     }
 }
