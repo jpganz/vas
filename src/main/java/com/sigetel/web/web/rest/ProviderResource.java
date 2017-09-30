@@ -66,7 +66,7 @@ public class ProviderResource {
      */
     @PutMapping("/providers")
     @Timed
-    public ResponseEntity<Provider> updateProvider(@Valid @RequestBody Provider provider) throws URISyntaxException {
+    public ResponseEntity<Provider> updateProvider( @RequestBody Provider provider) throws URISyntaxException {
         log.debug("REST request to update Provider : {}", provider);
         if (provider.getId() == null) {
             return createProvider(provider);

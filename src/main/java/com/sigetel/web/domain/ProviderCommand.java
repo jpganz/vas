@@ -46,22 +46,22 @@ public class ProviderCommand implements Serializable {
     @Column(name = "email_notify")
     private Integer emailNotify;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    //@JsonIgnore
     private Provider provider;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private CommunicationStandard communicationStandard;
 
-    @OneToMany(mappedBy = "providerCommand")
+    @OneToMany(mappedBy = "providerCommand", cascade=CascadeType.ALL)
     //@JsonIgnore
     private Set<ProviderResponse> providerResponses = new HashSet<>();
 
-    @OneToMany(mappedBy = "providerCommand")
+    @OneToMany(mappedBy = "providerCommand", cascade=CascadeType.ALL)
     @JsonIgnore
     private Set<RequestParameter> requestParameters = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Command command;
 
     @OneToMany(mappedBy = "providerCommand")
