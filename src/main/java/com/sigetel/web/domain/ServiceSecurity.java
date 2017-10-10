@@ -32,8 +32,9 @@ public class ServiceSecurity implements Serializable {
     @OneToMany(mappedBy = "serviceSecurity")
     private Set<SecurityParams> securityParams = new HashSet<>();
 
-    @ManyToOne
-    private ProviderCommand providerCommand;
+    @OneToMany(mappedBy = "serviceSecurity")
+    @JsonIgnore
+    private Set<ProviderCommand> providerCommands;
 
     public Long getId() {
         return id;
@@ -94,18 +95,27 @@ public class ServiceSecurity implements Serializable {
         this.securityParams = securityParams;
     }
 
-    public ProviderCommand getProviderCommand() {
+    /*public ProviderCommand getProviderCommand() {
         return providerCommand;
-    }
+    }*/
 
-    public ServiceSecurity providerCommand(ProviderCommand providerCommand) {
-        this.providerCommand = providerCommand;
+    public ServiceSecurity providerCommand(Set<ProviderCommand> providerCommands) {
+        this.providerCommands = providerCommands;
         return this;
     }
 
-    public void setProviderCommand(ProviderCommand providerCommand) {
+    /*public void setProviderCommand(ProviderCommand providerCommand) {
         this.providerCommand = providerCommand;
+    }*/
+
+    public Set<ProviderCommand> getProviderCommands() {
+        return providerCommands;
     }
+
+    public void setProviderCommands(Set<ProviderCommand> providerCommands) {
+        this.providerCommands = providerCommands;
+    }
+
 
     @Override
     public boolean equals(Object o) {

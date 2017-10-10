@@ -49,6 +49,10 @@ public class UserService {
         this.authorityRepository = authorityRepository;
     }
 
+    public Optional<User> findUserByEmail(String email){
+        return userRepository.findOneByEmail(email);
+    }
+
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         return userRepository.findOneByActivationKey(key)

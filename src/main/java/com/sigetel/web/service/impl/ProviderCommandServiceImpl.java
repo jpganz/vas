@@ -72,4 +72,12 @@ public class ProviderCommandServiceImpl implements ProviderCommandService{
         log.debug("Request to delete ProviderCommand : {}", id);
         providerCommandRepository.delete(id);
     }
+
+    @Override
+    public List<ProviderCommand>  findByProviderId(Long id) {
+        log.debug("Request to delete ProviderCommand : {}", id);
+        return providerCommandRepository.findByProviderId(id);
+    }
+
+
 }

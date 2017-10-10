@@ -46,27 +46,35 @@ public class ProviderCommand implements Serializable {
     @Column(name = "email_notify")
     private Integer emailNotify;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)//), cascade=CascadeType.ALL)
     //@JsonIgnore
     private Provider provider;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne//(cascade=CascadeType.ALL)
     private CommunicationStandard communicationStandard;
 
-    @OneToMany(mappedBy = "providerCommand", cascade=CascadeType.ALL)
-    //@JsonIgnore
+    @OneToMany(mappedBy = "providerCommand" )//, cascade=CascadeType.ALL)
+    //JsonIgnore
     private Set<ProviderResponse> providerResponses = new HashSet<>();
 
-    @OneToMany(mappedBy = "providerCommand", cascade=CascadeType.ALL)
-    @JsonIgnore
+    @Transient
+    private Set<ProviderResponse> providerResponsesSet = new HashSet<>();
+
+    @OneToMany(mappedBy = "providerCommand")//, cascade=CascadeType.ALL)
+    //@JsonIgnore
     private Set<RequestParameter> requestParameters = new HashSet<>();
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne//(cascade=CascadeType.ALL)
     private Command command;
 
-    @OneToMany(mappedBy = "providerCommand")
-    @JsonIgnore
-    private Set<ServiceSecurity> serviceSecurities = new HashSet<>();
+    @ManyToOne
+    //@OneToMany(mappedBy = "providerCommand")
+    //@JsonIgnore
+    private ServiceSecurity serviceSecurity;
+
+    @OneToMany(mappedBy = "providerCommand")//, cascade=CascadeType.ALL)
+    //@JsonIgnore
+    private Set<SecurityParams> securityParams = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -256,15 +264,7 @@ public class ProviderCommand implements Serializable {
         this.command = command;
     }
 
-    public Set<ServiceSecurity> getServiceSecurities() {
-        return serviceSecurities;
-    }
-
-    public ProviderCommand serviceSecurities(Set<ServiceSecurity> serviceSecurities) {
-        this.serviceSecurities = serviceSecurities;
-        return this;
-    }
-
+    /*
     public ProviderCommand addServiceSecurity(ServiceSecurity serviceSecurity) {
         this.serviceSecurities.add(serviceSecurity);
         serviceSecurity.setProviderCommand(this);
@@ -279,6 +279,30 @@ public class ProviderCommand implements Serializable {
 
     public void setServiceSecurities(Set<ServiceSecurity> serviceSecurities) {
         this.serviceSecurities = serviceSecurities;
+    }*/
+
+    public ServiceSecurity getServiceSecurity() {
+        return serviceSecurity;
+    }
+
+    public void setServiceSecurity(ServiceSecurity serviceSecurity) {
+        this.serviceSecurity = serviceSecurity;
+    }
+
+    public Set<ProviderResponse> getProviderResponsesSet() {
+        return providerResponsesSet;
+    }
+
+    public void setProviderResponsesSet(Set<ProviderResponse> providerResponsesSet) {
+        this.providerResponsesSet = providerResponsesSet;
+    }
+
+    public Set<SecurityParams> getSecurityParams() {
+        return securityParams;
+    }
+
+    public void setSecurityParams(Set<SecurityParams> securityParams) {
+        this.securityParams = securityParams;
     }
 
     @Override

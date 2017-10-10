@@ -1,12 +1,15 @@
 package com.sigetel.web.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.sigetel.web.domain.ProviderResponse;
+import com.sigetel.web.domain.*;
+import com.sigetel.web.service.ProviderCommandService;
 import com.sigetel.web.service.ProviderResponseService;
+import com.sigetel.web.service.ResponseParameterService;
 import com.sigetel.web.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +17,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * REST controller for managing ProviderResponse.
@@ -30,8 +32,16 @@ public class ProviderResponseResource {
 
     private final ProviderResponseService providerResponseService;
 
-    public ProviderResponseResource(ProviderResponseService providerResponseService) {
+    private final ResponseParameterService responseParameterService;
+
+    private final ProviderCommandService providerCommandService;
+
+    public ProviderResponseResource(ProviderResponseService providerResponseService,
+                                    ResponseParameterService responseParameterService,
+                                    ProviderCommandService providerCommandService) {
         this.providerResponseService = providerResponseService;
+        this.responseParameterService = responseParameterService;
+        this.providerCommandService = providerCommandService;
     }
 
     /**
@@ -43,15 +53,29 @@ public class ProviderResponseResource {
      */
     @PostMapping("/provider-responses")
     @Timed
-    public ResponseEntity<ProviderResponse> createProviderResponse(@Valid @RequestBody ProviderResponse providerResponse) throws URISyntaxException {
+    public ResponseEntity<ProviderResponse> createProviderResponse(@Valid @RequestBody ProviderResponseCommand providerResponse) throws URISyntaxException {
         log.debug("REST request to save ProviderResponse : {}", providerResponse);
-        if (providerResponse.getId() != null) {
+        if (providerResponse.getProviderResponse().getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new providerResponse cannot already have an ID")).body(null);
         }
-        ProviderResponse result = providerResponseService.save(providerResponse);
-        return ResponseEntity.created(new URI("/api/provider-responses/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        ProviderCommand command = providerCommandService.findOne(providerResponse.getProviderCommand().getId());
+        if(command != null && command.getId() > 0){
+            ProviderResponse response = providerResponse.getProviderResponse();
+            response.setProviderCommand(command);
+            providerResponseService.save(response);
+            for(ResponseParameter parameter:response.getResponseParameters()){
+                parameter.setProviderResponse(response);
+                responseParameterService.save(parameter);
+            }
+        }else{
+            //error return ResponseEntity
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(null);
+        }
+        //ProviderResponse result = providerResponseService.save(providerResponse);
+        return ResponseEntity.created(new URI("/api/provider-responses/" + command.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, command.getId().toString()))
+            .body(null);
     }
 
     /**
@@ -66,14 +90,23 @@ public class ProviderResponseResource {
     @PutMapping("/provider-responses")
     @Timed
     public ResponseEntity<ProviderResponse> updateProviderResponse(@Valid @RequestBody ProviderResponse providerResponse) throws URISyntaxException {
-        log.debug("REST request to update ProviderResponse : {}", providerResponse);
-        if (providerResponse.getId() == null) {
-            return createProviderResponse(providerResponse);
+        ProviderCommand command = providerResponse.getProviderCommand();
+        if(command != null && command.getId() > 0){
+            providerResponse.setProviderCommand(providerCommandService.findOne(command.getId()));
+            providerResponseService.save(providerResponse);
+            for(ResponseParameter parameter:providerResponse.getResponseParameters()){
+                parameter.setProviderResponse(providerResponse);
+                responseParameterService.save(parameter);
+            }
+        }else{
+            //error return ResponseEntity
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(null);
         }
-        ProviderResponse result = providerResponseService.save(providerResponse);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, providerResponse.getId().toString()))
-            .body(result);
+        //ProviderResponse result = providerResponseService.save(providerResponse);
+        return ResponseEntity.created(new URI("/api/provider-responses/" + command.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, command.getId().toString()))
+            .body(null);
     }
 
     /**
@@ -83,9 +116,17 @@ public class ProviderResponseResource {
      */
     @GetMapping("/provider-responses")
     @Timed
-    public List<ProviderResponse> getAllProviderResponses() {
+    public List<ProviderResponseCommand> getAllProviderResponses() {
         log.debug("REST request to get all ProviderResponses");
-        return providerResponseService.findAll();
+        List<ProviderResponseCommand> responseCommand= new ArrayList<>();
+        List<ProviderResponse> responses = providerResponseService.findAll();
+        for(ProviderResponse response:responses){
+            ProviderResponseCommand providerResponseCommand = new ProviderResponseCommand();
+            providerResponseCommand.setProviderResponse(response);
+            providerResponseCommand.setProviderCommand(providerCommandService.findOne(response.getProviderCommand().getId()));
+            responseCommand.add(providerResponseCommand);
+        }
+        return responseCommand;
     }
 
     /**
@@ -96,10 +137,19 @@ public class ProviderResponseResource {
      */
     @GetMapping("/provider-responses/{id}")
     @Timed
-    public ResponseEntity<ProviderResponse> getProviderResponse(@PathVariable Long id) {
+    public ResponseEntity<ProviderResponseCommand> getProviderResponse(@PathVariable Long id) {
         log.debug("REST request to get ProviderResponse : {}", id);
-        ProviderResponse providerResponse = providerResponseService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(providerResponse));
+        ProviderResponse response = providerResponseService.findOne(id);
+        if(response != null){
+            ProviderResponseCommand providerResponseCommand = new ProviderResponseCommand();
+            providerResponseCommand.setProviderResponse(response);
+            providerResponseCommand.setProviderCommand(providerCommandService.findOne(response.getProviderCommand().getId()));
+            return ResponseUtil.wrapOrNotFound(Optional.ofNullable(providerResponseCommand));
+        }else{
+            //return not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(null);
+        }
     }
 
     /**

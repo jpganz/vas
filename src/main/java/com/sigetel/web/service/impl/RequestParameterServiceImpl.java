@@ -62,6 +62,15 @@ public class RequestParameterServiceImpl implements RequestParameterService{
         return requestParameterRepository.findOne(id);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<RequestParameter> findByAllProviderCommandId(Long id) {
+        log.debug("Request to get RequestParameter : {}", id);
+        return requestParameterRepository.findByProviderCommandId(id);
+    }
+
+    ;
+
     /**
      *  Delete the  requestParameter by id.
      *

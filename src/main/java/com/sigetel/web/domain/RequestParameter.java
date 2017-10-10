@@ -27,7 +27,7 @@ public class RequestParameter implements Serializable {
     private String name;
 
     @NotNull
-    @Column(name = "jhi_type", nullable = false)
+    @Column(name = "type", nullable = false)
     private String type;
 
     @Column(name = "default_value")

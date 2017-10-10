@@ -33,7 +33,7 @@ public class Provider implements Serializable {
     private Long code;
 
     @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY)
-    //@JsonIgnore
+    @JsonIgnore
     private List<ProviderCommand> providerCommands = new ArrayList<>();
 
     public Long getId() {

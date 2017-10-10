@@ -37,4 +37,6 @@ public interface RequestParameterService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    List<RequestParameter> findByAllProviderCommandId(Long id);
 }

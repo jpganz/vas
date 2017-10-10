@@ -72,4 +72,12 @@ public class ProviderResponseServiceImpl implements ProviderResponseService{
         log.debug("Request to delete ProviderResponse : {}", id);
         providerResponseRepository.delete(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public  List<ProviderResponse> findByAllProviderCommandId(Long id) {
+        log.debug("Request to get ProviderResponse : {}", id);
+        return providerResponseRepository.findByProviderCommandId(id);
+    }
+
 }

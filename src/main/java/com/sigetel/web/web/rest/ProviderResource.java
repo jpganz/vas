@@ -3,6 +3,7 @@ package com.sigetel.web.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.sigetel.web.domain.*;
 import com.sigetel.web.service.ProviderService;
+import com.sigetel.web.web.rest.consumer.RestClient;
 import com.sigetel.web.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -15,6 +16,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +34,12 @@ public class ProviderResource {
 
     private final ProviderService providerService;
 
-    public ProviderResource(ProviderService providerService) {
+    private final RestClient restClient;
+
+    public ProviderResource(ProviderService providerService,
+                            RestClient restClient) {
         this.providerService = providerService;
+        this.restClient = restClient;
     }
 
     /**
@@ -77,16 +84,18 @@ public class ProviderResource {
             .body(result);
     }
 
-    /**
-     * GET  /providers : get all the providers.
-     *
-     * @return the ResponseEntity with status 200 (OK) and the list of providers in body
-     */
-    @GetMapping("/providersA")
+
+    @GetMapping("/testRest")
     @Timed
-    public List<Provider> getAllProviders() {
-        log.debug("REST request to get all Providers");
-        return providerService.findAll();
+    public ResponseEntity<Provider> testRest() {
+        List<String> paramList = new ArrayList<>();
+        String contentType = "application/json";
+        HashMap<String, String> headerMap = new HashMap<>();
+        HashMap<String, String> bodyMap = new HashMap<>();
+        bodyMap.put("name", "Juan Pablo");
+        bodyMap.put("job", "millionare");
+        restClient.postRequest("https://reqres.in/api/users",bodyMap, contentType, headerMap );
+        return null;
     }
 
     /**

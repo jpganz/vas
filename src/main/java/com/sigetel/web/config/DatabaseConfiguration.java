@@ -24,8 +24,8 @@ import javax.sql.DataSource;
 public class DatabaseConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
-
     private final Environment env;
+
 
     public DatabaseConfiguration(Environment env) {
         this.env = env;

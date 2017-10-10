@@ -36,6 +36,7 @@ public class ProviderResponse implements Serializable {
     private Integer addToRetry;
 
     @ManyToOne
+    @JsonIgnore
     private ProviderCommand providerCommand;
 
     @OneToMany(mappedBy = "providerResponse",  fetch = FetchType.EAGER)

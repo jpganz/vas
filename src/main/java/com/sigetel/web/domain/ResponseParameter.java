@@ -26,7 +26,7 @@ public class ResponseParameter implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "jhi_type")
+    @Column(name = "type")
     private String type;
 
     @Column(name = "default_value")

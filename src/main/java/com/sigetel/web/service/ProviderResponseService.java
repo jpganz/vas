@@ -37,4 +37,6 @@ public interface ProviderResponseService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    List<ProviderResponse> findByAllProviderCommandId(Long id);
 }

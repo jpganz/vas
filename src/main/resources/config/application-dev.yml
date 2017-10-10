@@ -49,10 +49,25 @@ spring:
         hibernate:
           ddl-auto: update
     mail:
-        host: localhost
-        port: 25
-        username:
+        host: smtp.gmail.com
+        port: 587
+        username: 
         password:
+        properties:
+            mail:
+                smtp:
+                    starttls: 
+                        enable: true
+                        required: true
+                    auth: true
+                    connectiontimeout: 5000
+                    timeout: 5000
+                    writetimeout: 5000
+    ftp:
+        server: test.rebex.net
+        port: 21
+        user: demo
+        password: password
     messages:
         cache-seconds: 1
     thymeleaf:
