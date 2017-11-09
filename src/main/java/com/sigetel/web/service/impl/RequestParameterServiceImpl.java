@@ -81,4 +81,11 @@ public class RequestParameterServiceImpl implements RequestParameterService{
         log.debug("Request to delete RequestParameter : {}", id);
         requestParameterRepository.delete(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public RequestParameter findByName(String name) {
+        return requestParameterRepository.findByName(name);
+    }
+
 }

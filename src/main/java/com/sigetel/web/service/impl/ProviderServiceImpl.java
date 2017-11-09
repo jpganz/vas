@@ -76,6 +76,11 @@ public class ProviderServiceImpl implements ProviderService{
         log.debug("Request to delete Provider : {}", id);
         providerRepository.delete(id);
     }
+
+    @Override
+    public Provider findByCode(String code) {
+        return providerRepository.findByCode(code);
+    }
 /*
     @Override
     @Transactional(readOnly = true)

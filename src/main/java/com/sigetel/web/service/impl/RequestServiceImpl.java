@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,6 +56,13 @@ public class RequestServiceImpl implements RequestService{
         return requests;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<Request> findByDatetimeBetween(LocalDate init, LocalDate end) {
+        List<Request> requests = requestRepository.findByDateTimeBetween(init, end);
+        return requests;
+    }
+
     /**
      *  Get one request by id.
      *
@@ -81,4 +90,15 @@ public class RequestServiceImpl implements RequestService{
         log.debug("Request to delete Request : {}", id);
         requestRepository.delete(id);
     }
+
+    /**
+     *  Get all requests by status.
+     *
+     *  @param status Name of the status of the request
+     */
+    @Override
+    public List<Request> findAllByRequestStatus(Long requestStatus) {
+        return requestRepository.findByRequestStatus(requestStatus);
+    }
+
 }

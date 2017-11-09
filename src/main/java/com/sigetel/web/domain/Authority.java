@@ -47,6 +47,13 @@ public class Authority implements Serializable {
         return !(name != null ? !name.equals(authority.name) : authority.name != null);
     }
 
+    public Authority() {
+    }
+
+    public Authority(String name) {
+        this.name = name;
+    }
+
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;

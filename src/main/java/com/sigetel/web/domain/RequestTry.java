@@ -4,13 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
-/**
- * A RequestTry.
- */
 @Entity
 @Table(name = "request_try")
 public class RequestTry implements Serializable {
@@ -18,11 +16,19 @@ public class RequestTry implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "status")
     private Integer status;
+
+    @Column(name = "try_number")
+    private Integer tryNumber;
+
+    @Column(name = "date_time")
+    private LocalDate dateTime;
+
+
 
     @ManyToOne
     @JsonIgnore
@@ -66,6 +72,14 @@ public class RequestTry implements Serializable {
         this.request = request;
     }
 
+    public Integer getTryNumber() {
+        return tryNumber;
+    }
+
+    public void setTryNumber(Integer tryNumber) {
+        this.tryNumber = tryNumber;
+    }
+
     public Set<TryResponseParameter> getTryResponseParameters() {
         return tryResponseParameters;
     }
@@ -89,6 +103,14 @@ public class RequestTry implements Serializable {
 
     public void setTryResponseParameters(Set<TryResponseParameter> tryResponseParameters) {
         this.tryResponseParameters = tryResponseParameters;
+    }
+
+    public LocalDate getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDate dateTime) {
+        this.dateTime = dateTime;
     }
 
     @Override

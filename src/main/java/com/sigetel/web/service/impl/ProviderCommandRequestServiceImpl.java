@@ -62,6 +62,14 @@ public class ProviderCommandRequestServiceImpl implements ProviderCommandRequest
         return providerCommandRequestRepository.findOne(id);
     }
 
+
+    @Override
+    @Transactional(readOnly = true)
+    public  ProviderCommandRequest findByRequestId(Long requestId) {
+        return providerCommandRequestRepository.findByRequestId(requestId);
+    }
+
+
     /**
      *  Delete the  providerCommandRequest by id.
      *

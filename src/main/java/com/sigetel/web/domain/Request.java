@@ -51,10 +51,13 @@ public class Request implements Serializable {
     @Column(name = "next_try_by")
     private LocalDate nextTryBy;
 
-    @Column(name = "date_time")
+    @Column(name = "datetime")
     private LocalDate dateTime;
 
-    @OneToMany(mappedBy = "request", fetch = FetchType.LAZY)
+    @Column(name = "client_phone")
+    private String clientPhone;
+
+    @OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
     private List<RequestTry> requestTries = new ArrayList<>();
 
     public Long getId() {
@@ -238,6 +241,14 @@ public class Request implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
+    }
+
+    public String getClientPhone() {
+        return clientPhone;
+    }
+
+    public void setClientPhone(String clientPhone) {
+        this.clientPhone = clientPhone;
     }
 
     @Override

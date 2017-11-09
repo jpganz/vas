@@ -50,6 +50,17 @@ public class RequestTryServiceImpl implements RequestTryService{
     }
 
     /**
+     *  Get all the requestTries by Status.
+     *
+     *  @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<RequestTry> findByStatus(int status) {
+        return requestTryRepository.findByStatus(status);
+    }
+
+    /**
      *  Get one requestTry by id.
      *
      *  @param id the id of the entity

@@ -12,5 +12,6 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface ResponseParameterRepository extends JpaRepository<ResponseParameter,Long> {
-    
+
+    ResponseParameter findByName(String name);
 }

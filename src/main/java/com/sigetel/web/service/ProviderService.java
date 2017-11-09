@@ -38,4 +38,5 @@ public interface ProviderService {
      */
     void delete(Long id);
 
+    Provider findByCode(String code);
 }

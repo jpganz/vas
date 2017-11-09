@@ -80,4 +80,9 @@ public class ProviderCommandServiceImpl implements ProviderCommandService{
     }
 
 
+    @Override
+    public List<ProviderCommand> findByProviderCodeAndCommandName(String code, String name) {
+        return providerCommandRepository.findByCodeAndCommandName(code, name);
+    }
+
 }

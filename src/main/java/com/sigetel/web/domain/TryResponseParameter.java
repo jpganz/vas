@@ -31,6 +31,9 @@ public class TryResponseParameter implements Serializable {
     @JsonIgnore
     private RequestTry requestTry;
 
+    @Column(name = "requestkey")
+    private String key;
+
     public Long getId() {
         return id;
     }
@@ -91,6 +94,14 @@ public class TryResponseParameter implements Serializable {
             return false;
         }
         return Objects.equals(getId(), tryResponseParameter.getId());
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

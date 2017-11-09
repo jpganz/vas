@@ -2,6 +2,7 @@ package com.sigetel.web.web.rest;
 
 import com.sigetel.web.config.Constants;
 import com.codahale.metrics.annotation.Timed;
+import com.sigetel.web.domain.ResponseObj;
 import com.sigetel.web.domain.User;
 import com.sigetel.web.domain.ValidUser;
 import com.sigetel.web.repository.UserRepository;
@@ -9,15 +10,17 @@ import com.sigetel.web.security.AuthoritiesConstants;
 import com.sigetel.web.service.MailService;
 import com.sigetel.web.service.UserService;
 import com.sigetel.web.service.dto.UserDTO;
+import com.sigetel.web.soap.SoapService;
+import com.sigetel.web.soap.SoapServiceImpl;
 import com.sigetel.web.web.rest.vm.ManagedUserVM;
 import com.sigetel.web.web.rest.util.HeaderUtil;
 import com.sigetel.web.web.rest.util.PaginationUtil;
-import com.sigetel.web.wsdl.AuthTigoApp;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -69,12 +72,15 @@ public class UserResource {
 
     private final UserService userService;
 
+    private final SoapService soapServiceImpl;
+
     public UserResource(UserRepository userRepository, MailService mailService,
-            UserService userService) {
+            UserService userService, SoapService soapServiceImpl) {
 
         this.userRepository = userRepository;
         this.mailService = mailService;
         this.userService = userService;
+        this.soapServiceImpl = soapServiceImpl;
     }
 
     /**
@@ -109,7 +115,7 @@ public class UserResource {
                 .body(null);
         } else {
             User newUser = userService.createUser(managedUserVM);
-            mailService.sendCreationEmail(newUser);
+            //mailService.sendCreationEmail(newUser);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert( "A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
                 .body(newUser);
@@ -203,30 +209,25 @@ public class UserResource {
      *
      * @return the ResponseEntity with status 200 (OK) and with body all information
      */
-    @GetMapping("/validateUser")
+    @GetMapping("/validateUser/{username}/{password}")
     @Timed
-    public ResponseEntity<ValidUser> isValidUser(@ApiParam String username, @ApiParam String password) {
+    public ResponseEntity<ValidUser> isValidUser(@PathVariable String username, @PathVariable String password) {
         //check if user exists, if not, update it
         ValidUser response = new ValidUser();
         if (isTigoUser(username, password)){
             response.setStatus(true);
             response.setDescription("Request accepted");
+            return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, username))
+                .body(response);
         }else {
             response.setStatus(false);
             response.setDescription("Login failed");
+            return ResponseUtil.wrapOrNotFound(Optional.ofNullable(null));
         }
-        //return response;
-
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, username))
-            .body(response);
     }
 
     private boolean isTigoUser(final String username, final String password){
-        AuthTigoApp authTigoApp = new AuthTigoApp();
-        authTigoApp.setCredentialsWS("sigel", "sig3lusr");
-        //System.out.println("RESPONSE: " +
-        return (authTigoApp.processUserInformationResponse(
-            authTigoApp.requestUserInfo(100, username, password)).size() > 0);
+    	return soapServiceImpl.invokeLdap(username, password);
     }
 }

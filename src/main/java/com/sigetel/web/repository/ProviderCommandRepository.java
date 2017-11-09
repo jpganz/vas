@@ -16,4 +16,6 @@ import java.util.List;
 public interface ProviderCommandRepository extends JpaRepository<ProviderCommand,Long> {
 
     List<ProviderCommand> findByProviderId(Long id);
+
+    List<ProviderCommand> findByCodeAndCommandName(String code, String name);
 }

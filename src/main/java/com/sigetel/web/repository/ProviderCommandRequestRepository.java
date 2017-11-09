@@ -13,4 +13,7 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface ProviderCommandRequestRepository extends JpaRepository<ProviderCommandRequest,Long> {
 
+    ProviderCommandRequest findByRequestId(Long id);
+
 }
+

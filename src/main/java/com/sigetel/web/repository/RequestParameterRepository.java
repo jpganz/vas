@@ -17,4 +17,5 @@ public interface RequestParameterRepository extends JpaRepository<RequestParamet
 
     List<RequestParameter> findByProviderCommandId(Long id);
 
+    RequestParameter findByName(String name);
 }

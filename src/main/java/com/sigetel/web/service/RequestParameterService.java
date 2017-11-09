@@ -39,4 +39,6 @@ public interface RequestParameterService {
     void delete(Long id);
 
     List<RequestParameter> findByAllProviderCommandId(Long id);
+
+    RequestParameter findByName(String name);
 }

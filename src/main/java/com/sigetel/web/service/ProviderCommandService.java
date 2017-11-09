@@ -40,4 +40,6 @@ public interface ProviderCommandService {
 
     List<ProviderCommand> findByProviderId(Long id);
 
+    List<ProviderCommand> findByProviderCodeAndCommandName(String code, String name);
+
 }

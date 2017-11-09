@@ -72,4 +72,14 @@ public class ResponseParameterServiceImpl implements ResponseParameterService{
         log.debug("Request to delete ResponseParameter : {}", id);
         responseParameterRepository.delete(id);
     }
+
+    /**
+     *  find ResponseParameter by name
+     *
+     *  @param name: name of the parameter to find
+     */
+    @Override
+    public ResponseParameter findByName(String name) {
+       return responseParameterRepository.findByName(name);
+    }
 }

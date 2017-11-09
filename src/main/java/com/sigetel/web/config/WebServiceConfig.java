@@ -3,6 +3,7 @@ package com.sigetel.web.config;
 import com.sigetel.web.soap.SoapService;
 import com.sigetel.web.soap.webServices.GenerateLoginToken;
 import com.sigetel.web.web.rest.consumer.RestClient;
+import com.sigetel.web.web.rest.consumer.SoapClient;
 import com.sigetel.web.web.rest.util.JasperHelper;
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
@@ -45,6 +46,14 @@ public class WebServiceConfig  extends HttpServlet {
     }
 
     @Bean
+    public SoapClient soapClient(){
+        SoapClient soapClient = new SoapClient();
+        return soapClient;
+    }
+
+
+
+    @Bean
     public Endpoint endpointToken() {
 
         EndpointImpl endpoint = new EndpointImpl(bus,generateLoginToken );
@@ -57,7 +66,7 @@ public class WebServiceConfig  extends HttpServlet {
 
     @Bean
     public JasperHelper jasperHelper() {
-        JasperHelper helper = new JasperHelper("classpath:/report1.jrxml");
+        JasperHelper helper = new JasperHelper("classpath:/billing.jrxml");
         return helper;
     }
 

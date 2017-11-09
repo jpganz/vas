@@ -14,4 +14,5 @@ import org.springframework.data.jpa.repository.*;
 public interface ProviderRepository extends JpaRepository<Provider,Long> {
 
     //Provider findByIdAndProviderCommandsId(Long id,Long commandId);
+    Provider findByCode(String code);
 }

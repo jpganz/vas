@@ -16,10 +16,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * REST controller for managing Provider.
@@ -88,13 +85,11 @@ public class ProviderResource {
     @GetMapping("/testRest")
     @Timed
     public ResponseEntity<Provider> testRest() {
-        List<String> paramList = new ArrayList<>();
-        String contentType = "application/json";
-        HashMap<String, String> headerMap = new HashMap<>();
-        HashMap<String, String> bodyMap = new HashMap<>();
-        bodyMap.put("name", "Juan Pablo");
-        bodyMap.put("job", "millionare");
-        restClient.postRequest("https://reqres.in/api/users",bodyMap, contentType, headerMap );
+        Map<String, String> hm = new HashMap<String, String>();
+        hm.put("content-type", "application/json");
+        String p = "{ \"code\": \"GQ574\", \"price\": 399, \"departureDate\": \"2016/12/20\",\"origin\": \"ORD\", \"destination\": \"SFO\", \"emptySeats\": 200, \"plane\": {\"type\": \"Boeing 747\", \"totalSeats\": 400}}";
+        RestClient restClient = new RestClient();
+        restClient.postRequest("http://apdev-american-ws.cloudhub.io/api/flights", p,"application/json", hm);
         return null;
     }
 

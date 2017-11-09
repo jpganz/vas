@@ -37,4 +37,11 @@ public interface ProviderCommandRequestService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     *  Find by Request Id.
+     *
+     *  @param id the id of the entity -- Does NOT require fully object.
+     */
+    ProviderCommandRequest findByRequestId(Long requestId);
 }

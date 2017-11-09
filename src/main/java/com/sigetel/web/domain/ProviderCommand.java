@@ -46,6 +46,9 @@ public class ProviderCommand implements Serializable {
     @Column(name = "email_notify")
     private Integer emailNotify;
 
+    @Column(name = "product")
+    private String producto;
+
     @ManyToOne(fetch = FetchType.EAGER)//), cascade=CascadeType.ALL)
     //@JsonIgnore
     private Provider provider;
@@ -264,7 +267,18 @@ public class ProviderCommand implements Serializable {
         this.command = command;
     }
 
-    /*
+    public Boolean getAddToRetry() {
+        return addToRetry;
+    }
+
+    public String getProducto() {
+        return producto;
+    }
+
+    public void setProducto(String producto) {
+        this.producto = producto;
+    }
+/*
     public ProviderCommand addServiceSecurity(ServiceSecurity serviceSecurity) {
         this.serviceSecurities.add(serviceSecurity);
         serviceSecurity.setProviderCommand(this);

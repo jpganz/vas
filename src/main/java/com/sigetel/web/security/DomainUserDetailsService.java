@@ -2,7 +2,8 @@ package com.sigetel.web.security;
 
 import com.sigetel.web.domain.User;
 import com.sigetel.web.repository.UserRepository;
-import com.sigetel.web.wsdl.AuthTigoApp;
+import com.sigetel.web.soap.SoapService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,9 +27,12 @@ public class DomainUserDetailsService implements UserDetailsService {
     private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
     private final UserRepository userRepository;
+    
+    private final SoapService soapServiceImpl;
 
-    public DomainUserDetailsService(UserRepository userRepository) {
+    public DomainUserDetailsService(UserRepository userRepository, SoapService soapService) {
         this.userRepository = userRepository;
+        this.soapServiceImpl = soapService;
     }
 
     @Override
@@ -38,7 +42,7 @@ public class DomainUserDetailsService implements UserDetailsService {
         String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
         Optional<User> userFromDatabase = userRepository.findOneWithAuthoritiesByLogin(lowercaseLogin);
         return userFromDatabase.map(user -> {
-            //if (!isUserValid(userFromDatabase.get().getEmail(), userFromDatabase.get().getPassword()) && !user.getActivated()) {
+            //if (!isUserValid(userFromDatabase.get().getEmail(), userFromDatabase.get().getPassword()) && !user.getActivated()) { ||
             if (!user.getActivated()) {
                     throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
             }
@@ -53,11 +57,6 @@ public class DomainUserDetailsService implements UserDetailsService {
     }
 
     public boolean isUserValid(final String user,final String password ) {
-        //return true;
-        AuthTigoApp authTigoApp = new AuthTigoApp();
-        authTigoApp.setCredentialsWS("sigel", "sig3lusr");
-        //System.out.println("RESPONSE: " +
-        return (authTigoApp.processUserInformationResponse(
-            authTigoApp.requestUserInfo(100, user, password)).size() > 0);
+    	return soapServiceImpl.invokeLdap(user, password);
     }
 }

@@ -1,5 +1,6 @@
 package com.sigetel.web.service;
 
+import com.sigetel.web.domain.Request;
 import com.sigetel.web.domain.RequestTry;
 import java.util.List;
 
@@ -37,4 +38,6 @@ public interface RequestTryService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    List<RequestTry> findByStatus(int status);
 }

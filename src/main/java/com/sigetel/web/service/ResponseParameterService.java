@@ -37,4 +37,6 @@ public interface ResponseParameterService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    ResponseParameter findByName(String name);
 }
