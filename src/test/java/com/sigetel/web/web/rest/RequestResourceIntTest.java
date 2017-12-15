@@ -7,6 +7,7 @@ import com.sigetel.web.repository.RequestRepository;
 import com.sigetel.web.service.RequestService;
 import com.sigetel.web.web.rest.errors.ExceptionTranslator;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,8 +65,8 @@ public class RequestResourceIntTest {
     private static final String DEFAULT_EVENT_CONFIRMATION = "AAAAAAAAAA";
     private static final String UPDATED_EVENT_CONFIRMATION = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_NEXT_TRY_BY = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_NEXT_TRY_BY = LocalDate.now(ZoneId.systemDefault());
+    private static final DateTime DEFAULT_NEXT_TRY_BY = DateTime.now();
+    private static final DateTime UPDATED_NEXT_TRY_BY = DateTime.now();
 
     private static final LocalDate DEFAULT_DATE_TIME = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE_TIME = LocalDate.now(ZoneId.systemDefault());
@@ -118,7 +119,7 @@ public class RequestResourceIntTest {
             .statusRequested(DEFAULT_STATUS_REQUESTED)
             .serviceCode(DEFAULT_SERVICE_CODE)
             .eventConfirmation(DEFAULT_EVENT_CONFIRMATION)
-            .nextTryBy(DEFAULT_NEXT_TRY_BY)
+            .nextTryBy(DEFAULT_NEXT_TRY_BY.toDate())
             .dateTime(DEFAULT_DATE_TIME);
         return request;
     }
@@ -301,7 +302,7 @@ public class RequestResourceIntTest {
             .statusRequested(UPDATED_STATUS_REQUESTED)
             .serviceCode(UPDATED_SERVICE_CODE)
             .eventConfirmation(UPDATED_EVENT_CONFIRMATION)
-            .nextTryBy(UPDATED_NEXT_TRY_BY)
+            .nextTryBy(UPDATED_NEXT_TRY_BY.toDate())
             .dateTime(UPDATED_DATE_TIME);
 
         restRequestMockMvc.perform(put("/api/requests")

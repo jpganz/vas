@@ -1,0 +1,62 @@
+<div>
+    <h2>Provider Requests</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="provider-request.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Provider Request
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Provider Command</span></th>
+                    <th><span>Request</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="providerRequest in vm.providerRequests track by providerRequest.id">
+                    <td><a ui-sref="provider-request-detail({id:providerRequest.id})">{{providerRequest.id}}</a></td>
+                    <td>
+                        <a ui-sref="provider-command-detail({id:providerRequest.providerCommand.id})">{{providerRequest.providerCommand.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="request-detail({id:providerRequest.request.id})">{{providerRequest.request.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="provider-request-detail({id:providerRequest.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="provider-request.edit({id:providerRequest.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="provider-request.delete({id:providerRequest.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

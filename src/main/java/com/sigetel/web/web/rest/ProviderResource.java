@@ -3,9 +3,11 @@ package com.sigetel.web.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.sigetel.web.domain.*;
 import com.sigetel.web.service.ProviderService;
+import com.sigetel.web.soap.SoapService;
 import com.sigetel.web.web.rest.consumer.RestClient;
 import com.sigetel.web.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +35,14 @@ public class ProviderResource {
 
     private final RestClient restClient;
 
+    private final SoapService soapService;
+
     public ProviderResource(ProviderService providerService,
-                            RestClient restClient) {
+                            RestClient restClient,
+                            SoapService soapService) {
         this.providerService = providerService;
         this.restClient = restClient;
+        this.soapService = soapService;
     }
 
     /**
@@ -81,6 +87,19 @@ public class ProviderResource {
             .body(result);
     }
 
+
+    @GetMapping("/testRetryTime")
+    @Timed
+    public String testRetryTime() {
+        final DateTime nextTry = new DateTime().plusMinutes(50);
+        return nextTry.toString();
+    }
+
+    @GetMapping("/testRetry")
+    @Timed
+    public void testRetry() {
+        soapService.invokeRetryRequest();
+    }
 
     @GetMapping("/testRest")
     @Timed

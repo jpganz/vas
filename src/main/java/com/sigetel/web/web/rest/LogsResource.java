@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * Controller for view and managing Log Level at runtime.
  */
@@ -23,10 +21,11 @@ public class LogsResource {
     @Timed
     public List<LoggerVM> getList() {
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-        return context.getLoggerList()
+        return null;
+        /*return context.getLoggerList()
             .stream()
             .map(LoggerVM::new)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
     }
 
     @PutMapping("/logs")

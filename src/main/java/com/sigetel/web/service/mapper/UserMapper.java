@@ -23,10 +23,11 @@ public class UserMapper {
     }
 
     public List<UserDTO> usersToUserDTOs(List<User> users) {
-        return users.stream()
+        /*return users.stream()
             .filter(Objects::nonNull)
             .map(this::userToUserDTO)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+        return null;
     }
 
     public User userDTOToUser(UserDTO userDTO) {
@@ -51,10 +52,10 @@ public class UserMapper {
     }
 
     public List<User> userDTOsToUsers(List<UserDTO> userDTOs) {
-        return userDTOs.stream()
+        /*return userDTOs.stream()
             .filter(Objects::nonNull)
             .map(this::userDTOToUser)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
     }
 
     public User userFromId(Long id) {
@@ -67,10 +68,11 @@ public class UserMapper {
     }
 
     public Set<Authority> authoritiesFromStrings(Set<String> strings) {
-        return strings.stream().map(string -> {
+        /*return strings.stream().map(string -> {
             Authority auth = new Authority();
             auth.setName(string);
             return auth;
-        }).collect(Collectors.toSet());
+        }).collect(Collectors.toSet());*/
+        return null;
     }
 }

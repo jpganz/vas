@@ -6,6 +6,7 @@ import com.codahale.metrics.servlets.MetricsServlet;
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.web.filter.CachingHttpHeadersFilter;
+import io.undertow.Undertow;
 import io.undertow.UndertowOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.MimeMappings;
+import org.springframework.boot.context.embedded.undertow.UndertowBuilderCustomizer;
 import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
@@ -84,8 +86,12 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
             container instanceof UndertowEmbeddedServletContainerFactory) {
 
             ((UndertowEmbeddedServletContainerFactory) container)
-                .addBuilderCustomizers(builder ->
-                    builder.setServerOption(UndertowOptions.ENABLE_HTTP2, true));
+                .addBuilderCustomizers(new UndertowBuilderCustomizer() {
+                    @Override
+                    public void customize(Undertow.Builder builder) {
+                        builder.setServerOption(UndertowOptions.ENABLE_HTTP2, true);
+                    }
+                });
         }
     }
 

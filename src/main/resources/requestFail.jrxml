@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Performance" pageWidth="840" pageHeight="595" orientation="Landscape" columnWidth="800" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6be75363-5c4f-4810-b514-3fb52d95d8d9">
+	<queryString language="SQL">
+		<![CDATA[]]>
+	</queryString>
+	<field name="fechaInicio" class="java.lang.String">
+		<fieldDescription><![CDATA[fechaInicio]]></fieldDescription>
+	</field>
+	<field name="fechaFin" class="java.lang.String">
+		<fieldDescription><![CDATA[fechaFin]]></fieldDescription>
+	</field>
+	<field name="proveedor" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor]]></fieldDescription>
+	</field>
+	<field name="producto" class="java.lang.String">
+		<fieldDescription><![CDATA[producto]]></fieldDescription>
+	</field>
+	<field name="cliente" class="java.lang.String">
+		<fieldDescription><![CDATA[cliente]]></fieldDescription>
+	</field>
+	<field name="anexo" class="java.lang.String">
+		<fieldDescription><![CDATA[anexo]]></fieldDescription>
+	</field>
+	<field name="operacionARealizar" class="java.lang.String">
+		<fieldDescription><![CDATA[operacionARealizar]]></fieldDescription>
+	</field>
+	<field name="intentosRealizados" class="java.lang.String">
+		<fieldDescription><![CDATA[intentosRealizados]]></fieldDescription>
+	</field>
+	<field name="fechaPrimerIntento" class="java.lang.String">
+		<fieldDescription><![CDATA[fechaPrimerIntento]]></fieldDescription>
+	</field>
+	<field name="fechaUltimoIntento" class="java.lang.String">
+		<fieldDescription><![CDATA[fechaUltimoIntento]]></fieldDescription>
+	</field>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ebb724cd-772d-4567-b574-17d1a8e56f23" x="36" y="15" width="77" height="15"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Fecha Inicio:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="82238d0c-2d33-43e4-b084-7a845cc7476d" x="126" y="15" width="72" height="15"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaInicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="38f4d824-8319-401c-b896-12d033f472b2" x="266" y="16" width="62" height="13"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Fecha Fin:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0d899e7a-db1a-4629-92e3-e62cb6b0edec" x="350" y="15" width="72" height="15"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaFin}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ed11a0c6-80d5-467a-ba51-0b6289818628" x="0" y="0" width="100" height="20" forecolor="#D62522"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Proveedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9b2454fe-fbec-4de4-81de-13e751173258" x="125" y="0" width="100" height="20" forecolor="#D62522"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8f3d534d-057c-4702-a359-8ab3f5ea25e1" x="225" y="0" width="100" height="20" forecolor="#D62522"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a4c79e54-6cd6-41e0-9e8c-d3bca7b8672c" x="275" y="0" width="100" height="20" forecolor="#D62522"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Anexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0bde771a-2859-4e00-9c98-d0d93cd2d7f3" x="450" y="0" width="100" height="20" forecolor="#D62522"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Operación a realizar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="de0fd006-8419-4eaa-aa03-6a86908b0eac" x="525" y="0" width="100" height="20" forecolor="#D62522"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[#intentos realizados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="de0fd006-8419-4eaa-aa03-6a86908b0eac" x="525" y="0" width="100" height="20" forecolor="#D62522"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Fecha de primer intento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="de0fd006-8419-4eaa-aa03-6a86908b0eac" x="525" y="0" width="100" height="20" forecolor="#D62522"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Fecha de último intento]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="8110c1eb-22a6-497f-8f5d-4d3ecd6f5261" x="0" y="0" width="100" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proveedor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="07c5516f-eb55-4c09-9c81-62f37188a345" x="100" y="0" width="100" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b50319b5-8315-4edd-b393-de735eea35e7" x="200" y="0" width="100" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e4bb0fbd-b14c-4bfd-925a-dbb6d4e41c8e" x="300" y="0" width="100" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{anexo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6c7795d5-adfd-414b-b1c7-c1950777c03f" x="400" y="0" width="100" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{operacionARealizar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="15b5a3f0-6dec-436a-a703-41e0af3e14ea" x="500" y="0" width="100" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{intentosRealizados}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="15b5a3f0-6dec-436a-a703-41e0af3e14ea" x="600" y="0" width="100" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaPrimerIntento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="15b5a3f0-6dec-436a-a703-41e0af3e14ea" x="700" y="0" width="100" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaUltimoIntento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

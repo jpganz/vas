@@ -72,4 +72,17 @@ public class TryParameterServiceImpl implements TryParameterService{
         log.debug("Request to delete TryParameter : {}", id);
         tryParameterRepository.delete(id);
     }
+
+    /**
+     *  Get all the tryParameters by request.
+     *
+     *  @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<TryParameter> findByRequestId(long requestId) {
+        log.debug("Request to get all TryParameters");
+        return tryParameterRepository.findByRequestId(requestId);
+    }
+
 }

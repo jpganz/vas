@@ -49,11 +49,13 @@ public class UserService {
         this.authorityRepository = authorityRepository;
     }
 
-    public Optional<User> findUserByEmail(String email){
+    public User findUserByEmail(String email){
         return userRepository.findOneByEmail(email);
     }
 
-    public Optional<User> activateRegistration(String key) {
+    public User activateRegistration(String key) {
+        return null;
+        /* todo
         log.debug("Activating user for activation key {}", key);
         return userRepository.findOneByActivationKey(key)
             .map(user -> {
@@ -63,11 +65,15 @@ public class UserService {
                 log.debug("Activated user: {}", user);
                 return user;
             });
+            */
     }
 
-    public Optional<User> completePasswordReset(String newPassword, String key) {
+    public User completePasswordReset(String newPassword, String key) {
        log.debug("Reset user password for reset key {}", key);
 
+       return null;
+
+       /* todo
        return userRepository.findOneByResetKey(key)
            .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
            .map(user -> {
@@ -76,9 +82,12 @@ public class UserService {
                 user.setResetDate(null);
                 return user;
            });
+           */
     }
 
-    public Optional<User> requestPasswordReset(String mail) {
+    public User requestPasswordReset(String mail) {
+        return null;
+        /* todo
         return userRepository.findOneByEmail(mail)
             .filter(User::getActivated)
             .map(user -> {
@@ -86,6 +95,7 @@ public class UserService {
                 user.setResetDate(Instant.now());
                 return user;
             });
+            */
     }
 
     public User createUser(String login, String password, String firstName, String lastName, String email,
@@ -136,7 +146,7 @@ public class UserService {
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
-        user.setResetDate(Instant.now());
+        user.setResetDate(null);
         user.setActivated(true);
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
@@ -214,7 +224,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<User> getUserWithAuthoritiesByLogin(String login) {
+    public User getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneWithAuthoritiesByLogin(login);
     }
 

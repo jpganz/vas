@@ -1,0 +1,189 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN"
+    "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="Billing"
+              pageWidth="842"
+              pageHeight="595"
+              orientation="Landscape"
+              columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
+
+
+    <field name="montoPlan" class="java.lang.String">
+        <fieldDescription><![CDATA[montoPlan]]></fieldDescription>
+    </field>
+
+    <field name="numeroCliente" class="java.lang.String">
+        <fieldDescription><![CDATA[numeroCliente]]></fieldDescription>
+    </field>
+
+    <field name="numeroAnexo" class="java.lang.String">
+        <fieldDescription><![CDATA[numeroAnexo]]></fieldDescription>
+    </field>
+
+    <field name="nombreCliente" class="java.lang.String">
+        <fieldDescription><![CDATA[nombreCliente]]></fieldDescription>
+    </field>
+
+    <field name="numeroTelefono" class="java.lang.String">
+        <fieldDescription><![CDATA[numeroTelefono]]></fieldDescription>
+    </field>
+
+    <field name="estado" class="java.lang.String">
+        <fieldDescription><![CDATA[estado]]></fieldDescription>
+    </field>
+
+    <field name="fechaEstado" class="java.lang.String">
+        <fieldDescription><![CDATA[fechaEstado]]></fieldDescription>
+    </field>
+    <field name="codigoServicio" class="java.lang.String">
+        <fieldDescription><![CDATA[codigoServicio]]></fieldDescription>
+    </field>
+    <field name="confirmacionEvent" class="java.lang.String">
+        <fieldDescription><![CDATA[confirmacionEvent]]></fieldDescription>
+    </field>
+
+    <columnHeader>
+        <band height="25" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="0" width="125" height="20" forecolor="#D62522"/>
+                <text><![CDATA[Header]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="125" y="0" width="100" height="20" forecolor="#D62522"/>
+                <text><![CDATA[# Cliente]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="225" y="0" width="50" height="20" forecolor="#D62522"/>
+                <text><![CDATA[# Anexo]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="275" y="0" width="275" height="20" forecolor="#D62522"/>
+                <text><![CDATA[Nombre Cliente]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="450" y="0" width="75" height="20" forecolor="#D62522"/>
+                <text><![CDATA[Telefono]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement  x="525" y="0" width="100" height="20" forecolor="#D62522"/>
+                <text><![CDATA[Estado]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="625" y="0" width="75" height="20" forecolor="#D62522"/>
+                <text><![CDATA[Fecha]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="700" y="0" width="50" height="20" forecolor="#D62522"/>
+                <text><![CDATA[Servicio]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="755" y="0" width="65" height="20" forecolor="#D62522"/>
+                <text><![CDATA[Evento]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="15" splitType="Stretch">
+
+            <textField>
+                <reportElement x="0" y="0" width="125" height="15" />
+
+                <textElement textAlignment="Left" verticalAlignment="Middle"/>
+
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{montoPlan}]]>
+                </textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="125" y="0" width="100" height="15" />
+
+                <textElement textAlignment="Left" verticalAlignment="Middle"/>
+
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{numeroCliente}]]>
+                </textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="225" y="0" width="50" height="15"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle"/>
+
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{numeroAnexo}]]>
+                </textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="275" y="0" width="275" height="15"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle"/>
+
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{nombreCliente}]]>
+                </textFieldExpression>
+            </textField>
+
+
+            <textField>
+                <reportElement x="450" y="0" width="75" height="15"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle"/>
+
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{numeroTelefono}]]>
+                </textFieldExpression>
+            </textField>
+
+
+            <textField>
+                <reportElement x="525" y="0" width="100" height="15"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle"/>
+
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{estado}]]>
+                </textFieldExpression>
+            </textField>
+
+
+            <textField>
+                <reportElement x="625" y="0" width="75" height="15"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle"/>
+
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{fechaEstado}]]>
+                </textFieldExpression>
+            </textField>
+
+
+            <textField>
+                <reportElement x="700" y="0" width="50" height="15"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle"/>
+
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{codigoServicio}]]>
+                </textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="755" y="0" width="65" height="15"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle"/>
+
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{confirmacionEvent}]]>
+                </textFieldExpression>
+            </textField>
+
+        </band>
+    </detail>
+</jasperReport>

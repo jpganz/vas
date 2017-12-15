@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity ServiceSecurity.
+    -->
+    <changeSet id="20170713120620-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="communication_standard_id"
+                                 baseTableName="service_security"
+                                 constraintName="fk_service_security_communication_standard_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="communication_standard"/>
+
+        <addForeignKeyConstraint baseColumnNames="provider_command_id"
+                                 baseTableName="service_security"
+                                 constraintName="fk_service_security_provider_command_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="provider_command"/>
+
+    </changeSet>
+</databaseChangeLog>

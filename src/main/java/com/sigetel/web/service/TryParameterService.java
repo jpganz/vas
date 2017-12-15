@@ -37,4 +37,11 @@ public interface TryParameterService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     *  Get all the tryParameters by request.
+     *
+     *  @return the list of entities
+     */
+    List<TryParameter> findByRequestId(long requestId);
 }

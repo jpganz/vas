@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.util.Optional;
+import java.util.Date;
+
 
 /**
  * Service for managing audit events.
@@ -33,17 +33,30 @@ public class AuditEventService {
     }
 
     public Page<AuditEvent> findAll(Pageable pageable) {
+        return null;
+        /* todo
         return persistenceAuditEventRepository.findAll(pageable)
             .map(auditEventConverter::convertToAuditEvent);
+            */
     }
 
+    /* todo
     public Page<AuditEvent> findByDates(Instant fromDate, Instant toDate, Pageable pageable) {
         return persistenceAuditEventRepository.findAllByAuditEventDateBetween(fromDate, toDate, pageable)
             .map(auditEventConverter::convertToAuditEvent);
+    }*/
+
+    public Page<AuditEvent> findByDates(Date fromDate, Date toDate, Pageable pageable) {
+        return null;
     }
 
+    /* todo
     public Optional<AuditEvent> find(Long id) {
         return Optional.ofNullable(persistenceAuditEventRepository.findOne(id)).map
             (auditEventConverter::convertToAuditEvent);
+    }*/
+
+    public AuditEvent find(Long id) {
+        return null;
     }
 }

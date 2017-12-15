@@ -8,12 +8,16 @@ import com.sigetel.web.service.validator.EntrySaveService;
 import com.sigetel.web.service.validator.EntryValidator;
 import com.sigetel.web.soap.security.AuthService;
 import com.sigetel.web.web.rest.consumer.SoapClient;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPBody;
@@ -24,15 +28,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.sigetel.web.domain.RequestTryStatus.PENDING;
-import static com.sigetel.web.domain.RequestTryStatus.REQUESTED;
-import static com.sigetel.web.domain.RequestTryStatus.TRY_AGAIN;
+import static com.sigetel.web.domain.RequestTryStatus.*;
 
 @Service
 @javax.jws.WebService(serviceName = "SoapService", portName = "SoapRequestPort",
     targetNamespace = "http://service.ws.sample/",
     endpointInterface = "com.sigetel.web.soap.SoapService")
 public class SoapServiceImpl implements SoapService {
+
+    //TODO: split this method
     @Autowired
     private AuthService authService;
 
@@ -68,17 +72,22 @@ public class SoapServiceImpl implements SoapService {
     @RequestWrapper(localName = "requestParams", targetNamespace = "http://service.ws.sample/", className = " com.sigetel.web.soap.RequestParams")
 
     @Override
-    public ReponseObject requestSoap(RequestParams requestParams) {
+    public ReponseObject requestSoap(final RequestParams requestParams) {
+        return requestSoap(requestParams, false, 0l);
+    }
+
+    private ReponseObject requestSoap(final RequestParams requestParams, final boolean isRetry, final long requestId) {
         Long savedInvoke = 0L;
         ReponseObject reponseObject = new ReponseObject();
         Map newMmap = new HashMap<String, String>();
         Long validEntry = 0L;
         try {
-            Boolean tokenVerified = authService.checkLogin(requestParams.getToken());
-
-            reponseObject.setTokenVerified(tokenVerified);
-            if (!tokenVerified) {
-                throw new Exception("Token is not available or expired");
+            if (!isRetry) {
+                final Boolean tokenVerified = authService.checkLogin(requestParams.getToken());
+                reponseObject.setTokenVerified(tokenVerified);
+                if (!tokenVerified) {
+                    throw new Exception("Token is not available or expired");
+                }
             }
 
             Map stringParams = new HashMap<String, String>();
@@ -110,12 +119,12 @@ public class SoapServiceImpl implements SoapService {
                     }
                 }
                 //saving request
-                SaveRequestCommand savedRequest = saveRequest(requestParams, validEntry);
+                SaveRequestCommand savedRequest = saveRequest(requestParams, validEntry, isRetry, requestId);
                 if (savedRequest != null) {
                     savedValue = savedRequest.getRequest().getId();
                     // consume soap endpoint
                     //check if is soap or rest
-                    savedInvoke = entrySaveService.invokeAndSave(requestParams, validEntry, savedRequest, stringParams, intParams);
+                    savedInvoke = entrySaveService.invokeAndSave(requestParams, validEntry, savedRequest, stringParams, intParams, isRetry);
                     if (savedInvoke > 0) {
                         Request freshRequest = requestService.findOne(savedValue);
                         freshRequest.setRequestStatus(Long.valueOf(REQUESTED.getValue()));
@@ -166,7 +175,7 @@ public class SoapServiceImpl implements SoapService {
     }
 
     @Transactional
-    private SaveRequestCommand saveRequest(RequestParams requestParams, Long providerCommandId) {
+    private SaveRequestCommand saveRequest(RequestParams requestParams, Long providerCommandId, boolean isRetry, long requestId) {
         Map<String, String> headers = new HashMap<>();
         Map<String, String> body = new HashMap<>();
         Map<String, String> auth = new HashMap<>();
@@ -220,11 +229,29 @@ public class SoapServiceImpl implements SoapService {
                 }
 
                 request.dateTime(LocalDate.now());
-                requestService.save(request);
-                Request flushedRequest = requestService.findOne(request.getId());
-                for (TryParameter tryParameter : tryParameters) {
-                    tryParameter.setRequest(flushedRequest);
-                    tryParameterService.save(tryParameter);
+                //if is saved we go and get the request and add 1 to the requests totals
+                Request flushedRequest = null;
+                if (!isRetry) {
+                    request.nextTryBy(nextTryBy(providerCommand.getRetryInterval().intValue()).toDate());
+                    request.setRequestNumber(1);
+                    requestService.save(request);
+                    flushedRequest = requestService.findOne(request.getId());
+                } else {
+                    //when is retry....
+                    final Request savedRequest = requestService.findOne(requestId);
+                    final Integer totalTries = savedRequest.getRequestNumber() + 1;
+                    savedRequest.setRequestNumber(totalTries); // cannot make it self, gets nuts?
+                    //calculate next try by
+                    savedRequest.setNextTryBy(nextTryBy(providerCommand.getRetryInterval().intValue()).toDate());
+                    requestService.save(savedRequest);
+                    flushedRequest = requestService.findOne(requestId);
+                }
+                //we avoid this part as well
+                if (!isRetry) {
+                    for (TryParameter tryParameter : tryParameters) {
+                        tryParameter.setRequest(flushedRequest);
+                        tryParameterService.save(tryParameter);
+                    }
                 }
                 SaveRequestCommand savedRequestCommand = new SaveRequestCommand();
                 savedRequestCommand.setRequest(flushedRequest);
@@ -298,19 +325,60 @@ public class SoapServiceImpl implements SoapService {
         }
     }
 
-
+    ///RETRY
     @Override
     @Transactional
+    @Scheduled(cron = "* 0/10 * * * *")
     public void invokeRetryRequest() {
-        List<Request> missingRequests = requestService.findAllByRequestStatus(Long.valueOf(PENDING.getValue()));
-        for (Request request : missingRequests) {
-            ProviderCommandRequest providerCommandRequest = providerCommandRequestService.findByRequestId(request.getId());
+        try {
+            List<Request> missingRequests = requestService.findAllByRequestStatus(Long.valueOf(PENDING.getValue()));
+            for (Request request : missingRequests) {
+                RequestParams requestParam = new RequestParams();
+                requestParam.setAnneedNumber(String.valueOf(request.getAnnexedNumber()));
+                requestParam.setClientNumber(String.valueOf(request.getClientNumber()));
+                requestParam.setPhoneNumber(request.getClientPhone());
+                requestParam.setRequestedStatus(String.valueOf(request.getStatusRequested()));
+                requestParam.setServiceCode(request.getServiceCode());
 
+                ProviderCommandRequest providerCommandRequest = providerCommandRequestService.findByRequestId(request.getId());
+                List<TryParameter> tryParameters = tryParameterService.findByRequestId(request.getId());
+                Map<String, String> params = new HashMap<>();
+                for (TryParameter tryParameter : tryParameters) {
+                    params.put(tryParameter.getRequestParameter().getName(), tryParameter.getValue());
+                }
+                requestParam.setOptionMap(params);
+                final DateTime nextRetry = new DateTime(request.getNextTryBy());
+                if (isRetryable(providerCommandRequest.getProviderCommandId(), request.getRequestNumber(), nextRetry)) {
+                    requestSoap(requestParam, true, request.getId());
+                } else {
+                    //mark as failed because we wont try anymore
+                    if (DateTime.now().isAfter(nextRetry)) {
+                        request.setRequestStatus(Long.valueOf(FAILED.getValue())); // hate this long, change to integer
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Ocurrio un error en el retry");
+            log.error(e.getMessage());
         }
-
     }
 
-    private String createMailMessage(ProviderCommand command, boolean failed) {
+    @Transactional
+    private boolean isRetryable(final long providerId, final int retries, final DateTime nextTry) {
+        final ProviderCommand command = providerCommandService.findOne(providerId);
+        //if still retries accepted
+        if (command.getRetryLimit() > Long.valueOf(retries)) {// extra casting, bad practice
+            System.out.println("el next try es valido? " + DateTime.now().isAfter(nextTry));
+            return (DateTime.now().isAfter(nextTry));
+        }
+        return false;
+    }
+
+    private DateTime nextTryBy(final Integer retryInterval) {
+        return new DateTime().plusMinutes(retryInterval);
+    }
+
+    private String createMailMessage(final ProviderCommand command, final boolean failed) {
         String typeMessage = "";
         if (failed) {
             typeMessage += "Lamentamos notificar que la transaccion con los siguientes datos ha fallado, seguiremos intentando  " + (command.getRetryLimit() - 1) + " mas por una respuesta exitosa.";

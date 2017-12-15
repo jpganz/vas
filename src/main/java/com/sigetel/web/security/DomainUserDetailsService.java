@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 /**
  * Authenticate a user from the database.
@@ -27,7 +27,7 @@ public class DomainUserDetailsService implements UserDetailsService {
     private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
     private final UserRepository userRepository;
-    
+
     private final SoapService soapServiceImpl;
 
     public DomainUserDetailsService(UserRepository userRepository, SoapService soapService) {
@@ -39,7 +39,8 @@ public class DomainUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(final String login) {
         log.debug("Authenticating {}", login);
-        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
+        return null;
+        /*String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
         Optional<User> userFromDatabase = userRepository.findOneWithAuthoritiesByLogin(lowercaseLogin);
         return userFromDatabase.map(user -> {
             //if (!isUserValid(userFromDatabase.get().getEmail(), userFromDatabase.get().getPassword()) && !user.getActivated()) { ||
@@ -53,7 +54,7 @@ public class DomainUserDetailsService implements UserDetailsService {
                 user.getPassword(),
                 grantedAuthorities);
         }).orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the " +
-        "database"));
+        "database"));*/
     }
 
     public boolean isUserValid(final String user,final String password ) {

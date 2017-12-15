@@ -1,10 +1,12 @@
 package com.sigetel.web.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -26,7 +28,7 @@ public class RequestTry implements Serializable {
     private Integer tryNumber;
 
     @Column(name = "date_time")
-    private LocalDate dateTime;
+    private Date dateTime;
 
 
 
@@ -105,11 +107,11 @@ public class RequestTry implements Serializable {
         this.tryResponseParameters = tryResponseParameters;
     }
 
-    public LocalDate getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDate dateTime) {
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 

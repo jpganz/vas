@@ -66,7 +66,9 @@ public class AccountResource {
         if (!checkPasswordLength(managedUserVM.getPassword())) {
             return new ResponseEntity<>(CHECK_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
         }
-        return userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase())
+        return null;
+        /* todo
+            return userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase())
             .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
             .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
                 .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
@@ -80,7 +82,7 @@ public class AccountResource {
                     mailService.sendActivationEmail(user);
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
-        );
+        );*/
     }
 
     /**
@@ -92,9 +94,14 @@ public class AccountResource {
     @GetMapping("/activate")
     @Timed
     public ResponseEntity<String> activateAccount(@RequestParam(value = "key") String key) {
+        return null;
+        /* todo
         return userService.activateRegistration(key)
-            .map(user -> new ResponseEntity<String>(HttpStatus.OK))
+            .map(user -> {
+                return new ResponseEntity<String>(HttpStatus.OK);
+            })
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+            */
     }
 
     /**
@@ -118,9 +125,12 @@ public class AccountResource {
     @GetMapping("/account")
     @Timed
     public ResponseEntity<UserDTO> getAccount() {
+        return null;
+        /*todo
         return Optional.ofNullable(userService.getUserWithAuthorities())
             .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+            */
     }
 
     /**
@@ -132,6 +142,9 @@ public class AccountResource {
     @PostMapping("/account")
     @Timed
     public ResponseEntity saveAccount(@Valid @RequestBody UserDTO userDTO) {
+        return null;
+        //todo
+        /*
         final String userLogin = SecurityUtils.getCurrentUserLogin();
         Optional<User> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {
@@ -144,7 +157,7 @@ public class AccountResource {
                     userDTO.getLangKey(), userDTO.getImageUrl());
                 return new ResponseEntity(HttpStatus.OK);
             })
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));*/
     }
 
     /**
@@ -174,11 +187,14 @@ public class AccountResource {
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
     public ResponseEntity requestPasswordReset(@RequestBody String mail) {
+        return null;
+        /* todo
         return userService.requestPasswordReset(mail)
             .map(user -> {
                 mailService.sendPasswordResetMail(user);
                 return new ResponseEntity<>("email was sent", HttpStatus.OK);
             }).orElse(new ResponseEntity<>("email address not registered", HttpStatus.BAD_REQUEST));
+            */
     }
 
     /**
@@ -192,12 +208,17 @@ public class AccountResource {
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
     public ResponseEntity<String> finishPasswordReset(@RequestBody KeyAndPasswordVM keyAndPassword) {
+        return null;
+        /*
+        todo
+
         if (!checkPasswordLength(keyAndPassword.getNewPassword())) {
             return new ResponseEntity<>(CHECK_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
         }
         return userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey())
               .map(user -> new ResponseEntity<String>(HttpStatus.OK))
               .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+        */
     }
 
     private boolean checkPasswordLength(String password) {

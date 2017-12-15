@@ -49,13 +49,17 @@ public class Request implements Serializable {
     private String eventConfirmation;
 
     @Column(name = "next_try_by")
-    private LocalDate nextTryBy;
+    private Date nextTryBy;
 
     @Column(name = "datetime")
     private LocalDate dateTime;
 
     @Column(name = "client_phone")
     private String clientPhone;
+
+    @Column(name = "request_number")
+    private Integer requestNumber;
+
 
     @OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
     private List<RequestTry> requestTries = new ArrayList<>();
@@ -172,16 +176,16 @@ public class Request implements Serializable {
         this.eventConfirmation = eventConfirmation;
     }
 
-    public LocalDate getNextTryBy() {
+    public Date getNextTryBy() {
         return nextTryBy;
     }
 
-    public Request nextTryBy(LocalDate nextTryBy) {
+    public Request nextTryBy(Date nextTryBy) {
         this.nextTryBy = nextTryBy;
         return this;
     }
 
-    public void setNextTryBy(LocalDate nextTryBy) {
+    public void setNextTryBy(Date nextTryBy) {
         this.nextTryBy = nextTryBy;
     }
 
@@ -221,6 +225,14 @@ public class Request implements Serializable {
 
     public void setRequestTries(List<RequestTry> requestTries) {
         this.requestTries = requestTries;
+    }
+
+    public Integer getRequestNumber() {
+        return requestNumber;
+    }
+
+    public void setRequestNumber(Integer requestNumber) {
+        this.requestNumber = requestNumber;
     }
 
     @Override

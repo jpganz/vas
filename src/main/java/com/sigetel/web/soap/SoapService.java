@@ -24,4 +24,5 @@ public interface SoapService {
     boolean invokeLdap(String username, String password);
 
     void invokeRetryRequest();
+
 }
